@@ -3,14 +3,18 @@ import PropTypes from 'prop-types'
 import Participant from './components/Participant'
 
 const ParticipantList = (props) => (
-  <div className='participantList'>
-    {props.participants.map(participant => <Participant key={participant.id} id={participant.id} />)}
+  <div>
+    Who else?
+    <div className='participantList'>
+      {props.participants.map(participantId =>
+        <Participant key={participantId} user={props.users[participantId]} />)}
+    </div>
   </div>
 )
 
 ParticipantList.propTypes = {
-  participants: PropTypes.array.isRequired,
-  users: PropTypes.array.isRequired
+  participants: PropTypes.arrayOf(PropTypes.number),
+  users: PropTypes.object.isRequired
 }
 
 export default ParticipantList

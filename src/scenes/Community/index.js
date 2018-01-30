@@ -13,7 +13,7 @@ const Community = (props) => (
   <div>
     <Typography type='display3' gutterBottom>{props.name}</Typography>
     <Router>
-      <Offers projects={props.projects} trades={props.trades}>
+      <Offers projects={props.projects} trades={props.trades} users={props.users}>
         <ProjectList projects={props.projects} />
         <TradeList trades={props.trades} />
       </Offers>
@@ -24,7 +24,8 @@ const Community = (props) => (
 Community.propTypes = {
   name: PropTypes.string.isRequired,
   projects: PropTypes.arrayOf(PropTypes.object),
-  trades: PropTypes.arrayOf(PropTypes.object)
+  trades: PropTypes.arrayOf(PropTypes.object),
+  users: PropTypes.object.isRequired
 }
 
 export default Community

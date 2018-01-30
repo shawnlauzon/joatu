@@ -1,14 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Avatar from 'material-ui/Avatar'
+import Chip from 'material-ui/Chip'
+import { withStyles } from 'material-ui/styles'
+
+// Obviously need a different way of storing / accessing these
+import user0 from './images/0.jpg'
+import user1 from './images/1.jpg'
+
+const styles = theme => ({
+  chip: {
+    margin: theme.spacing.unit
+  }
+})
 
 const Participant = (props) => (
-  <Avatar alt='{props.name}' src='./images/{props.id}.jpg' />
+  <span>
+    <Chip className={props.classes.chip}
+      avatar={<Avatar src={props.user.id === 0 ? user0 : user1} />}
+      label={props.user.name}
+    />
+
+  </span>
 )
 
 Participant.propTypes = {
-  id: PropTypes.number.isRequired
-  // name: PropTypes.string.isRequired
+  user: PropTypes.object.isRequired
 }
 
-export default Participant
+export default withStyles(styles)(Participant)

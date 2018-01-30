@@ -32,7 +32,6 @@ const data = {
           'map_coords': 'Sir+Wilfrid+Laurier+Park/@45.5322995,-73.5897065,17z',
           'organizer': 0,
           'participants': [
-            0,
             1
           ]
         }
@@ -56,18 +55,18 @@ const data = {
       ]
     }
   ],
-  'users': [
-    {
+  'users': {
+    0: {
       'id': 0,
       'name': 'Shawn Lauzon',
       'email': 'shawn.lauzon@gmail.com'
     },
-    {
+    1: {
       'id': 1,
       'name': 'Jamie Klinger',
       'email': 'teddyrux@gmail.com'
     }
-  ]
+  }
 }
 
 ReactDOM.render(<App data={data} />, document.getElementById('root'))

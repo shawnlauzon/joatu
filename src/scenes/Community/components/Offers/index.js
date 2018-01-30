@@ -25,7 +25,7 @@ class Offers extends React.Component {
     // TODO Should not be needed with Redux
     const ProjectDetailPane = (props) => {
       return (
-        <ProjectDetail projects={this.props.projects}
+        <ProjectDetail projects={this.props.projects} users={this.props.users}
           {...props}
         />
       )

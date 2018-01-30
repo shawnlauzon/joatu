@@ -9,7 +9,8 @@ function App (props) {
   return (
     <Community name={myCommunity.name}
       projects={myCommunity.projects}
-      trades={myCommunity.trades} />
+      trades={myCommunity.trades}
+      users={props.data.users} />
   )
 }
 
