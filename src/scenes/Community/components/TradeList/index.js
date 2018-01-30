@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Trade from './components/Trade'
+import ButtonOffering from '../../../../components/ButtonOffering'
 
 const TradeList = (props) => (
   <div>
     {props.trades.map(trade =>
-      <Trade key={trade.id} name={trade.name} />)}
+      <ButtonOffering key={trade.id} name={trade.name} to={`/trades/${trade.id}`} />)}
   </div>
   )
 

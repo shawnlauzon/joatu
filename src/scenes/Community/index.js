@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  BrowserRouter as Router
+} from 'react-router-dom'
 import Typography from 'material-ui/Typography'
 
 import Offers from './components/Offers'
@@ -9,10 +12,12 @@ import TradeList from './components/TradeList'
 const Community = (props) => (
   <div>
     <Typography type='display3' gutterBottom>{props.name}</Typography>
-    <Offers>
-      <ProjectList projects={props.projects} />
-      <TradeList trades={props.trades} />
-    </Offers>
+    <Router>
+      <Offers projects={props.projects} trades={props.trades}>
+        <ProjectList projects={props.projects} />
+        <TradeList trades={props.trades} />
+      </Offers>
+    </Router>
   </div>
 )
 

@@ -15,12 +15,12 @@ const styles = {
   }
 }
 
-function Project (props) {
+function ButtonOffering (props) {
   const { classes } = props
   return (
     <Card className={classes.card}>
       <CardContent >
-        <Typography className={classes.text} component={Link} to={`/projects/${props.id}`}>
+        <Typography className={classes.text} component={Link} to={props.to}>
           {props.name}
         </Typography>
       </CardContent>
@@ -28,9 +28,10 @@ function Project (props) {
   )
 }
 
-Project.propTypes = {
+ButtonOffering.propTypes = {
   name: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Project)
+export default withStyles(styles)(ButtonOffering)

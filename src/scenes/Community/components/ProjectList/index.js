@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Project from './components/Project'
+import ButtonOffering from '../../../../components/ButtonOffering'
 
 function ProjectList (props) {
   return (
     <div>
       {props.projects.map(project =>
-        <Project key={project.id} name={project.name} />)}
+        <ButtonOffering key={project.id} name={project.name} to={`/projects/${project.id}`} />)}
     </div>
   )
 }
