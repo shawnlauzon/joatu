@@ -14,7 +14,8 @@ const ProjectDetail = (props) => {
       <h2>{project.name}</h2>
       <div>
         <DisplayMap location={project.coordinates} />
-        <ProjectDetails startTime={project.start} duration={project.duration} />
+        {/* TODO the hourly award needs to be calculated */}
+        <ProjectDetails startTime={project.start} duration={project.duration} hourlyAward={15} />
       </div>
       <ButtonJoin />
       <ParticipantList participants={project.participants} users={props.users} />

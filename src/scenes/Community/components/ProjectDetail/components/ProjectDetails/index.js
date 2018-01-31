@@ -1,12 +1,20 @@
 import React from 'react'
+import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
+import PropTypes from 'prop-types'
 
 const ProjectDetails = (props) => (
   <div className='ProjectDetails'>
-    <div className='ProjectDetails-date'>Jan 10</div>
-    <div className='ProjectDetails-time'>7:00{props.time}</div>
-    <div className='ProjectDetails-award'>30 CAPS{props.award}</div>
-    <div className='ProjectDetails-duration'>{props.duration}</div>
+    <div><FormattedDate value={props.startTime} year='numeric' month='short' day='numeric' /></div>
+    <div><FormattedTime value={props.startTime} /></div>
+    <div><FormattedNumber value={props.hourlyAward * props.duration / 60} maxmumFractionDigits={1} /> CAPS</div>
+    <div><FormattedNumber value={props.duration / 60} maxmumFractionDigits={1} /> hours</div>
   </div>
 )
+
+ProjectDetails.propTypes = {
+  startTime: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  hourlyAward: PropTypes.number.isRequired
+}
 
 export default ProjectDetails

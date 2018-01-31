@@ -19,7 +19,7 @@ const data = {
             'lng': -73.586968
           },
           'start': '2018-02-03T19:00:00Z',
-          'duration': '120',
+          'duration': 150,
           'organizer': 0,
           'participants': [
             0,
@@ -29,9 +29,13 @@ const data = {
         {
           'id': 1,
           'name': 'Plant Garden',
-          'location': 'Sir Wilfrid Laurier Park',
+          'location': 'Square Georges-Guileault',
+          'coordinates': {
+            'lat': 45.529961,
+            'lng': -73.592063
+          },
           'start': '2018-02-03T19:00:00Z',
-          'duration': '120',
+          'duration': 120,
           'map_coords': 'Sir+Wilfrid+Laurier+Park/@45.5322995,-73.5897065,17z',
           'organizer': 0,
           'participants': [
