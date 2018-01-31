@@ -7,16 +7,27 @@ class DisplayMap extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      lat: props.location.lat,
-      lng: props.location.lng,
-      name: props.location.name,
+      location: {
+        lat: props.location.lat,
+        lng: props.location.lng
+      },
       zoom: 15
     }
   }
 
-  componentDidMount () {
-    const { lng, lat, zoom } = this.state
+  componentWillReceiveProps (nextProps) {
+    const locationsAreEqual = Object.keys(nextProps.location).every(
+      k => nextProps.location[k] === this.props.location[k]
+    )
 
+    if (!locationsAreEqual) {
+      this.updateLocation(nextProps.location)
+    }
+  }
+
+  componentDidMount () {
+    const { lng, lat } = this.state.location
+    const zoom = this.state.zoom
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v10',
@@ -24,9 +35,18 @@ class DisplayMap extends React.Component {
       zoom
     })
 
-    new mapboxgl.Marker()
+    this.marker = new mapboxgl.Marker()
       .setLngLat([lng, lat])
       .addTo(this.map)
+  }
+
+  updateLocation (location) {
+    const { lng, lat } = location
+
+    this.map.panTo([lng, lat])
+    this.marker.setLngLat([lng, lat])
+
+    this.setState({ location })
   }
 
   componentWillUnmount () {
