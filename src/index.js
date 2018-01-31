@@ -13,10 +13,13 @@ const data = {
         {
           'id': 0,
           'name': 'Clean Park',
-          'location': 'Sir Wilfrid Laurier Park',
+          'location': 'SW corner of Park Laurier',
+          'coordinates': {
+            'lat': 45.530434,
+            'lng': -73.586968
+          },
           'start': '2018-02-03T19:00:00Z',
           'duration': '120',
-          'map_coords': 'Sir+Wilfrid+Laurier+Park/@45.5322995,-73.5897065,17z',
           'organizer': 0,
           'participants': [
             0,
