@@ -23,6 +23,10 @@ class DisplayMap extends React.Component {
       center: [lng, lat],
       zoom
     })
+
+    new mapboxgl.Marker()
+      .setLngLat([lng, lat])
+      .addTo(this.map)
   }
 
   componentWillUnmount () {
