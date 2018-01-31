@@ -6,23 +6,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmb
 class DisplayMap extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      location: {
-        lat: props.location.lat,
-        lng: props.location.lng
-      },
-      zoom: 15
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const locationsAreEqual = Object.keys(nextProps.location).every(
-      k => nextProps.location[k] === this.props.location[k]
-    )
-
-    if (!locationsAreEqual) {
-      this.updateLocation(nextProps.location)
-    }
+    this.state = { location: props.location, zoom: 15 }
   }
 
   componentDidMount () {
@@ -38,6 +22,16 @@ class DisplayMap extends React.Component {
     this.marker = new mapboxgl.Marker()
       .setLngLat([lng, lat])
       .addTo(this.map)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const locationsAreEqual = Object.keys(nextProps.location).every(
+      k => nextProps.location[k] === this.props.location[k]
+    )
+
+    if (!locationsAreEqual) {
+      this.updateLocation(nextProps.location)
+    }
   }
 
   updateLocation (location) {
