@@ -9,6 +9,8 @@ import TradeList from './components/TradeList'
 import ProjectDetail from '../ProjectDetail'
 import TradeDetail from '../TradeDetail'
 
+const TAB_NAMES = [ 'Projects', 'Trades' ]
+
 class OfferList extends React.Component {
   constructor () {
     super()
@@ -45,9 +47,7 @@ class OfferList extends React.Component {
         <Grid container>
           <Grid item xs={12} sm={4}>
             <Tabs value={tabNum} onChange={this.onTabChanged}>
-              {/* TODO Get these labels from the children */}
-              <Tab label='Projects' />
-              <Tab label='Trades' />
+              {TAB_NAMES.map(name => <Tab label={name} />)}
             </Tabs>
             {tabNum === 0
               ? <ProjectList projects={this.props.projects} />
