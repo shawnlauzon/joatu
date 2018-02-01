@@ -47,7 +47,7 @@ class OfferList extends React.Component {
         <Grid container>
           <Grid item xs={12} sm={4}>
             <Tabs value={tabNum} onChange={this.onTabChanged}>
-              {TAB_NAMES.map(name => <Tab label={name} />)}
+              {TAB_NAMES.map((name, idx) => <Tab key={idx} label={name} />)}
             </Tabs>
             {tabNum === 0
               ? <ProjectList projects={this.props.projects} />
