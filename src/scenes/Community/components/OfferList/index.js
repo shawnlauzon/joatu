@@ -36,7 +36,7 @@ class OfferList extends React.Component {
     return (
       <div>
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={12} sm={4}>
             <Tabs value={tabNum} onChange={this.onTabChanged}>
               {/* TODO Get these labels from the children */}
               <Tab label='Projects' />
@@ -47,7 +47,7 @@ class OfferList extends React.Component {
               : <TradeList trades={this.props.trades} />
             }
           </Grid>
-          <Grid item xs hidden={{ xsDown: true }}>
+          <Grid sm={8} item hidden={{ xsDown: true }}>
             <Route path='/projects/:id' render={ProjectDetailPane} />
           </Grid>
         </Grid>

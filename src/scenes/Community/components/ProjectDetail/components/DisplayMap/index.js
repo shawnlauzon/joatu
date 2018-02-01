@@ -49,7 +49,6 @@ class DisplayMap extends React.Component {
 
   render () {
     const style = {
-      // width: '100%',
       height: '200px'
     }
 
