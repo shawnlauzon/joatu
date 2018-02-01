@@ -14,10 +14,12 @@ const ProjectDetail = (props) => {
       <div>
         <DisplayMap location={props.project.coordinates} />
         {/* TODO the hourly award needs to be calculated */}
-        <ProjectDetails startTime={props.project.start} duration={props.project.duration} hourlyAward={15} />
+        <ProjectDetails startTime={props.project.start}
+          duration={props.project.duration} hourlyAward={15} />
       </div>
       <ButtonJoin />
-      <ParticipantList participants={props.project.participants} users={props.users} />
+      <ParticipantList participants={props.project.participants}
+        users={props.users} />
     </div>
   )
 }
