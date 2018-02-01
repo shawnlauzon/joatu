@@ -42,7 +42,7 @@ class Offers extends React.Component {
             </Tabs>
             {this.props.children[value]}
           </Grid>
-          <Grid item sm>
+          <Grid item xs hidden={{ xsDown: true }}>
             <Route path='/projects/:id' render={ProjectDetailPane} />
           </Grid>
         </Grid>
