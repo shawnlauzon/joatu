@@ -15,18 +15,19 @@
     "react-scripts": "1.1.0",
     "redux": "^3.7.2"
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
+  },
   "scripts": {
+    "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "standard": {
-    "env": [
-      "jest"
-    ],
-    "ignore": [
-      "src/registerServiceWorker.js"
-    ]
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^6.1.0",
+    "prettier": "^1.10.2"
   }
 }
