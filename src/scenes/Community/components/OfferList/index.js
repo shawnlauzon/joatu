@@ -1,15 +1,30 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Grid from 'material-ui/Grid'
+import Button from 'material-ui/Button'
+import AddIcon from 'material-ui-icons/Add'
+import { withStyles } from 'material-ui/styles'
 
 import ProjectList from './components/ProjectList'
 import TradeList from './components/TradeList'
 import ProjectDetail from '../ProjectDetail'
 import TradeDetail from '../TradeDetail'
+import CreateOffer from '../../scenes/CreateOffer'
 
 const TAB_NAMES = [ 'Projects', 'Trades' ]
+
+const styles = theme => ({
+  fab: {
+    margin: 0,
+    top: 'auto',
+    left: 20,
+    bottom: 20,
+    right: 'auto',
+    position: 'fixed'
+  }
+})
 
 class OfferList extends React.Component {
   constructor () {
@@ -24,6 +39,7 @@ class OfferList extends React.Component {
   }
 
   render () {
+    const { classes } = this.props
     const { tabNum } = this.state
 
     const ProjectDetailPane = (routeInfo) => {
@@ -42,8 +58,18 @@ class OfferList extends React.Component {
       )
     }
 
+    const CreateOfferPane = (routeInfo) => {
+      return (
+        <CreateOffer />
+      )
+    }
+
     return (
       <div>
+        <Button fab className={classes.fab} color='primary' aria-label='add'
+          component={Link} to='/create-project'>
+          <AddIcon />
+        </Button>
         <Grid container>
           <Grid item xs={12} sm={4}>
             <Tabs value={tabNum} onChange={this.onTabChanged}>
@@ -55,10 +81,9 @@ class OfferList extends React.Component {
             }
           </Grid>
           <Grid xs={12} sm={8} item>
-            {tabNum === 0
-              ? <Route path='/projects/:id' render={ProjectDetailPane} />
-              : <Route path='/trades/:id' render={TradeDetailPane} />
-            }
+            <Route path='/projects/:id' render={ProjectDetailPane} />
+            <Route path='/trades/:id' render={TradeDetailPane} />
+            <Route path='/create-project' render={CreateOfferPane} />
           </Grid>
         </Grid>
       </div>
@@ -66,4 +91,4 @@ class OfferList extends React.Component {
   }
 }
 
-export default OfferList
+export default withStyles(styles)(OfferList)
