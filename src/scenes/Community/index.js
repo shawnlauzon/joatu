@@ -6,17 +6,12 @@ import {
 import Typography from 'material-ui/Typography'
 
 import Offers from './components/Offers'
-import ProjectList from './components/ProjectList'
-import TradeList from './components/TradeList'
 
 const Community = (props) => (
   <div>
     <Typography type='display3' gutterBottom>{props.name}</Typography>
     <Router>
-      <Offers projects={props.projects} trades={props.trades} users={props.users}>
-        <ProjectList projects={props.projects} />
-        <TradeList trades={props.trades} />
-      </Offers>
+      <Offers projects={props.projects} trades={props.trades} users={props.users} />
     </Router>
   </div>
 )

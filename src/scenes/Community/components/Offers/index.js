@@ -5,21 +5,23 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import Grid from 'material-ui/Grid'
 
 import ProjectDetail from '../ProjectDetail'
+import ProjectList from './components/ProjectList'
+import TradeList from './components/TradeList'
 
 class Offers extends React.Component {
   constructor () {
     super()
     this.state = {
-      value: 0
+      tabNum: 0
     }
 
-    this.handleChange = (event, value) => {
-      this.setState({ value })
+    this.onTabChanged = (event, value) => {
+      this.setState({ tabNum: value })
     }
   }
 
   render () {
-    const { value } = this.state
+    const { tabNum } = this.state
 
     // Needed to pass our additional props
     // TODO Should not be needed with Redux
@@ -35,12 +37,15 @@ class Offers extends React.Component {
       <div>
         <Grid container>
           <Grid item sm={6}>
-            <Tabs value={value} onChange={this.handleChange}>
+            <Tabs value={tabNum} onChange={this.onTabChanged}>
               {/* TODO Get these labels from the children */}
               <Tab label='Projects' />
               <Tab label='Trades' />
             </Tabs>
-            {this.props.children[value]}
+            {tabNum === 0
+              ? <ProjectList projects={this.props.projects} />
+              : <TradeList trades={this.props.trades} />
+            }
           </Grid>
           <Grid item xs hidden={{ xsDown: true }}>
             <Route path='/projects/:id' render={ProjectDetailPane} />

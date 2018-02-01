@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ButtonOffering from '../../../../components/ButtonOffering'
+import ButtonOffering from '../../../../../../components/ButtonOffering'
 
 const TradeList = (props) => (
   <div>
