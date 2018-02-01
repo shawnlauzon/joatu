@@ -8,7 +8,7 @@ import ProjectDetail from '../ProjectDetail'
 import ProjectList from './components/ProjectList'
 import TradeList from './components/TradeList'
 
-class Offers extends React.Component {
+class OfferList extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -56,4 +56,4 @@ class Offers extends React.Component {
   }
 }
 
-export default Offers
+export default OfferList
