@@ -4,9 +4,10 @@ import { Route } from 'react-router-dom'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Grid from 'material-ui/Grid'
 
-import ProjectDetail from '../ProjectDetail'
 import ProjectList from './components/ProjectList'
 import TradeList from './components/TradeList'
+import ProjectDetail from '../ProjectDetail'
+import TradeDetail from '../TradeDetail'
 
 class OfferList extends React.Component {
   constructor () {
@@ -23,13 +24,19 @@ class OfferList extends React.Component {
   render () {
     const { tabNum } = this.state
 
-    // Needed to pass our additional props
-    // TODO Should not be needed with Redux
-    const ProjectDetailPane = (props) => {
+    const ProjectDetailPane = (routeInfo) => {
+      const project = this.props.projects[routeInfo.match.params.id]
+
       return (
-        <ProjectDetail projects={this.props.projects} users={this.props.users}
-          {...props}
-        />
+        <ProjectDetail project={project} users={this.props.users} />
+      )
+    }
+
+    const TradeDetailPane = (routeInfo) => {
+      const trade = this.props.trades[routeInfo.match.params.id]
+
+      return (
+        <TradeDetail trade={trade} users={this.props.users} />
       )
     }
 
@@ -47,8 +54,11 @@ class OfferList extends React.Component {
               : <TradeList trades={this.props.trades} />
             }
           </Grid>
-          <Grid sm={8} item hidden={{ xsDown: true }}>
-            <Route path='/projects/:id' render={ProjectDetailPane} />
+          <Grid xs={12} sm={8} item>
+            {tabNum === 0
+              ? <Route path='/projects/:id' render={ProjectDetailPane} />
+              : <Route path='/trades/:id' render={TradeDetailPane} />
+            }
           </Grid>
         </Grid>
       </div>
