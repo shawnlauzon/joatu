@@ -1,19 +1,19 @@
-import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import React from 'react'
+import { Link, Route } from 'react-router-dom'
 
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
-import { withStyles } from 'material-ui/styles';
+import Tabs, { Tab } from 'material-ui/Tabs'
+import Grid from 'material-ui/Grid'
+import Button from 'material-ui/Button'
+import AddIcon from 'material-ui-icons/Add'
+import { withStyles } from 'material-ui/styles'
 
-import ProjectList from './components/ProjectList';
-import TradeList from './components/TradeList';
-import ProjectDetail from '../ProjectDetail';
-import TradeDetail from '../TradeDetail';
-import CreateOffer from '../../scenes/CreateOffer';
+import ProjectList from './components/ProjectList'
+import TradeList from './components/TradeList'
+import ProjectDetail from '../ProjectDetail'
+import TradeDetail from '../TradeDetail'
+import CreateOffer from '../../scenes/CreateOffer'
 
-const TAB_NAMES = ['Projects', 'Trades'];
+const TAB_NAMES = ['Projects', 'Trades']
 
 const styles = theme => ({
   fab: {
@@ -24,44 +24,39 @@ const styles = theme => ({
     right: 'auto',
     position: 'fixed'
   }
-});
+})
 
 class OfferList extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       tabNum: 0
-    };
-
-    this.onTabChanged = this.onTabChanged.bind(this);
+    }
   }
 
-  // onTabChanged (event, value) {
-  //   this.setState(prevState => ({ tabNum: value }))
-  // }
   onTabChanged = (event, value) => {
-    this.setState(prevState => ({ tabNum: value }));
-  };
+    this.setState(prevState => ({ tabNum: value }))
+  }
 
   render() {
-    const { classes } = this.props;
-    const { tabNum } = this.state;
+    const { classes } = this.props
+    const { tabNum } = this.state
 
     const ProjectDetailPane = routeInfo => {
-      const project = this.props.projects[routeInfo.match.params.id];
+      const project = this.props.projects[routeInfo.match.params.id]
 
-      return <ProjectDetail project={project} users={this.props.users} />;
-    };
+      return <ProjectDetail project={project} users={this.props.users} />
+    }
 
     const TradeDetailPane = routeInfo => {
-      const trade = this.props.trades[routeInfo.match.params.id];
+      const trade = this.props.trades[routeInfo.match.params.id]
 
-      return <TradeDetail trade={trade} users={this.props.users} />;
-    };
+      return <TradeDetail trade={trade} users={this.props.users} />
+    }
 
     const CreateOfferPane = routeInfo => {
-      return <CreateOffer onCreateProject={this.props.onCreateProject} />;
-    };
+      return <CreateOffer onCreateProject={this.props.onCreateProject} />
+    }
 
     return (
       <div>
@@ -93,8 +88,8 @@ class OfferList extends React.Component {
           </Grid>
         </Grid>
       </div>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(OfferList);
+export default withStyles(styles)(OfferList)

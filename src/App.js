@@ -1,27 +1,25 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import fr from 'react-intl/locale-data/fr';
+import React from 'react'
+import { connect } from 'react-redux'
+import { IntlProvider, addLocaleData } from 'react-intl'
+import fr from 'react-intl/locale-data/fr'
 
-import Community from './scenes/Community';
-import { createProject } from './actions';
-import './App.css';
+import Community from './scenes/Community'
+import { createProject } from './actions'
+import './App.css'
 
 class App extends React.Component {
   constructor() {
-    super();
-    addLocaleData(fr);
-
-    this.onCreateProject = this.onCreateProject.bind(this);
+    super()
+    addLocaleData(fr)
   }
 
-  onCreateProject({ name, location, dateTime, duration }) {
-    this.props.dispatch(createProject({ name, location, dateTime, duration }));
+  onCreateProject = ({ name, location, dateTime, duration }) => {
+    this.props.dispatch(createProject({ name, location, dateTime, duration }))
   }
 
   render() {
     // TODO support > 1 community
-    const myCommunity = this.props.communities[1];
+    const myCommunity = this.props.communities[1]
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <Community
@@ -33,7 +31,7 @@ class App extends React.Component {
           onCreateProject={this.onCreateProject}
         />
       </IntlProvider>
-    );
+    )
   }
 }
 
@@ -43,7 +41,7 @@ function mapStateToProps(state) {
     projects: state.universe.projects,
     trades: state.universe.trades,
     users: state.universe.users
-  };
+  }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)

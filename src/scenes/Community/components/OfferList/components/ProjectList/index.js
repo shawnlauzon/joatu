@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ButtonOffering from '../../../../../../components/ButtonOffering';
+import React from 'react'
+import PropTypes from 'prop-types'
+import ButtonOffering from '../../../../../../components/ButtonOffering'
 
 function ProjectList(props) {
   return (
@@ -13,11 +13,11 @@ function ProjectList(props) {
         />
       ))}
     </div>
-  );
+  )
 }
 
 ProjectList.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.object)
-};
+}
 
-export default ProjectList;
+export default ProjectList

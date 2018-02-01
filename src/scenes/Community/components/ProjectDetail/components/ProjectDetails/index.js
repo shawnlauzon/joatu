@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl';
-import { Typography } from 'material-ui';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
+import { Typography } from 'material-ui'
 
 const ProjectDetails = props => (
   <Typography type="body1" component="div" gutterBottom>
@@ -29,12 +29,12 @@ const ProjectDetails = props => (
       CAPS
     </div>
   </Typography>
-);
+)
 
 ProjectDetails.propTypes = {
   startTime: PropTypes.string.isRequired,
   duration: PropTypes.number.isRequired,
   hourlyAward: PropTypes.number.isRequired
-};
+}
 
-export default ProjectDetails;
+export default ProjectDetails

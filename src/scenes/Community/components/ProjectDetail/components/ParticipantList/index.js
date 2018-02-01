@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Participant from './components/Participant';
-import { Typography } from 'material-ui';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Participant from './components/Participant'
+import { Typography } from 'material-ui'
 
 const ParticipantList = props => (
   <div>
@@ -12,11 +12,11 @@ const ParticipantList = props => (
       ))}
     </div>
   </div>
-);
+)
 
 ParticipantList.propTypes = {
   participants: PropTypes.arrayOf(PropTypes.number),
   users: PropTypes.object.isRequired
-};
+}
 
-export default ParticipantList;
+export default ParticipantList

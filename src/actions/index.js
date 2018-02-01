@@ -1,6 +1,6 @@
-let _id = 3;
+let _id = 3
 export function uniqueId() {
-  return _id++;
+  return _id++
 }
 
 export function createProject({ name, location, dateTime, duration }) {
@@ -13,5 +13,5 @@ export function createProject({ name, location, dateTime, duration }) {
       dateTime,
       duration
     }
-  });
+  })
 }

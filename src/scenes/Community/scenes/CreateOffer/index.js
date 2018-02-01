@@ -1,42 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography'
+import TextField from 'material-ui/TextField'
+import Button from 'material-ui/Button'
+import Grid from 'material-ui/Grid'
+import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   button: {
     margin: 8
   }
-});
+})
 
 class CreateOffer extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       name: '',
       location: '',
       dateTime: '',
       duration: 0
-    };
-
-    this.onNameChange = this.onNameChange.bind(this);
+    }
   }
 
-  onNameChange(e) {
-    this.setState(prevState => ({ name: e.target.value }));
-  }
-
-  saveNewOffer() {
-    this.props.onCreateProject({});
-    console.log('save me!');
+  onNameChange = e => {
+    this.setState(prevState => ({ name: e.target.value }))
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return (
       <Grid container direction="column">
@@ -81,8 +74,8 @@ class CreateOffer extends React.Component {
           </Button>
         </Grid>
       </Grid>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(CreateOffer);
+export default withStyles(styles)(CreateOffer)

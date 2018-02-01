@@ -1,10 +1,10 @@
-import React from 'react';
-import { Typography } from 'material-ui';
+import React from 'react'
+import { Typography } from 'material-ui'
 
-import DisplayMap from './components/DisplayMap';
-import ProjectDetails from './components/ProjectDetails';
-import ButtonJoin from './components/ButtonJoin';
-import ParticipantList from './components/ParticipantList';
+import DisplayMap from './components/DisplayMap'
+import ProjectDetails from './components/ProjectDetails'
+import ButtonJoin from './components/ButtonJoin'
+import ParticipantList from './components/ParticipantList'
 
 const ProjectDetail = props => {
   return (
@@ -26,7 +26,7 @@ const ProjectDetail = props => {
         users={props.users}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ProjectDetail;
+export default ProjectDetail

@@ -68,10 +68,10 @@ const mockUniverse = {
       email: 'teddyrux@gmail.com'
     }
   }
-};
+}
 
 export default function projects(state = { universe: mockUniverse }, action) {
-  const makeEntry = payload => ({ [payload.id]: payload });
+  const makeEntry = payload => ({ [payload.id]: payload })
 
   if (action.type === 'CREATE_PROJECT') {
     return {
@@ -80,8 +80,8 @@ export default function projects(state = { universe: mockUniverse }, action) {
         this.state.projects,
         makeEntry(action.payload)
       )
-    };
+    }
   }
 
-  return state;
+  return state
 }
