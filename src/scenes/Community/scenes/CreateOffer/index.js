@@ -28,20 +28,14 @@ class CreateOffer extends React.Component {
     }
   }
 
-  onNameChange = e => {
-    this.setState({ name: e.target.value })
-  }
+  onInputChange = event => {
+    const target = event.target
+    const value = target.value
+    const id = target.id
 
-  onLocationChange = e => {
-    this.setState({ location: e.target.value })
-  }
-
-  onDateTimeChange = e => {
-    this.setState({ dateTime: e.target.value })
-  }
-
-  onDurationChange = e => {
-    this.setState({ duration: e.target.value })
+    this.setState({
+      [id]: value
+    })
   }
 
   onSaveOffer = e => {
@@ -68,7 +62,7 @@ class CreateOffer extends React.Component {
             id="name"
             label="Name"
             value={this.state.name}
-            onChange={this.onNameChange}
+            onChange={this.onInputChange}
             required
             fullWidth
             autoFocus
@@ -80,7 +74,7 @@ class CreateOffer extends React.Component {
             id="location"
             helperText="Where?"
             value={this.state.location}
-            onChange={this.onLocationChange}
+            onChange={this.onInputChange}
             required
           />{' '}
           at{' '}
@@ -89,7 +83,7 @@ class CreateOffer extends React.Component {
             type="datetime-local"
             helperText="When?"
             value={this.state.dateTime}
-            onChange={this.onDateTimeChange}
+            onChange={this.onInputChange}
             required
           />{' '}
           for{' '}
@@ -98,7 +92,7 @@ class CreateOffer extends React.Component {
             type="number"
             helperText="How long?"
             value={this.state.duration}
-            onChange={this.onDurationChange}
+            onChange={this.onInputChange}
             required
           />{' '}
           hours.
