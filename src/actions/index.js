@@ -1,4 +1,12 @@
-import * as api from '../api'
+import { CALL_API } from '../middleware/firebaseApi'
+
+export const FETCH_COMMUNITIES_STARTED = 'FETCH_COMMUNITIES_STARTED'
+export const FETCH_COMMUNITIES_SUCCEEDED = 'FETCH_COMMUNITIES_SUCCEEDED'
+export const FETCH_COMMUNITIES_FAILED = 'FETCH_COMMUNITIES_FAILED'
+
+export const FETCH_PROJECTS_STARTED = 'FETCH_PROJECTS_STARTED'
+export const FETCH_PROJECTS_SUCCEEDED = 'FETCH_PROJECTS_SUCCEEDED'
+export const FETCH_PROJECTS_FAILED = 'FETCH_PROJECTS_FAILED'
 
 let _id = 3
 export function uniqueId() {
@@ -6,35 +14,27 @@ export function uniqueId() {
 }
 
 export function fetchCommunities() {
-  return dispatch => {
-    api.fetchCommunities().then(resp => {
-      dispatch(fetchCommunitiesSucceeded(resp))
-    })
-  }
-}
-
-export function fetchCommunitiesSucceeded(communities) {
   return {
-    type: 'FETCH_COMMUNITIES_SUCCEEDED',
-    payload: {
-      communities
+    [CALL_API]: {
+      types: [
+        FETCH_COMMUNITIES_STARTED,
+        FETCH_COMMUNITIES_SUCCEEDED,
+        FETCH_COMMUNITIES_FAILED
+      ],
+      collection: 'communities'
     }
   }
 }
 
 export function fetchProjects() {
-  return dispatch => {
-    api.fetchProjects().then(resp => {
-      dispatch(fetchProjectsSucceeded(resp))
-    })
-  }
-}
-
-export function fetchProjectsSucceeded(projects) {
   return {
-    type: 'FETCH_PROJECTS_SUCCEEDED',
-    payload: {
-      projects
+    [CALL_API]: {
+      types: [
+        FETCH_PROJECTS_STARTED,
+        FETCH_PROJECTS_SUCCEEDED,
+        FETCH_PROJECTS_FAILED
+      ],
+      collection: 'projects'
     }
   }
 }

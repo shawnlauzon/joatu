@@ -56,7 +56,7 @@ export default function projects(state = {}, action) {
   if (action.type === 'FETCH_COMMUNITIES_SUCCEEDED') {
     const s = {
       ...state,
-      communities: action.payload.communities
+      communities: action.payload
     }
     return s
   }
@@ -64,7 +64,7 @@ export default function projects(state = {}, action) {
   if (action.type === 'FETCH_PROJECTS_SUCCEEDED') {
     const s = {
       ...state,
-      projects: action.payload.projects
+      projects: action.payload
     }
     return s
   }
