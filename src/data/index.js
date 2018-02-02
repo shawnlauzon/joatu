@@ -57,8 +57,6 @@ import {
 // }
 
 export default function projects(state = {}, action) {
-  const makeEntry = payload => ({ [payload.id]: payload })
-
   if (action.type === FETCH_COMMUNITIES_SUCCEEDED) {
     const s = {
       ...state,
@@ -78,7 +76,7 @@ export default function projects(state = {}, action) {
   if (action.type === CREATE_PROJECT_SUCCEEDED) {
     return {
       ...state,
-      projects: Object.assign({}, state.projects, makeEntry(action.payload))
+      projects: Object.assign({}, state.projects, action.payload)
     }
   }
 
