@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import mapboxgl from 'mapbox-gl'
 
 mapboxgl.accessToken =
@@ -8,25 +10,24 @@ class DisplayMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: {
-        lng: props.location.longitude,
-        lat: props.location.latitude
-      },
+      location: props.location,
       zoom: 15
     }
   }
 
   componentDidMount() {
-    const { lng, lat } = this.state.location
+    const { longitude, latitude } = this.state.location
     const zoom = this.state.zoom
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v10',
-      center: [lng, lat],
+      center: [longitude, latitude],
       zoom
     })
 
-    this.marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map)
+    this.marker = new mapboxgl.Marker()
+      .setLngLat([longitude, latitude])
+      .addTo(this.map)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,10 +41,10 @@ class DisplayMap extends React.Component {
   }
 
   updateLocation(location) {
-    const { lng, lat } = location
+    const { longitude, latitude } = location
 
-    this.map.panTo([lng, lat])
-    this.marker.setLngLat([lng, lat])
+    this.map.panTo([longitude, latitude])
+    this.marker.setLngLat([longitude, latitude])
 
     this.setState({ location })
   }
@@ -66,6 +67,13 @@ class DisplayMap extends React.Component {
       />
     )
   }
+}
+
+DisplayMap.propTypes = {
+  location: PropTypes.shape({
+    longitude: PropTypes.number.isRequired,
+    latitude: PropTypes.number.isRequired
+  }).isRequired
 }
 
 export default DisplayMap
