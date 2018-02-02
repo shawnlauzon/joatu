@@ -106,7 +106,7 @@ class CreateOffer extends React.Component {
             onChange={this.onInputChange}
             required
           />{' '}
-          hours.
+          minutes.
         </Grid>
         <Grid item>
           <TextField
