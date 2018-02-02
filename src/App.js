@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import fr from 'react-intl/locale-data/fr'
 
+import Reboot from 'material-ui/Reboot'
+
 import Community from './scenes/Community'
 import { createProject } from './actions'
 import './App.css'
@@ -22,14 +24,17 @@ class App extends React.Component {
     const myCommunity = this.props.communities[1]
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
-        <Community
-          name={myCommunity.name}
-          // TODO Filter projects & trades for this community
-          projects={Object.values(this.props.projects)}
-          trades={Object.values(this.props.trades)}
-          users={this.props.users}
-          onCreateProject={this.onCreateProject}
-        />
+        <div>
+          <Reboot />
+          <Community
+            name={myCommunity.name}
+            // TODO Filter projects & trades for this community
+            projects={Object.values(this.props.projects)}
+            trades={Object.values(this.props.trades)}
+            users={this.props.users}
+            onCreateProject={this.onCreateProject}
+          />
+        </div>
       </IntlProvider>
     )
   }
