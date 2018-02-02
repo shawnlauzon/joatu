@@ -20,8 +20,8 @@ class App extends React.Component {
     this.props.dispatch(fetchProjects(this.props.firebase))
   }
 
-  onCreateProject = ({ name, location, start, duration }) => {
-    this.props.dispatch(createProject({ name, location, start, duration }))
+  onCreateProject = body => {
+    this.props.dispatch(createProject(body))
   }
 
   render() {

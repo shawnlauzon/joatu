@@ -43,7 +43,7 @@ export function fetchProjects() {
   }
 }
 
-export function createProject({ name, location, start, duration }) {
+export function createProject(body) {
   return {
     [CALL_API]: {
       types: [
@@ -53,12 +53,7 @@ export function createProject({ name, location, start, duration }) {
       ],
       collection: 'projects',
       action: 'add',
-      body: {
-        name,
-        location,
-        start,
-        duration
-      }
+      body
     }
   }
 }

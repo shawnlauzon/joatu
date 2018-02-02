@@ -29,7 +29,9 @@ class CreateOffer extends React.Component {
         .add(2, 'weeks')
         .minute(0)
         .format('YYYY-MM-DDTHH:mm'),
-      duration: 120
+      duration: 120,
+      latitude: 45.5288239,
+      longitude: -73.591279
     }
   }
 
@@ -48,7 +50,11 @@ class CreateOffer extends React.Component {
       name: this.state.name,
       location: this.state.location,
       start: new Date(this.state.start),
-      duration: Number(this.state.duration)
+      duration: Number(this.state.duration),
+      coordinates: {
+        latitude: Number(this.state.latitude),
+        longitude: Number(this.state.longitude)
+      }
     })
   }
 
@@ -102,6 +108,25 @@ class CreateOffer extends React.Component {
           />{' '}
           hours.
         </Grid>
+        <Grid item>
+          <TextField
+            id="latitude"
+            type="number"
+            label="Latitude"
+            value={this.state.latitude}
+            onChange={this.onInputChange}
+            required
+          />
+          <TextField
+            id="longitude"
+            type="number"
+            label="Longitude"
+            value={this.state.longitude}
+            onChange={this.onInputChange}
+            required
+          />
+        </Grid>
+
         <Grid item>
           <Button className={classes.button} raised component={Link} to="..">
             Cancel
