@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { devToolsEnhancer } from 'redux-devtools-extension'
 import projects from './data'
 import './index.css'
+import './fire'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
