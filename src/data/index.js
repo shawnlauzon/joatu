@@ -57,28 +57,30 @@ import {
 // }
 
 export default function projects(state = {}, action) {
-  if (action.type === FETCH_COMMUNITIES_SUCCEEDED) {
-    const s = {
-      ...state,
-      communities: action.payload
-    }
-    return s
+  let newState = {}
+  switch (action.type) {
+    case FETCH_COMMUNITIES_SUCCEEDED:
+      newState = {
+        ...state,
+        communities: action.payload
+      }
+      break
+
+    case FETCH_PROJECTS_SUCCEEDED:
+      newState = {
+        ...state,
+        projects: action.payload
+      }
+      break
+    case CREATE_PROJECT_SUCCEEDED:
+      newState = {
+        ...state,
+        projects: Object.assign({}, state.projects, action.payload)
+      }
+      break
+    default:
+      newState = state
   }
 
-  if (action.type === FETCH_PROJECTS_SUCCEEDED) {
-    const s = {
-      ...state,
-      projects: action.payload
-    }
-    return s
-  }
-
-  if (action.type === CREATE_PROJECT_SUCCEEDED) {
-    return {
-      ...state,
-      projects: Object.assign({}, state.projects, action.payload)
-    }
-  }
-
-  return state
+  return newState
 }
