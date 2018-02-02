@@ -15,18 +15,33 @@ const apiMiddleware = store => next => action => {
 
   next({ type: requestStartedType })
 
-  return doGet(callApi.collection).then(
-    response =>
-      next({
-        type: successType,
-        payload: response
-      }),
-    error =>
-      next({
-        type: failureType,
-        error: error.message
-      })
-  )
+  if (callApi.action === 'add') {
+    return doAdd(callApi.collection, callApi.body).then(
+      response =>
+        next({
+          type: successType,
+          payload: response
+        }),
+      error =>
+        next({
+          type: failureType,
+          error: error.message
+        })
+    )
+  } else {
+    return doGet(callApi.collection).then(
+      response =>
+        next({
+          type: successType,
+          payload: response
+        }),
+      error =>
+        next({
+          type: failureType,
+          error: error.message
+        })
+    )
+  }
 }
 
 function doGet(collectionName) {
@@ -40,6 +55,19 @@ function doGet(collectionName) {
       })
       return coll
     })
+    .catch(err => {
+      return err
+    })
+}
+
+function doAdd(collectionName, data) {
+  return db
+    .collection(collectionName)
+    .add(data)
+    .then(docRef => ({
+      // Return id: { ...data }
+      [docRef.id]: data
+    }))
     .catch(err => {
       return err
     })

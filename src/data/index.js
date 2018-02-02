@@ -1,3 +1,9 @@
+import {
+  FETCH_COMMUNITIES_SUCCEEDED,
+  FETCH_PROJECTS_SUCCEEDED,
+  CREATE_PROJECT_SUCCEEDED
+} from '../actions'
+
 // const mockProjects = {
 //   0: {
 //     id: 0,
@@ -53,7 +59,7 @@
 export default function projects(state = {}, action) {
   const makeEntry = payload => ({ [payload.id]: payload })
 
-  if (action.type === 'FETCH_COMMUNITIES_SUCCEEDED') {
+  if (action.type === FETCH_COMMUNITIES_SUCCEEDED) {
     const s = {
       ...state,
       communities: action.payload
@@ -61,7 +67,7 @@ export default function projects(state = {}, action) {
     return s
   }
 
-  if (action.type === 'FETCH_PROJECTS_SUCCEEDED') {
+  if (action.type === FETCH_PROJECTS_SUCCEEDED) {
     const s = {
       ...state,
       projects: action.payload
@@ -69,7 +75,7 @@ export default function projects(state = {}, action) {
     return s
   }
 
-  if (action.type === 'CREATE_PROJECT') {
+  if (action.type === CREATE_PROJECT_SUCCEEDED) {
     return {
       ...state,
       projects: Object.assign({}, state.projects, makeEntry(action.payload))

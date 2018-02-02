@@ -8,6 +8,10 @@ export const FETCH_PROJECTS_STARTED = 'FETCH_PROJECTS_STARTED'
 export const FETCH_PROJECTS_SUCCEEDED = 'FETCH_PROJECTS_SUCCEEDED'
 export const FETCH_PROJECTS_FAILED = 'FETCH_PROJECTS_FAILED'
 
+export const CREATE_PROJECT_STARTED = 'CREATE_PROJECT_STARTED'
+export const CREATE_PROJECT_SUCCEEDED = 'CREATE_PROJECT_SUCCEEDED'
+export const CREATE_PROJECT_FAILED = 'CREATE_PROJECT_FAILED'
+
 let _id = 3
 export function uniqueId() {
   return _id++
@@ -39,15 +43,22 @@ export function fetchProjects() {
   }
 }
 
-export function createProject({ name, location, dateTime, duration }) {
+export function createProject({ name, location, start, duration }) {
   return {
-    type: 'CREATE_PROJECT',
-    payload: {
-      id: uniqueId(),
-      name,
-      location,
-      dateTime,
-      duration
+    [CALL_API]: {
+      types: [
+        CREATE_PROJECT_STARTED,
+        CREATE_PROJECT_SUCCEEDED,
+        CREATE_PROJECT_FAILED
+      ],
+      collection: 'projects',
+      action: 'add',
+      body: {
+        name
+        // location,
+        // start,
+        // duration
+      }
     }
   }
 }
