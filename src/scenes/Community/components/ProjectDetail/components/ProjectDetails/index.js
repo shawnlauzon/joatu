@@ -7,12 +7,12 @@ const ProjectDetails = props => (
   <Typography type="body1" component="div" gutterBottom>
     <div>
       <FormattedDate
-        value={props.startTime}
+        value={props.start}
         year="numeric"
         month="short"
         day="numeric"
       />{' '}
-      at <FormattedTime value={props.startTime} /> for{' '}
+      at <FormattedTime value={props.start} /> for{' '}
       <FormattedNumber value={props.duration / 60} maxmumFractionDigits={1} />{' '}
       hours
     </div>
@@ -28,7 +28,7 @@ const ProjectDetails = props => (
 )
 
 ProjectDetails.propTypes = {
-  startTime: PropTypes.string.isRequired,
+  start: PropTypes.any.isRequired,
   duration: PropTypes.number.isRequired,
   hourlyAward: PropTypes.number.isRequired
 }

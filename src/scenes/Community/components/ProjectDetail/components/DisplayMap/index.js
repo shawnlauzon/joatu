@@ -7,7 +7,13 @@ mapboxgl.accessToken =
 class DisplayMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { location: props.location, zoom: 15 }
+    this.state = {
+      location: {
+        lng: props.location.longitude,
+        lat: props.location.latitude
+      },
+      zoom: 15
+    }
   }
 
   componentDidMount() {

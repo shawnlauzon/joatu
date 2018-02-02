@@ -6,7 +6,7 @@ import fr from 'react-intl/locale-data/fr'
 import Reboot from 'material-ui/Reboot'
 
 import Community from './scenes/Community'
-import { createProject } from './actions'
+import { fetchCommunities, fetchProjects, createProject } from './actions'
 import './App.css'
 
 class App extends React.Component {
@@ -15,25 +15,32 @@ class App extends React.Component {
     addLocaleData(fr)
   }
 
+  componentDidMount() {
+    this.props.dispatch(fetchCommunities(this.props.firebase))
+    this.props.dispatch(fetchProjects(this.props.firebase))
+  }
+
   onCreateProject = ({ name, location, dateTime, duration }) => {
     this.props.dispatch(createProject({ name, location, dateTime, duration }))
   }
 
   render() {
-    // TODO support > 1 community
-    const myCommunity = this.props.communities[0]
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <div>
           <Reboot />
-          <Community
-            name={myCommunity.name}
-            // TODO Filter projects & trades for this community
-            projects={this.props.projects}
-            trades={this.props.trades}
-            users={this.props.users}
-            onCreateProject={this.onCreateProject}
-          />
+          {this.props.communities &&
+            Object.values(this.props.communities).map((community, idx) => (
+              <Community
+                key={idx}
+                name={community.name}
+                // TODO Filter projects & trades for this community
+                projects={this.props.projects}
+                trades={this.props.trades}
+                users={this.props.users}
+                onCreateProject={this.onCreateProject}
+              />
+            ))}
         </div>
       </IntlProvider>
     )

@@ -1,15 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
+// import { devToolsEnhancer } from 'redux-devtools-extension'
 import projects from './data'
 import './index.css'
-import './fire'
+import './firebase'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
-const store = createStore(projects, devToolsEnhancer())
+const store = createStore(projects, applyMiddleware(thunk)) //devToolsEnhancer())
 
 ReactDOM.render(
   <Provider store={store}>

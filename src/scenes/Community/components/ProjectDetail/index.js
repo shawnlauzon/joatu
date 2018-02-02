@@ -6,7 +6,7 @@ import { Typography } from 'material-ui'
 import DisplayMap from './components/DisplayMap'
 import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
-import ParticipantList from './components/ParticipantList'
+// import ParticipantList from './components/ParticipantList'
 
 const ProjectDetail = props => {
   return (
@@ -19,16 +19,17 @@ const ProjectDetail = props => {
         )}
         {/* TODO the hourly award needs to be calculated */}
         <ProjectDetails
-          startTime={props.project.start}
+          start={props.project.start}
           duration={props.project.duration}
           hourlyAward={15}
         />
       </div>
       <ButtonJoin />
-      <ParticipantList
+      {/* FIXME: Need to understand how to resolve references */}
+      {/* <ParticipantList
         participants={props.project.participants}
         users={props.users}
-      />
+      /> */}
     </div>
   )
 }

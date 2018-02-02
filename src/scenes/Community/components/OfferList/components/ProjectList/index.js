@@ -5,19 +5,20 @@ import ButtonOffering from '../../../../../../components/ButtonOffering'
 function ProjectList(props) {
   return (
     <div>
-      {Object.values(props.projects).map(project => (
-        <ButtonOffering
-          key={project.id}
-          name={project.name}
-          to={`/projects/${project.id}`}
-        />
-      ))}
+      {props.projects &&
+        Object.entries(props.projects).map(entry => (
+          <ButtonOffering
+            key={entry[0]}
+            name={entry[1].name}
+            to={`/projects/${entry[0]}`}
+          />
+        ))}
     </div>
   )
 }
 
 ProjectList.propTypes = {
-  projects: PropTypes.object.isRequired
+  projects: PropTypes.object
 }
 
 export default ProjectList

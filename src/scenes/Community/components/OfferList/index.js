@@ -45,9 +45,13 @@ class OfferList extends React.Component {
     const { tabNum } = this.state
 
     const ProjectDetailPane = routeInfo => {
-      const project = this.props.projects[routeInfo.match.params.id]
+      if (this.props.projects) {
+        const project = this.props.projects[routeInfo.match.params.id]
 
-      return <ProjectDetail project={project} users={this.props.users} />
+        return <ProjectDetail project={project} users={this.props.users} />
+      } else {
+        return null
+      }
     }
 
     const TradeDetailPane = routeInfo => {
@@ -95,9 +99,9 @@ class OfferList extends React.Component {
 }
 
 OfferList.propTypes = {
-  projects: PropTypes.object.isRequired,
-  trades: PropTypes.object.isRequired,
-  users: PropTypes.object.isRequired
+  projects: PropTypes.object,
+  trades: PropTypes.object,
+  users: PropTypes.object
 }
 
 export default withStyles(styles)(OfferList)

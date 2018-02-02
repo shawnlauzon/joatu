@@ -23,9 +23,9 @@ const Community = props => (
 
 Community.propTypes = {
   name: PropTypes.string.isRequired,
-  projects: PropTypes.object.isRequired,
-  trades: PropTypes.object.isRequired,
-  users: PropTypes.object.isRequired
+  projects: PropTypes.object,
+  trades: PropTypes.object,
+  users: PropTypes.object
 }
 
 export default Community
