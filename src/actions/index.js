@@ -54,10 +54,10 @@ export function createProject({ name, location, start, duration }) {
       collection: 'projects',
       action: 'add',
       body: {
-        name
-        // location,
-        // start,
-        // duration
+        name,
+        location,
+        start,
+        duration
       }
     }
   }

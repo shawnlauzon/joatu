@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import moment from 'moment'
+
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
@@ -22,9 +24,12 @@ class CreateOffer extends React.Component {
     super(props)
     this.state = {
       name: '',
-      location: '',
-      dateTime: '',
-      duration: 0
+      location: 'the community center',
+      start: moment()
+        .add(2, 'weeks')
+        .minute(0)
+        .format('YYYY-MM-DDTHH:mm'),
+      duration: 120
     }
   }
 
@@ -42,8 +47,8 @@ class CreateOffer extends React.Component {
     this.props.onCreateProject({
       name: this.state.name,
       location: this.state.location,
-      dateTime: this.state.dateTime,
-      duration: this.state.duration
+      start: new Date(this.state.start),
+      duration: Number(this.state.duration)
     })
   }
 
@@ -79,10 +84,10 @@ class CreateOffer extends React.Component {
           />{' '}
           at{' '}
           <TextField
-            id="date"
+            id="start"
             type="datetime-local"
             helperText="When?"
-            value={this.state.dateTime}
+            value={this.state.start}
             onChange={this.onInputChange}
             required
           />{' '}
