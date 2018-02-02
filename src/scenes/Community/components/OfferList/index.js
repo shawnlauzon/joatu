@@ -55,9 +55,13 @@ class OfferList extends React.Component {
     }
 
     const TradeDetailPane = routeInfo => {
-      const trade = this.props.trades[routeInfo.match.params.id]
+      if (this.props.trades) {
+        const trade = this.props.trades[routeInfo.match.params.id]
 
-      return <TradeDetail trade={trade} users={this.props.users} />
+        return <TradeDetail trade={trade} users={this.props.users} />
+      } else {
+        return null
+      }
     }
 
     const CreateOfferPane = routeInfo => {
