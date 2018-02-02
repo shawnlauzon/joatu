@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link, Route } from 'react-router-dom'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -91,6 +92,12 @@ class OfferList extends React.Component {
       </div>
     )
   }
+}
+
+OfferList.propTypes = {
+  projects: PropTypes.object.isRequired,
+  trades: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(OfferList)

@@ -12,12 +12,8 @@ const ProjectDetails = props => (
         month="short"
         day="numeric"
       />{' '}
-      at&nbsp;
-      <FormattedTime value={props.startTime} /> for&nbsp;
-      <FormattedNumber
-        value={props.duration / 60}
-        maxmumFractionDigits={1}
-      />{' '}
+      at <FormattedTime value={props.startTime} /> for{' '}
+      <FormattedNumber value={props.duration / 60} maxmumFractionDigits={1} />{' '}
       hours
     </div>
     <div>

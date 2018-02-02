@@ -5,7 +5,7 @@ import ButtonOffering from '../../../../../../components/ButtonOffering'
 function ProjectList(props) {
   return (
     <div>
-      {props.projects.map(project => (
+      {Object.values(props.projects).map(project => (
         <ButtonOffering
           key={project.id}
           name={project.name}
@@ -17,7 +17,7 @@ function ProjectList(props) {
 }
 
 ProjectList.propTypes = {
-  projects: PropTypes.arrayOf(PropTypes.object)
+  projects: PropTypes.object.isRequired
 }
 
 export default ProjectList

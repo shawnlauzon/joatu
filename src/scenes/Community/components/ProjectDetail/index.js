@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { Typography } from 'material-ui'
 
 import DisplayMap from './components/DisplayMap'
@@ -12,7 +14,9 @@ const ProjectDetail = props => {
       <Typography type="display2">{props.project.name}</Typography>
       <Typography type="subheading">{props.project.location}</Typography>
       <div>
-        <DisplayMap location={props.project.coordinates} />
+        {props.project.coordinates && (
+          <DisplayMap location={props.project.coordinates} />
+        )}
         {/* TODO the hourly award needs to be calculated */}
         <ProjectDetails
           startTime={props.project.start}
@@ -27,6 +31,10 @@ const ProjectDetail = props => {
       />
     </div>
   )
+}
+
+ProjectDetail.propTypes = {
+  project: PropTypes.object.isRequired
 }
 
 export default ProjectDetail

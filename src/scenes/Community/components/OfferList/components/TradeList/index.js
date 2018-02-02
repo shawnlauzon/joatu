@@ -4,7 +4,7 @@ import ButtonOffering from '../../../../../../components/ButtonOffering'
 
 const TradeList = props => (
   <div>
-    {props.trades.map(trade => (
+    {Object.values(props.trades).map(trade => (
       <ButtonOffering
         key={trade.id}
         name={trade.name}
@@ -15,7 +15,7 @@ const TradeList = props => (
 )
 
 TradeList.propTypes = {
-  trades: PropTypes.arrayOf(PropTypes.object)
+  trades: PropTypes.object.isRequired
 }
 
 export default TradeList

@@ -29,8 +29,8 @@ class App extends React.Component {
           <Community
             name={myCommunity.name}
             // TODO Filter projects & trades for this community
-            projects={Object.values(this.props.projects)}
-            trades={Object.values(this.props.trades)}
+            projects={this.props.projects}
+            trades={this.props.trades}
             users={this.props.users}
             onCreateProject={this.onCreateProject}
           />

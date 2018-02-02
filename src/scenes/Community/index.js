@@ -23,8 +23,8 @@ const Community = props => (
 
 Community.propTypes = {
   name: PropTypes.string.isRequired,
-  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
-  trades: PropTypes.arrayOf(PropTypes.object).isRequired,
+  projects: PropTypes.object.isRequired,
+  trades: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired
 }
 
