@@ -29,6 +29,7 @@ const styles = theme => ({
 class OfferList extends React.Component {
   constructor() {
     super()
+
     this.state = {
       tabNum: 0
     }

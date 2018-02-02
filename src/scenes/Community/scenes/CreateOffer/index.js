@@ -10,6 +10,10 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => ({
   button: {
     margin: 8
+  },
+  text: {
+    // It's weird that this is necessary, but without it I get serif
+    fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
   }
 })
 
@@ -25,7 +29,28 @@ class CreateOffer extends React.Component {
   }
 
   onNameChange = e => {
-    this.setState(prevState => ({ name: e.target.value }))
+    this.setState({ name: e.target.value })
+  }
+
+  onLocationChange = e => {
+    this.setState({ location: e.target.value })
+  }
+
+  onDateTimeChange = e => {
+    this.setState({ dateTime: e.target.value })
+  }
+
+  onDurationChange = e => {
+    this.setState({ duration: e.target.value })
+  }
+
+  onSaveOffer = e => {
+    this.props.onCreateProject({
+      name: this.state.name,
+      location: this.state.location,
+      dateTime: this.state.dateTime,
+      duration: this.state.duration
+    })
   }
 
   render() {
@@ -39,23 +64,42 @@ class CreateOffer extends React.Component {
           </Typography>
         </Grid>
         <Grid item>
-          <TextField id="name" label="Name" required fullWidth autoFocus />
+          <TextField
+            id="name"
+            label="Name"
+            value={this.state.name}
+            onChange={this.onNameChange}
+            required
+            fullWidth
+            autoFocus
+          />
         </Grid>
-        <Grid item>
+        <Grid item className={classes.text}>
           We will meet at{' '}
-          <TextField id="location" required helperText="Where?" /> at{' '}
+          <TextField
+            id="location"
+            helperText="Where?"
+            value={this.state.location}
+            onChange={this.onLocationChange}
+            required
+          />{' '}
+          at{' '}
           <TextField
             id="date"
             type="datetime-local"
-            required
             helperText="When?"
+            value={this.state.dateTime}
+            onChange={this.onDateTimeChange}
+            required
           />{' '}
           for{' '}
           <TextField
             id="duration"
-            helperText="How long?"
-            required
             type="number"
+            helperText="How long?"
+            value={this.state.duration}
+            onChange={this.onDurationChange}
+            required
           />{' '}
           hours.
         </Grid>
@@ -67,6 +111,8 @@ class CreateOffer extends React.Component {
             className={classes.button}
             raised
             color="primary"
+            onClick={this.onSaveOffer}
+            // TODO Validate before navigating away
             component={Link}
             to=".."
           >

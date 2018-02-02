@@ -21,7 +21,7 @@ class App extends React.Component {
 
   render() {
     // TODO support > 1 community
-    const myCommunity = this.props.communities[1]
+    const myCommunity = this.props.communities[0]
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <div>
@@ -42,10 +42,10 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    communities: state.universe.communities,
-    projects: state.universe.projects,
-    trades: state.universe.trades,
-    users: state.universe.users
+    communities: state.communities,
+    projects: state.projects,
+    trades: state.trades,
+    users: state.users
   }
 }
 

@@ -4,7 +4,7 @@ export function uniqueId() {
 }
 
 export function createProject({ name, location, dateTime, duration }) {
-  this.props.dispatch({
+  return {
     type: 'CREATE_PROJECT',
     payload: {
       id: uniqueId(),
@@ -13,5 +13,5 @@ export function createProject({ name, location, dateTime, duration }) {
       dateTime,
       duration
     }
-  })
+  }
 }
