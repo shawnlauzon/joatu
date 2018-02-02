@@ -6,7 +6,12 @@ import fr from 'react-intl/locale-data/fr'
 import Reboot from 'material-ui/Reboot'
 
 import Community from './scenes/Community'
-import { fetchCommunities, fetchProjects, createProject } from './actions'
+import {
+  fetchCommunities,
+  fetchProjects,
+  createProject,
+  deleteProject
+} from './actions'
 import './App.css'
 
 class App extends React.Component {
@@ -24,21 +29,27 @@ class App extends React.Component {
     this.props.dispatch(createProject(body))
   }
 
+  onDeleteProject = id => {
+    this.props.dispatch(deleteProject(id))
+  }
+
   render() {
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <div>
           <Reboot />
           {this.props.communities &&
-            Object.values(this.props.communities).map((community, idx) => (
+            Object.entries(this.props.communities).map(([id, community]) => (
               <Community
-                key={idx}
+                key={id}
+                id={id}
                 name={community.name}
                 // TODO Filter projects & trades for this community
                 projects={this.props.projects}
                 trades={this.props.trades}
                 users={this.props.users}
                 onCreateProject={this.onCreateProject}
+                onDeleteProject={this.onDeleteProject}
               />
             ))}
         </div>

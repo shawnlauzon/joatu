@@ -12,6 +12,10 @@ export const CREATE_PROJECT_STARTED = 'CREATE_PROJECT_STARTED'
 export const CREATE_PROJECT_SUCCEEDED = 'CREATE_PROJECT_SUCCEEDED'
 export const CREATE_PROJECT_FAILED = 'CREATE_PROJECT_FAILED'
 
+export const DELETE_PROJECT_STARTED = 'DELETE_PROJECT_STARTED'
+export const DELETE_PROJECT_SUCCEEDED = 'DELETE_PROJECT_SUCCEEDED'
+export const DELETE_PROJECT_FAILED = 'DELETE_PROJECT_FAILED'
+
 let _id = 3
 export function uniqueId() {
   return _id++
@@ -54,6 +58,21 @@ export function createProject(body) {
       collection: 'projects',
       action: 'add',
       body
+    }
+  }
+}
+
+export function deleteProject(id) {
+  return {
+    [CALL_API]: {
+      types: [
+        DELETE_PROJECT_STARTED,
+        DELETE_PROJECT_SUCCEEDED,
+        DELETE_PROJECT_FAILED
+      ],
+      collection: 'projects',
+      action: 'delete',
+      id
     }
   }
 }

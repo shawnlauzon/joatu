@@ -6,11 +6,12 @@ function ProjectList(props) {
   return (
     <div>
       {props.projects &&
-        Object.entries(props.projects).map(entry => (
+        Object.entries(props.projects).map(([id, project]) => (
           <ButtonOffering
-            key={entry[0]}
-            name={entry[1].name}
-            to={`/projects/${entry[0]}`}
+            key={id}
+            id={id}
+            name={project.name}
+            to={`/projects/${id}`}
           />
         ))}
     </div>

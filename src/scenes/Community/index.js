@@ -16,6 +16,7 @@ const Community = props => (
         trades={props.trades}
         users={props.users}
         onCreateProject={props.onCreateProject}
+        onDeleteProject={props.onDeleteProject}
       />
     </Router>
   </div>

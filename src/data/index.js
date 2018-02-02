@@ -1,7 +1,10 @@
+import * as R from 'ramda'
+
 import {
   FETCH_COMMUNITIES_SUCCEEDED,
   FETCH_PROJECTS_SUCCEEDED,
-  CREATE_PROJECT_SUCCEEDED
+  CREATE_PROJECT_SUCCEEDED,
+  DELETE_PROJECT_SUCCEEDED
 } from '../actions'
 
 // const mockProjects = {
@@ -76,6 +79,12 @@ export default function projects(state = {}, action) {
       newState = {
         ...state,
         projects: Object.assign({}, state.projects, action.payload)
+      }
+      break
+    case DELETE_PROJECT_SUCCEEDED:
+      newState = {
+        ...state,
+        projects: R.dissoc(action.payload, state.projects)
       }
       break
     default:

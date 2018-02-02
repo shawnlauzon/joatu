@@ -1,26 +1,31 @@
 import React from 'react'
 import Button from 'material-ui/Button'
+import Delete from 'material-ui-icons/Delete'
 import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
 
-function ButtonJoin(props) {
+function ButtonDelete(props) {
   const { classes } = props
 
   return (
     <Button
       className={classes.button}
-      onClick={props.handleClick}
       raised
-      color="primary"
+      color="secondary"
+      onClick={props.handleClick}
     >
-      I'm in!
+      Delete
+      <Delete className={classes.rightIcon} />
     </Button>
   )
 }
 
-export default withStyles(styles)(ButtonJoin)
+export default withStyles(styles)(ButtonDelete)

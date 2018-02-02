@@ -5,11 +5,12 @@ import ButtonOffering from '../../../../../../components/ButtonOffering'
 const TradeList = props => (
   <div>
     {props.trades &&
-      Object.values(props.trades).map(trade => (
+      Object.entries(props.trades).map(([id, trade]) => (
         <ButtonOffering
-          key={trade.id}
+          key={id}
+          id={id}
           name={trade.name}
-          to={`/trades/${trade.id}`}
+          to={`/trades/${id}`}
         />
       ))}
   </div>

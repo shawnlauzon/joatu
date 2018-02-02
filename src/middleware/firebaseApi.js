@@ -28,6 +28,19 @@ const apiMiddleware = store => next => action => {
           error: error.message
         })
     )
+  } else if (callApi.action === 'delete') {
+    return doDelete(callApi.collection, callApi.id).then(
+      response =>
+        next({
+          type: successType,
+          payload: response
+        }),
+      error =>
+        next({
+          type: failureType,
+          error: error.message
+        })
+    )
   } else {
     return doGet(callApi.collection).then(
       response =>
@@ -68,6 +81,17 @@ function doAdd(collectionName, data) {
       // Return id: { ...data }
       [docRef.id]: data
     }))
+    .catch(err => {
+      return err
+    })
+}
+
+function doDelete(collectionName, id) {
+  return db
+    .collection(collectionName)
+    .doc(id)
+    .delete()
+    .then(() => id)
     .catch(err => {
       return err
     })

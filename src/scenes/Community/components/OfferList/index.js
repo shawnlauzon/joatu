@@ -48,7 +48,14 @@ class OfferList extends React.Component {
       if (this.props.projects) {
         const project = this.props.projects[routeInfo.match.params.id]
 
-        return <ProjectDetail project={project} users={this.props.users} />
+        return (
+          <ProjectDetail
+            id={routeInfo.match.params.id}
+            {...project}
+            users={this.props.users}
+            onDeleteProject={this.props.onDeleteProject}
+          />
+        )
       } else {
         return null
       }
