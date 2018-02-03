@@ -15,6 +15,16 @@ const apiMiddleware = store => next => action => {
 
   next({ type: requestStartedType })
 
+  if (callApi.collection === 'projects' && callApi.action === 'add') {
+    callApi.body = {
+      ...callApi.body,
+      coordinates: new firebase.firestore.GeoPoint(
+        body.coordinates.latitude,
+        body.coordinates.longitude
+      )
+    }
+  }
+
   if (callApi.action === 'add') {
     return doAdd(callApi.collection, callApi.body).then(
       response =>
