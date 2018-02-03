@@ -19,8 +19,8 @@ const apiMiddleware = store => next => action => {
     callApi.body = {
       ...callApi.body,
       coordinates: new firebase.firestore.GeoPoint(
-        body.coordinates.latitude,
-        body.coordinates.longitude
+        callApi.body.coordinates.latitude,
+        callApi.body.coordinates.longitude
       )
     }
   }
