@@ -8,6 +8,10 @@ export const FETCH_PROJECTS_STARTED = 'FETCH_PROJECTS_STARTED'
 export const FETCH_PROJECTS_SUCCEEDED = 'FETCH_PROJECTS_SUCCEEDED'
 export const FETCH_PROJECTS_FAILED = 'FETCH_PROJECTS_FAILED'
 
+export const FETCH_USERS_STARTED = 'FETCH_USERS_STARTED'
+export const FETCH_USERS_SUCCEEDED = 'FETCH_USERS_SUCCEEDED'
+export const FETCH_USERS_FAILED = 'FETCH_USERS_FAILED'
+
 export const CREATE_PROJECT_STARTED = 'CREATE_PROJECT_STARTED'
 export const CREATE_PROJECT_SUCCEEDED = 'CREATE_PROJECT_SUCCEEDED'
 export const CREATE_PROJECT_FAILED = 'CREATE_PROJECT_FAILED'
@@ -43,6 +47,15 @@ export function fetchProjects() {
         FETCH_PROJECTS_FAILED
       ],
       collection: 'projects'
+    }
+  }
+}
+
+export function fetchUsers() {
+  return {
+    [CALL_API]: {
+      types: [FETCH_USERS_STARTED, FETCH_USERS_SUCCEEDED, FETCH_USERS_FAILED],
+      collection: 'users'
     }
   }
 }

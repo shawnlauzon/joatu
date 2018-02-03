@@ -9,6 +9,7 @@ import Community from './scenes/Community'
 import {
   fetchCommunities,
   fetchProjects,
+  fetchUsers,
   createProject,
   deleteProject
 } from './actions'
@@ -21,6 +22,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(fetchUsers(this.props.firebase))
     this.props.dispatch(fetchCommunities(this.props.firebase))
     this.props.dispatch(fetchProjects(this.props.firebase))
   }

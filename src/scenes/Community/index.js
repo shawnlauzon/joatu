@@ -26,7 +26,9 @@ Community.propTypes = {
   name: PropTypes.string.isRequired,
   projects: PropTypes.object,
   trades: PropTypes.object,
-  users: PropTypes.object
+  users: PropTypes.object.isRequired,
+  onCreateProject: PropTypes.func.isRequired,
+  onDeleteProject: PropTypes.func.isRequired
 }
 
 export default Community

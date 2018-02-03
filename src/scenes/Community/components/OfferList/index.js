@@ -112,7 +112,7 @@ class OfferList extends React.Component {
 OfferList.propTypes = {
   projects: PropTypes.object,
   trades: PropTypes.object,
-  users: PropTypes.object
+  users: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(OfferList)

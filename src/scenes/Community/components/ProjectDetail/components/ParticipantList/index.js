@@ -6,10 +6,12 @@ import { Typography } from 'material-ui'
 const ParticipantList = props => (
   <div>
     <Typography type="display1">Participants</Typography>
-    {props.participants && (
+    {!props.participants ? (
+      <Typography type="body1">Maybe you?</Typography>
+    ) : (
       <div className="participantList">
-        {props.participants.map(participantId => (
-          <Participant key={participantId} user={props.users[participantId]} />
+        {Object.keys(props.participants).map(id => (
+          <Participant key={id} user={props.users[id]} />
         ))}
       </div>
     )}
@@ -17,7 +19,7 @@ const ParticipantList = props => (
 )
 
 ParticipantList.propTypes = {
-  participants: PropTypes.arrayOf(PropTypes.number),
+  participants: PropTypes.object,
   users: PropTypes.object.isRequired
 }
 

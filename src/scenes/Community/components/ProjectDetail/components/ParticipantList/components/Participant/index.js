@@ -6,7 +6,6 @@ import { withStyles } from 'material-ui/styles'
 
 // Obviously need a different way of storing / accessing these
 import user0 from './images/0.jpg'
-import user1 from './images/1.jpg'
 
 const styles = theme => ({
   chip: {
@@ -18,8 +17,8 @@ const Participant = props => (
   <span>
     <Chip
       className={props.classes.chip}
-      avatar={<Avatar src={props.user.id === 0 ? user0 : user1} />}
-      label={props.user.name}
+      avatar={<Avatar src={user0} />}
+      label={`${props.user.name.first} ${props.user.name.last}`}
     />
   </span>
 )

@@ -7,7 +7,7 @@ import DisplayMap from './components/DisplayMap'
 import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
 import ButtonDelete from './components/ButtonDelete'
-// import ParticipantList from './components/ParticipantList'
+import ParticipantList from './components/ParticipantList'
 
 const ProjectDetail = props => {
   const handleJoin = e => {
@@ -35,11 +35,7 @@ const ProjectDetail = props => {
         <ButtonJoin handleClick={handleJoin} />
         <ButtonDelete handleClick={handleDelete} />
       </div>
-      {/* FIXME: Need to understand how to resolve references */}
-      {/* <ParticipantList
-        participants={props.project.participants}
-        users={props.users}
-      /> */}
+      <ParticipantList participants={props.participants} users={props.users} />
     </div>
   )
 }
@@ -49,6 +45,8 @@ ProjectDetail.propTypes = {
   start: PropTypes.any.isRequired,
   duration: PropTypes.number.isRequired,
   coordinates: PropTypes.object.isRequired,
+  participants: PropTypes.object,
+  users: PropTypes.object.isRequired,
   onDeleteProject: PropTypes.func.isRequired
 }
 
