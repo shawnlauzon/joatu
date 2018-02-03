@@ -11,7 +11,7 @@ import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   button: {
-    margin: 8
+    margin: theme.spacing.unit
   },
   text: {
     // It's weird that this is necessary, but without it I get serif
@@ -128,7 +128,7 @@ class CreateOffer extends React.Component {
         </Grid>
 
         <Grid item>
-          <Button className={classes.button} raised component={Link} to="..">
+          <Button className={classes.button} component={Link} to="..">
             Cancel
           </Button>
           <Button
