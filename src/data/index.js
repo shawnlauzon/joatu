@@ -30,10 +30,10 @@ export function projects(state = {}, action) {
       newState = action.payload
       break
     case CREATE_PROJECT_SUCCEEDED:
-      newState = Object.assign({}, state.projects, action.payload)
+      newState = Object.assign({}, state, action.payload)
       break
     case DELETE_PROJECT_SUCCEEDED:
-      newState = R.dissoc(action.payload, state.projects)
+      newState = R.dissoc(action.payload, state)
       break
     default:
       newState = state
@@ -48,7 +48,7 @@ export function users(state = {}, action) {
       newState = action.payload
       break
     case CREATE_USER_SUCCEEDED:
-      newState = Object.assign({}, state.users, action.payload)
+      newState = Object.assign({}, state, action.payload)
       break
     default:
       newState = state
