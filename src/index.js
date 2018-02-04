@@ -24,4 +24,10 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
+firebase.auth().onAuthStateChanged(async user => {
+  console.log('auth state changed')
+  console.log(user)
+})
+
 registerServiceWorker()

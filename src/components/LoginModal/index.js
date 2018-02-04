@@ -46,7 +46,7 @@ class LoginModal extends React.Component {
   }
 
   handleLogin = () => {
-    this.props.auth.loginWithFacebook().then(() => {
+    this.props.auth.loginWithFacebook().then(result => {
       this.setState({ open: false })
     })
   }
