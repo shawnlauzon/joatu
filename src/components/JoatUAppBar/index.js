@@ -8,6 +8,7 @@ import Button from 'material-ui/Button'
 import Hidden from 'material-ui/Hidden'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
+import Avatar from 'material-ui/Avatar'
 
 import LoginModal from '../LoginModal'
 
@@ -54,7 +55,10 @@ class JoatUAppBar extends React.Component {
               <Hidden smUp>JoatU</Hidden>
             </Typography>
             {this.props.user.authenticated ? (
-              <Typography>{this.props.user.name.first}</Typography>
+              <Avatar
+                alt={this.props.user.name.first}
+                src={this.props.user.imgUrl}
+              />
             ) : (
               <Button color="inherit" onClick={this.handleLogin}>
                 Login
