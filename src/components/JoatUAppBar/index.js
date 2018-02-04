@@ -9,6 +9,7 @@ import Hidden from 'material-ui/Hidden'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import Avatar from 'material-ui/Avatar'
+import Menu, { MenuItem } from 'material-ui/Menu'
 
 import LoginModal from '../LoginModal'
 
@@ -29,7 +30,8 @@ class JoatUAppBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showLogin: false
+      showLogin: false,
+      anchorEl: null
     }
   }
 
@@ -37,8 +39,24 @@ class JoatUAppBar extends React.Component {
     this.setState({ showLogin: true })
   }
 
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
+  handleLogout = () => {
+    this.handleClose()
+    this.props.onLogout()
+  }
+
   render() {
     const { classes } = this.props
+    const { anchorEl } = this.state
+    const open = Boolean(anchorEl)
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -55,10 +73,31 @@ class JoatUAppBar extends React.Component {
               <Hidden smUp>JoatU</Hidden>
             </Typography>
             {this.props.user.authenticated ? (
-              <Avatar
-                alt={this.props.user.name.first}
-                src={this.props.user.imgUrl}
-              />
+              <div>
+                <Avatar
+                  alt={this.props.user.displayName}
+                  src={this.props.user.imgUrl}
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                />
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
             ) : (
               <Button color="inherit" onClick={this.handleLogin}>
                 Login
@@ -67,7 +106,8 @@ class JoatUAppBar extends React.Component {
           </Toolbar>
         </AppBar>
         <LoginModal
-          loginWithFacebook={this.props.auth.loginWithFacebook}
+          onLogin={this.props.onLogin}
+          onLogout={this.props.onLogout}
           show={this.state.showLogin}
         />
       </div>
@@ -79,14 +119,11 @@ JoatUAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
-    name: PropTypes.shape({
-      first: PropTypes.string.isRequired
-    }),
+    displayName: PropTypes.string,
     imgUrl: PropTypes.string
   }).isRequired,
-  auth: PropTypes.shape({
-    loginWithFacebook: PropTypes.func.isRequired
-  }).isRequired
+  onLogin: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(JoatUAppBar)

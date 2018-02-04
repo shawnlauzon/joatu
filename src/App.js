@@ -7,7 +7,6 @@ import Reboot from 'material-ui/Reboot'
 
 import JoatUAppBar from './components/JoatUAppBar'
 import Community from './scenes/Community'
-import auth from './firebaseBackend/auth'
 
 import {
   fetchCommunities,
@@ -21,31 +20,18 @@ import {
 import './App.css'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    props.firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        const splitName = user.displayName.split(' ')
-        // TODO create user if doesn't exist
-        this.props.dispatch(
-          loginUser({
-            email: user.email,
-            name: {
-              first: splitName[0],
-              last: splitName.slice(1).join(' ')
-            },
-            imgUrl: user.photoURL
-          })
-        )
-      }
-    })
+  componentDidMount() {
+    this.props.dispatch(fetchUsers())
+    this.props.dispatch(fetchCommunities())
+    this.props.dispatch(fetchProjects())
   }
 
-  componentDidMount() {
-    this.props.dispatch(fetchUsers(this.props.firebase))
-    this.props.dispatch(fetchCommunities(this.props.firebase))
-    this.props.dispatch(fetchProjects(this.props.firebase))
+  onLogin = provider => {
+    this.props.dispatch(loginUser(provider))
+  }
+
+  onLogout = () => {
+    this.props.dispatch(logoutUser())
   }
 
   render() {
@@ -53,9 +39,9 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <Reboot />
         <JoatUAppBar
-          auth={auth(this.props.firebase)}
-          onLogoutUser={() => this.props.dispatch(logoutUser())}
           {...this.props}
+          onLogin={this.onLogin}
+          onLogout={this.onLogout}
         />
         {this.props.communities &&
           Object.entries(this.props.communities).map(([id, community]) => (

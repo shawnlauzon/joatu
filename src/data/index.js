@@ -7,8 +7,8 @@ import {
   CREATE_USER_SUCCEEDED,
   CREATE_PROJECT_SUCCEEDED,
   DELETE_PROJECT_SUCCEEDED,
-  LOGIN_USER,
-  LOGOUT_USER
+  LOGIN_SUCCEEDED,
+  LOGOUT_SUCCEEDED
 } from '../actions'
 
 export function communities(state = {}, action) {
@@ -59,10 +59,10 @@ export function users(state = {}, action) {
 export function auth(state = { authenticated: false }, action) {
   let newState
   switch (action.type) {
-    case LOGIN_USER:
+    case LOGIN_SUCCEEDED:
       newState = Object.assign({ authenticated: true }, action.payload)
       break
-    case LOGOUT_USER:
+    case LOGOUT_SUCCEEDED:
       newState = { authenticated: false }
       break
     default:

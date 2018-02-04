@@ -24,8 +24,13 @@ export const DELETE_PROJECT_STARTED = 'DELETE_PROJECT_STARTED'
 export const DELETE_PROJECT_SUCCEEDED = 'DELETE_PROJECT_SUCCEEDED'
 export const DELETE_PROJECT_FAILED = 'DELETE_PROJECT_FAILED'
 
-export const LOGIN_USER = 'LOGIN_USER'
-export const LOGOUT_USER = 'LOGOUT_USER'
+export const LOGIN_STARTED = 'LOGIN_STARTED'
+export const LOGIN_SUCCEEDED = 'LOGIN_SUCCEEDED'
+export const LOGIN_FAILED = 'LOGIN_FAILED'
+
+export const LOGOUT_STARTED = 'LOGOUT_STARTED'
+export const LOGOUT_SUCCEEDED = 'LOGOUT_SUCCEEDED'
+export const LOGOUT_FAILED = 'LOGOUT_FAILED'
 
 export function fetchCommunities() {
   return {
@@ -73,16 +78,22 @@ export function createUser(body) {
   }
 }
 
-export function loginUser(body) {
+export function loginUser(provider) {
   return {
-    type: LOGIN_USER,
-    payload: body
+    [CALL_API]: {
+      types: [LOGIN_STARTED, LOGIN_SUCCEEDED, LOGIN_FAILED],
+      action: 'login',
+      provider
+    }
   }
 }
 
 export function logoutUser() {
   return {
-    type: LOGOUT_USER
+    [CALL_API]: {
+      types: [LOGOUT_STARTED, LOGOUT_SUCCEEDED, LOGOUT_FAILED],
+      action: 'logout'
+    }
   }
 }
 

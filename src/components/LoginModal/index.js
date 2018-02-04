@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Typography from 'material-ui/Typography'
 import Modal from 'material-ui/Modal'
 import ButtonBase from 'material-ui/ButtonBase'
 
-import loginWithFacebook from './loginWithFacebook.png'
+import loginWithFacebookButton from './loginWithFacebook.png'
 
 const styles = theme => ({
   button: {
@@ -45,10 +44,9 @@ class LoginModal extends React.Component {
     this.setState({ open: false })
   }
 
-  handleLogin = () => {
-    this.props.loginWithFacebook().then(result => {
-      this.setState({ open: false })
-    })
+  handleLoginWithFacebook = () => {
+    this.handleClose()
+    this.props.onLogin('facebook')
   }
 
   render() {
@@ -61,16 +59,16 @@ class LoginModal extends React.Component {
         onClose={this.handleClose}
       >
         <div className={classes.paper}>
-          <Typography type="title" id="modal-title">
-            Choose your provider
-          </Typography>
           <div>
-            <ButtonBase className={classes.button} onClick={this.handleLogin}>
+            <ButtonBase
+              className={classes.button}
+              onClick={this.handleLoginWithFacebook}
+            >
               <img
                 height={32}
                 width={196}
                 alt="Login with Facebook"
-                src={loginWithFacebook}
+                src={loginWithFacebookButton}
               />
             </ButtonBase>
           </div>
@@ -82,7 +80,8 @@ class LoginModal extends React.Component {
 
 LoginModal.propTypes = {
   classes: PropTypes.object.isRequired,
-  loginWithFacebook: PropTypes.func.isRequired
+  onLogin: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(LoginModal)
