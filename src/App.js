@@ -9,19 +9,40 @@ import Reboot from 'material-ui/Reboot'
 
 import JoatUAppBar from './components/JoatUAppBar'
 import Community from './scenes/Community'
+import auth from './firebaseBackend/auth'
+
 import {
   fetchCommunities,
   fetchProjects,
   fetchUsers,
   createProject,
-  deleteProject
+  deleteProject,
+  loginUser,
+  logoutUser
 } from './actions'
 import './App.css'
 
 class App extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     addLocaleData(fr)
+
+    props.firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const splitName = user.displayName.split(' ')
+        // TODO create user if doesn't exist
+        this.props.dispatch(
+          loginUser({
+            email: user.email,
+            name: {
+              first: splitName[0],
+              last: splitName.slice(1).join(' ')
+            },
+            imgUrl: user.photoURL
+          })
+        )
+      }
+    })
   }
 
   componentDidMount() {
@@ -30,20 +51,16 @@ class App extends React.Component {
     this.props.dispatch(fetchProjects(this.props.firebase))
   }
 
-  onCreateProject = body => {
-    this.props.dispatch(createProject(body))
-  }
-
-  onDeleteProject = id => {
-    this.props.dispatch(deleteProject(id))
-  }
-
   render() {
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <MuiThemeProvider theme={theme}>
           <Reboot />
-          <JoatUAppBar {...this.props} />
+          <JoatUAppBar
+            auth={auth(this.props.firebase)}
+            onLogoutUser={() => this.props.dispatch(logoutUser())}
+            {...this.props}
+          />
           {this.props.communities &&
             Object.entries(this.props.communities).map(([id, community]) => (
               <Community
@@ -54,8 +71,12 @@ class App extends React.Component {
                 projects={this.props.projects}
                 trades={this.props.trades}
                 users={this.props.users}
-                onCreateProject={this.onCreateProject}
-                onDeleteProject={this.onDeleteProject}
+                onCreateProject={body =>
+                  this.props.dispatch(createProject(body))
+                }
+                onDeleteProject={body =>
+                  this.props.dispatch(deleteProject(body))
+                }
               />
             ))}
         </MuiThemeProvider>
@@ -66,6 +87,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    user: state.user,
     communities: state.communities,
     projects: state.projects,
     trades: state.trades,

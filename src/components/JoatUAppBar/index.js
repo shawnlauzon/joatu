@@ -76,9 +76,9 @@ JoatUAppBar.propTypes = {
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     name: PropTypes.shape({
-      first: PropTypes.string
+      first: PropTypes.string.isRequired
     }),
-    profilePhoto: PropTypes.string
+    imgUrl: PropTypes.string
   }).isRequired,
   auth: PropTypes.shape({
     loginWithFacebook: PropTypes.func.isRequired

@@ -7,7 +7,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import projects from './data'
 import { firebase } from './firebaseBackend/core'
-import auth from './firebaseBackend/auth'
 import firebaseApiMiddleware from './middleware/firebaseApi'
 import App from './App'
 
@@ -18,34 +17,11 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk, firebaseApiMiddleware(firebase)))
 )
 
-let state = {
-  user: {
-    authenticated: false
-  }
-}
-
 ReactDOM.render(
   <Provider store={store}>
-    <App user={state.user} auth={auth(firebase)} />
+    <App firebase={firebase} />
   </Provider>,
   document.getElementById('root')
 )
-
-firebase.auth().onAuthStateChanged(async user => {
-  console.log('auth state changed')
-  console.log(user)
-  if (!user) {
-    Object.assign({}, state, { user: { authenticated: false } })
-  } else {
-    Object.assign({}, state, {
-      user: {
-        authenticated: true,
-        name: {
-          first: user.displayName
-        }
-      }
-    })
-  }
-})
 
 registerServiceWorker()
