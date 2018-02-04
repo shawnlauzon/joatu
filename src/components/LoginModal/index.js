@@ -46,7 +46,7 @@ class LoginModal extends React.Component {
   }
 
   handleLogin = () => {
-    this.props.auth.loginWithFacebook().then(result => {
+    this.props.loginWithFacebook().then(result => {
       this.setState({ open: false })
     })
   }
@@ -82,7 +82,7 @@ class LoginModal extends React.Component {
 
 LoginModal.propTypes = {
   classes: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  loginWithFacebook: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(LoginModal)

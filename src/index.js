@@ -18,9 +18,15 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk, firebaseApiMiddleware(firebase)))
 )
 
+let state = {
+  user: {
+    authenticated: false
+  }
+}
+
 ReactDOM.render(
   <Provider store={store}>
-    <App auth={auth(firebase)} />
+    <App user={state.user} auth={auth(firebase)} />
   </Provider>,
   document.getElementById('root')
 )
@@ -28,6 +34,18 @@ ReactDOM.render(
 firebase.auth().onAuthStateChanged(async user => {
   console.log('auth state changed')
   console.log(user)
+  if (!user) {
+    Object.assign({}, state, { user: { authenticated: false } })
+  } else {
+    Object.assign({}, state, {
+      user: {
+        authenticated: true,
+        name: {
+          first: user.displayName
+        }
+      }
+    })
+  }
 })
 
 registerServiceWorker()

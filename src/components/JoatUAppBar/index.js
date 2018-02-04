@@ -53,12 +53,19 @@ class JoatUAppBar extends React.Component {
               <Hidden xsDown>The Jack of all Trades Universe</Hidden>
               <Hidden smUp>JoatU</Hidden>
             </Typography>
-            <Button color="inherit" onClick={this.handleLogin}>
-              Login
-            </Button>
+            {this.props.user.authenticated ? (
+              <Typography>{this.props.user.name.first}</Typography>
+            ) : (
+              <Button color="inherit" onClick={this.handleLogin}>
+                Login
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
-        <LoginModal show={this.state.showLogin} auth={this.props.auth} />
+        <LoginModal
+          loginWithFacebook={this.props.auth.loginWithFacebook}
+          show={this.state.showLogin}
+        />
       </div>
     )
   }
@@ -66,7 +73,16 @@ class JoatUAppBar extends React.Component {
 
 JoatUAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired,
+    name: PropTypes.shape({
+      first: PropTypes.string
+    }),
+    profilePhoto: PropTypes.string
+  }).isRequired,
+  auth: PropTypes.shape({
+    loginWithFacebook: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default withStyles(styles)(JoatUAppBar)
