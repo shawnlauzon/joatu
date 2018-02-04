@@ -43,7 +43,7 @@ class App extends React.Component {
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <MuiThemeProvider theme={theme}>
           <Reboot />
-          <JoatUAppBar />
+          <JoatUAppBar auth={this.props.auth} />
           {this.props.communities &&
             Object.entries(this.props.communities).map(([id, community]) => (
               <Community

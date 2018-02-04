@@ -6,7 +6,6 @@ import Modal from 'material-ui/Modal'
 import ButtonBase from 'material-ui/ButtonBase'
 
 import loginWithFacebook from './loginWithFacebook.png'
-import { login } from '../../backend/auth'
 
 const styles = theme => ({
   button: {
@@ -47,8 +46,7 @@ class LoginModal extends React.Component {
   }
 
   handleLogin = () => {
-    login().then(() => {
-      console.log('Logged in!')
+    this.props.auth.loginWithFacebook().then(() => {
       this.setState({ open: false })
     })
   }
@@ -68,7 +66,12 @@ class LoginModal extends React.Component {
           </Typography>
           <div>
             <ButtonBase className={classes.button} onClick={this.handleLogin}>
-              <img height={32} width={196} src={loginWithFacebook} />
+              <img
+                height={32}
+                width={196}
+                alt="Login with Facebook"
+                src={loginWithFacebook}
+              />
             </ButtonBase>
           </div>
         </div>
@@ -78,7 +81,8 @@ class LoginModal extends React.Component {
 }
 
 LoginModal.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(LoginModal)

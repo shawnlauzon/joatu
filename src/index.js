@@ -8,6 +8,7 @@ import './index.css'
 
 import projects from './data'
 import { firebase } from './firebaseBackend/core'
+import auth from './firebaseBackend/auth'
 import firebaseApiMiddleware from './middleware/firebaseApi'
 import App from './App'
 
@@ -20,7 +21,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App auth={auth(firebase)} />
   </Provider>,
   document.getElementById('root')
 )

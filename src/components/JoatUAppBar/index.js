@@ -27,7 +27,7 @@ class JoatUAppBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoginShowing: false
+      showLogin: false
     }
   }
 
@@ -56,14 +56,15 @@ class JoatUAppBar extends React.Component {
             </Button>
           </Toolbar>
         </AppBar>
-        <LoginModal show={this.state.showLogin} />
+        <LoginModal show={this.state.showLogin} auth={this.props.auth} />
       </div>
     )
   }
 }
 
 JoatUAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(JoatUAppBar)
