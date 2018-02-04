@@ -1,4 +1,6 @@
 import React from 'react'
+import { MuiThemeProvider } from 'material-ui/styles'
+import theme from './theme'
 import { connect } from 'react-redux'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import fr from 'react-intl/locale-data/fr'
@@ -39,7 +41,7 @@ class App extends React.Component {
   render() {
     return (
       <IntlProvider locale={navigator.language} defaultLocale="en">
-        <div>
+        <MuiThemeProvider theme={theme}>
           <Reboot />
           <JoatUAppBar />
           {this.props.communities &&
@@ -56,7 +58,7 @@ class App extends React.Component {
                 onDeleteProject={this.onDeleteProject}
               />
             ))}
-        </div>
+        </MuiThemeProvider>
       </IntlProvider>
     )
   }
