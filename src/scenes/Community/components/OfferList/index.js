@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link, Route } from 'react-router-dom'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -10,7 +9,7 @@ import { withStyles } from 'material-ui/styles'
 
 import ProjectList from './components/ProjectList'
 import TradeList from './components/TradeList'
-import ProjectDetail from '../ProjectDetail'
+import ProjectInfo from '../ProjectInfo'
 import TradeDetail from '../TradeDetail'
 import CreateOffer from '../../scenes/CreateOffer'
 
@@ -44,16 +43,15 @@ class OfferList extends React.Component {
     const { classes } = this.props
     const { tabNum } = this.state
 
-    const ProjectDetailPane = routeInfo => {
+    const ProjectInfoPane = routeInfo => {
       if (this.props.projects) {
         const project = this.props.projects[routeInfo.match.params.id]
 
         return (
-          <ProjectDetail
+          <ProjectInfo
+            {...this.props}
             id={routeInfo.match.params.id}
             {...project}
-            users={this.props.users}
-            onDeleteProject={this.props.onDeleteProject}
           />
         )
       } else {
@@ -65,7 +63,13 @@ class OfferList extends React.Component {
       if (this.props.trades) {
         const trade = this.props.trades[routeInfo.match.params.id]
 
-        return <TradeDetail trade={trade} users={this.props.users} />
+        return (
+          <TradeDetail
+            {...this.props}
+            id={routeInfo.match.params.id}
+            trade={trade}
+          />
+        )
       } else {
         return null
       }
@@ -99,7 +103,7 @@ class OfferList extends React.Component {
             )}
           </Grid>
           <Grid xs={12} sm={8} item>
-            <Route path="/projects/:id" render={ProjectDetailPane} />
+            <Route path="/projects/:id" render={ProjectInfoPane} />
             <Route path="/trades/:id" render={TradeDetailPane} />
             <Route path="/create-project" render={CreateOfferPane} />
           </Grid>
@@ -107,12 +111,6 @@ class OfferList extends React.Component {
       </div>
     )
   }
-}
-
-OfferList.propTypes = {
-  projects: PropTypes.object,
-  trades: PropTypes.object,
-  users: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(OfferList)

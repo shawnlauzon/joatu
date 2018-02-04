@@ -9,7 +9,7 @@ import ButtonJoin from './components/ButtonJoin'
 import ButtonDelete from './components/ButtonDelete'
 import ParticipantList from './components/ParticipantList'
 
-const ProjectDetail = props => {
+const ProjectInfo = props => {
   const handleJoin = e => {
     console.log('JOIN US!')
   }
@@ -38,9 +38,9 @@ const ProjectDetail = props => {
   )
 }
 
-ProjectDetail.propTypes = {
+ProjectInfo.propTypes = {
   id: PropTypes.string.isRequired,
   onDeleteProject: PropTypes.func.isRequired
 }
 
-export default ProjectDetail
+export default ProjectInfo
