@@ -20,11 +20,6 @@ export const DELETE_PROJECT_STARTED = 'DELETE_PROJECT_STARTED'
 export const DELETE_PROJECT_SUCCEEDED = 'DELETE_PROJECT_SUCCEEDED'
 export const DELETE_PROJECT_FAILED = 'DELETE_PROJECT_FAILED'
 
-let _id = 3
-export function uniqueId() {
-  return _id++
-}
-
 export function fetchCommunities() {
   return {
     [CALL_API]: {
