@@ -5,6 +5,9 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
+import { IntlProvider, addLocaleData } from 'react-intl'
+import fr from 'react-intl/locale-data/fr'
+
 import projects from './data'
 import { firebase } from './firebaseBackend/core'
 import firebaseApiMiddleware from './middleware/firebaseApi'
@@ -17,9 +20,13 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk, firebaseApiMiddleware(firebase)))
 )
 
+addLocaleData(fr)
+
 ReactDOM.render(
   <Provider store={store}>
-    <App firebase={firebase} />
+    <IntlProvider locale={navigator.language} defaultLocale="en">
+      <App firebase={firebase} />
+    </IntlProvider>
   </Provider>,
   document.getElementById('root')
 )

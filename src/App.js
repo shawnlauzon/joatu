@@ -2,8 +2,6 @@ import React from 'react'
 import { MuiThemeProvider } from 'material-ui/styles'
 import theme from './theme'
 import { connect } from 'react-redux'
-import { IntlProvider, addLocaleData } from 'react-intl'
-import fr from 'react-intl/locale-data/fr'
 
 import Reboot from 'material-ui/Reboot'
 
@@ -25,7 +23,6 @@ import './App.css'
 class App extends React.Component {
   constructor(props) {
     super(props)
-    addLocaleData(fr)
 
     props.firebase.auth().onAuthStateChanged(async user => {
       if (user) {
@@ -53,34 +50,28 @@ class App extends React.Component {
 
   render() {
     return (
-      <IntlProvider locale={navigator.language} defaultLocale="en">
-        <MuiThemeProvider theme={theme}>
-          <Reboot />
-          <JoatUAppBar
-            auth={auth(this.props.firebase)}
-            onLogoutUser={() => this.props.dispatch(logoutUser())}
-            {...this.props}
-          />
-          {this.props.communities &&
-            Object.entries(this.props.communities).map(([id, community]) => (
-              <Community
-                key={id}
-                id={id}
-                name={community.name}
-                // TODO Filter projects & trades for this community
-                projects={this.props.projects}
-                trades={this.props.trades}
-                users={this.props.users}
-                onCreateProject={body =>
-                  this.props.dispatch(createProject(body))
-                }
-                onDeleteProject={body =>
-                  this.props.dispatch(deleteProject(body))
-                }
-              />
-            ))}
-        </MuiThemeProvider>
-      </IntlProvider>
+      <MuiThemeProvider theme={theme}>
+        <Reboot />
+        <JoatUAppBar
+          auth={auth(this.props.firebase)}
+          onLogoutUser={() => this.props.dispatch(logoutUser())}
+          {...this.props}
+        />
+        {this.props.communities &&
+          Object.entries(this.props.communities).map(([id, community]) => (
+            <Community
+              key={id}
+              id={id}
+              name={community.name}
+              // TODO Filter projects & trades for this community
+              projects={this.props.projects}
+              trades={this.props.trades}
+              users={this.props.users}
+              onCreateProject={body => this.props.dispatch(createProject(body))}
+              onDeleteProject={body => this.props.dispatch(deleteProject(body))}
+            />
+          ))}
+      </MuiThemeProvider>
     )
   }
 }
