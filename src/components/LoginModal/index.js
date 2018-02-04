@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
 import Modal from 'material-ui/Modal'
-import Button from 'material-ui/Button'
+import ButtonBase from 'material-ui/ButtonBase'
+
+import loginWithFacebook from './loginWithFacebook.png'
+import { login } from '../../backend/auth'
 
 const styles = theme => ({
   button: {
@@ -40,12 +42,15 @@ class LoginModal extends React.Component {
     this.setState({ open: true })
   }
 
-  handleCancel = () => {
+  handleClose = () => {
     this.setState({ open: false })
   }
 
   handleLogin = () => {
-    this.setState({ open: false })
+    login().then(() => {
+      console.log('Logged in!')
+      this.setState({ open: false })
+    })
   }
 
   render() {
@@ -55,27 +60,16 @@ class LoginModal extends React.Component {
       <Modal
         className={classes.modal}
         open={this.state.open}
-        onClose={this.handleCancel}
+        onClose={this.handleClose}
       >
         <div className={classes.paper}>
           <Typography type="title" id="modal-title">
-            Enter your name
+            Choose your provider
           </Typography>
           <div>
-            <TextField id="name" label="Name" autoFocus required />
-          </div>
-          <div>
-            <Button className={classes.button} onClick={this.handleCancel}>
-              Cancel
-            </Button>
-            <Button
-              className={classes.button}
-              raised
-              color="primary"
-              onClick={this.handleLogin}
-            >
-              Login
-            </Button>
+            <ButtonBase className={classes.button} onClick={this.handleLogin}>
+              <img height={32} width={196} src={loginWithFacebook} />
+            </ButtonBase>
           </div>
         </div>
       </Modal>

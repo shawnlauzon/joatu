@@ -4,15 +4,18 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import projects from './data'
-import firebaseApiMiddleware from './middleware/firebaseApi'
 import './index.css'
+
+import projects from './data'
+import { firebase } from './firebaseBackend/core'
+import firebaseApiMiddleware from './middleware/firebaseApi'
 import App from './App'
+
 import registerServiceWorker from './registerServiceWorker'
 
 const store = createStore(
   projects,
-  composeWithDevTools(applyMiddleware(thunk, firebaseApiMiddleware))
+  composeWithDevTools(applyMiddleware(thunk, firebaseApiMiddleware(firebase)))
 )
 
 ReactDOM.render(
