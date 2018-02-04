@@ -5,6 +5,7 @@ import fr from 'react-intl/locale-data/fr'
 
 import Reboot from 'material-ui/Reboot'
 
+import JoatUAppBar from './components/JoatUAppBar'
 import Community from './scenes/Community'
 import {
   fetchCommunities,
@@ -40,6 +41,7 @@ class App extends React.Component {
       <IntlProvider locale={navigator.language} defaultLocale="en">
         <div>
           <Reboot />
+          <JoatUAppBar />
           {this.props.communities &&
             Object.entries(this.props.communities).map(([id, community]) => (
               <Community
