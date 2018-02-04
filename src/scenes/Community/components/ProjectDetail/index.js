@@ -23,34 +23,23 @@ const ProjectDetail = props => {
       <Typography type="display2">{props.name}</Typography>
       <Typography type="subheading">{props.location}</Typography>
       <div>
-        {props.coordinates && <DisplayMap location={props.coordinates} />}
+        {props.coordinates && <DisplayMap {...props} />}
         {/* TODO the hourly award needs to be calculated */}
         {/* FIXME Understand why start and duration are initially undefined */}
         {props.start &&
-          props.duration && (
-            <ProjectDetails
-              start={props.start}
-              duration={props.duration}
-              hourlyAward={15}
-            />
-          )}
+          props.duration && <ProjectDetails {...props} hourlyAward={15} />}
       </div>
       <div>
         <ButtonJoin handleClick={handleJoin} />
         <ButtonDelete handleClick={handleDelete} />
       </div>
-      <ParticipantList participants={props.participants} users={props.users} />
+      <ParticipantList {...props} />
     </div>
   )
 }
 
 ProjectDetail.propTypes = {
   id: PropTypes.string.isRequired,
-  start: PropTypes.any,
-  duration: PropTypes.number,
-  coordinates: PropTypes.object,
-  participants: PropTypes.object,
-  users: PropTypes.object.isRequired,
   onDeleteProject: PropTypes.func.isRequired
 }
 

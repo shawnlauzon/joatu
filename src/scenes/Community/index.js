@@ -11,24 +11,13 @@ const Community = props => (
       {props.name}
     </Typography>
     <Router>
-      <OfferList
-        projects={props.projects}
-        trades={props.trades}
-        users={props.users}
-        onCreateProject={props.onCreateProject}
-        onDeleteProject={props.onDeleteProject}
-      />
+      <OfferList {...props} />
     </Router>
   </div>
 )
 
 Community.propTypes = {
-  name: PropTypes.string.isRequired,
-  projects: PropTypes.object,
-  trades: PropTypes.object,
-  users: PropTypes.object.isRequired,
-  onCreateProject: PropTypes.func.isRequired,
-  onDeleteProject: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired
 }
 
 export default Community
