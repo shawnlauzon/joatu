@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
+import Hidden from 'material-ui/Hidden'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 
@@ -49,7 +50,8 @@ class JoatUAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              The Jack of all Trades Universe
+              <Hidden xsDown>The Jack of all Trades Universe</Hidden>
+              <Hidden smUp>JoatU</Hidden>
             </Typography>
             <Button color="inherit" onClick={this.handleLogin}>
               Login
