@@ -24,64 +24,35 @@ const styles = theme => ({
   }
 })
 
-class LoginModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      open: props.show || false
-    }
-  }
+function LoginModal(props) {
+  const { classes } = props
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ open: nextProps.show })
-  }
-
-  handleOpen = () => {
-    this.setState({ open: true })
-  }
-
-  handleClose = () => {
-    this.setState({ open: false })
-  }
-
-  handleLoginWithFacebook = () => {
-    this.handleClose()
-    this.props.onLogin('facebook')
-  }
-
-  render() {
-    const { classes } = this.props
-
-    return (
-      <Modal
-        className={classes.modal}
-        open={this.state.open}
-        onClose={this.handleClose}
-      >
-        <div className={classes.paper}>
-          <div>
-            <ButtonBase
-              className={classes.button}
-              onClick={this.handleLoginWithFacebook}
-            >
-              <img
-                height={32}
-                width={196}
-                alt="Login with Facebook"
-                src={loginWithFacebookButton}
-              />
-            </ButtonBase>
-          </div>
+  return (
+    <Modal className={classes.modal} open={props.open} onClose={props.onClose}>
+      <div className={classes.paper}>
+        <div>
+          <ButtonBase
+            className={classes.button}
+            onClick={() => props.onLogin('facebook')}
+          >
+            <img
+              height={32}
+              width={196}
+              alt="Login with Facebook"
+              src={loginWithFacebookButton}
+            />
+          </ButtonBase>
         </div>
-      </Modal>
-    )
-  }
+      </div>
+    </Modal>
+  )
 }
 
 LoginModal.propTypes = {
   classes: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
   onLogin: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(LoginModal)

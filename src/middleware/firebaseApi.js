@@ -166,16 +166,10 @@ function doLogin(provider) {
 }
 
 function doLogout(provider) {
-  return authFunctions
-    .logUserOut()
-    .then(r => {
-      console.log(r)
-      return r
-    })
-    .catch(err => {
-      console.err(err)
-      return err
-    })
+  return authFunctions.logUserOut().catch(err => {
+    console.err(err)
+    return err
+  })
 }
 
 export default apiMiddleware

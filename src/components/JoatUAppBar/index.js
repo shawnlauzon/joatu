@@ -30,32 +30,41 @@ class JoatUAppBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showLogin: false,
+      loginModalOpen: false,
       anchorEl: null
     }
   }
 
-  handleLogin = e => {
-    this.setState({ showLogin: true })
+  showLoginModal = e => {
+    this.setState({ loginModalOpen: true })
   }
 
-  handleMenu = event => {
+  handleLogin = provider => {
+    this.handleLoginModalClose()
+    this.props.onLogin(provider)
+  }
+
+  handleLoginModalClose = () => {
+    this.setState({ loginModalOpen: false })
+  }
+
+  showLogoutModal = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
 
-  handleClose = () => {
-    this.setState({ anchorEl: null })
+  handleLogout = () => {
+    this.props.onLogout()
+    this.handleLogoutModalClose()
   }
 
-  handleLogout = () => {
-    this.handleClose()
-    this.props.onLogout()
+  handleLogoutModalClose = () => {
+    this.setState({ anchorEl: null })
   }
 
   render() {
     const { classes } = this.props
     const { anchorEl } = this.state
-    const open = Boolean(anchorEl)
+    const openLogoutModal = Boolean(anchorEl)
 
     return (
       <div className={classes.root}>
@@ -77,9 +86,9 @@ class JoatUAppBar extends React.Component {
                 <Avatar
                   alt={this.props.user.displayName}
                   src={this.props.user.imgUrl}
-                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-owns={openLogoutModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
-                  onClick={this.handleMenu}
+                  onClick={this.showLogoutModal}
                 />
                 <Menu
                   id="menu-appbar"
@@ -92,23 +101,23 @@ class JoatUAppBar extends React.Component {
                     vertical: 'top',
                     horizontal: 'right'
                   }}
-                  open={open}
-                  onClose={this.handleClose}
+                  open={openLogoutModal}
+                  onClose={this.handleLogoutModalClose}
                 >
                   <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             ) : (
-              <Button color="inherit" onClick={this.handleLogin}>
+              <Button color="inherit" onClick={this.showLoginModal}>
                 Login
               </Button>
             )}
           </Toolbar>
         </AppBar>
         <LoginModal
-          onLogin={this.props.onLogin}
-          onLogout={this.props.onLogout}
-          show={this.state.showLogin}
+          onLogin={this.handleLogin}
+          onClose={this.handleLoginModalClose}
+          open={this.state.loginModalOpen}
         />
       </div>
     )
