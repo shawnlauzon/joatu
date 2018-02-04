@@ -8,7 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import fr from 'react-intl/locale-data/fr'
 
-import projects from './data'
+import rootReducer from './data'
 import { firebase } from './firebaseBackend/core'
 import firebaseApiMiddleware from './middleware/firebaseApi'
 import App from './App'
@@ -16,7 +16,7 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
 const store = createStore(
-  projects,
+  rootReducer,
   composeWithDevTools(applyMiddleware(thunk, firebaseApiMiddleware(firebase)))
 )
 
