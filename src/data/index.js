@@ -9,6 +9,7 @@ import {
   DELETE_PROJECT_SUCCEEDED,
   LOGIN_SUCCEEDED,
   LOGOUT_SUCCEEDED,
+  AUTH_CHANGED,
   ADD_PARTICIPANT_SUCCEEDED
 } from '../actions'
 
@@ -83,6 +84,13 @@ export function auth(state = { authenticated: false }, action) {
       break
     case LOGOUT_SUCCEEDED:
       newState = { authenticated: false }
+      break
+    case AUTH_CHANGED:
+      if (action.payload.id) {
+        newState = Object.assign({ authenticated: true }, action.payload)
+      } else {
+        newState = { authenticated: false }
+      }
       break
     default:
       newState = state

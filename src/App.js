@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React from 'react'
 import { MuiThemeProvider } from 'material-ui/styles'
 import theme from './theme'
@@ -17,7 +18,7 @@ import {
   loginUser,
   logoutUser,
   createUser,
-  onLoginSuccess,
+  onAuthChanged,
   addParticipant
 } from './actions'
 import './App.css'
@@ -28,21 +29,35 @@ class App extends React.Component {
 
     // TODO Integrate better with the API; it seems weird to be here
     props.firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.dispatch(onLoginSuccess(user))
-
-        // FIXME Race condition this.props.users isn't set yet
-        if (!this.props.users[user.uid]) {
-          this.props.dispatch(createUser(user))
-        }
-      }
+      this.props.dispatch(onAuthChanged(user))
     })
+
+    this.creatingUser = false
   }
 
   componentDidMount() {
     this.props.dispatch(fetchUsers())
     this.props.dispatch(fetchCommunities())
     this.props.dispatch(fetchProjects())
+  }
+
+  // FIXME This works unless the user is deleted from the backend without
+  // reloading the app, then the user doesn't get created because of the flag
+  // Still, this should be improved. Ideally after LOGIN_SUCCEEDED, the user
+  // should be created if it doesn't yet exist.
+  componentWillReceiveProps(nextProps) {
+    if (
+      !this.creatingUser &&
+      nextProps.user &&
+      nextProps.user.authenticated &&
+      !R.isEmpty(nextProps.users) &&
+      !nextProps.users[nextProps.user.id]
+    ) {
+      this.props.dispatch(createUser(nextProps.user))
+      // Note that this is never set to false unless app is reloaded. But if we
+      // don't have this flag, an infinite loop occurs
+      this.creatingUser = true
+    }
   }
 
   onLogin = provider => {

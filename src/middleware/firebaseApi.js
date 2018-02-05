@@ -151,20 +151,16 @@ function doAdd(collectionName, data) {
 }
 
 function doSet(collectionName, id, data) {
-  return (
-    db
-      .collection(collectionName)
-      .doc(id)
-      // FIXME only calling update because I'm setting the user every time and don't want to wipe out the projects set
-      .update(data)
-      .then(docRef => ({
-        // Return id: { ...data }
-        [docRef.id]: data
-      }))
-      .catch(err => {
-        return err
-      })
-  )
+  return db
+    .collection(collectionName)
+    .doc(id)
+    .set(data)
+    .then(docRef => ({
+      [id]: data
+    }))
+    .catch(err => {
+      return err
+    })
 }
 
 function doDelete(collectionName, id) {
@@ -184,16 +180,9 @@ function doLogin(provider) {
       return authFunctions
         .loginWithFacebook()
         .then(result => {
-          //     const splitName = user.displayName.split(' ')
-          //     // TODO create user if doesn't exist
-          //     this.props.dispatch(
-          //       loginUser({
-          //         email: user.email,
-          //         name: {
-          //           first: splitName[0],
-          //           last: splitName.slice(1).join(' ')
-          //         },
+          console.log(result)
           return {
+            id: result.user.uid,
             displayName: result.user.displayName,
             email: result.user.email,
             imgUrl: result.user.photoURL

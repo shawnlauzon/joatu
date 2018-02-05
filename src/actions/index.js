@@ -27,6 +27,7 @@ export const DELETE_PROJECT_FAILED = 'DELETE_PROJECT_FAILED'
 export const LOGIN_STARTED = 'LOGIN_STARTED'
 export const LOGIN_SUCCEEDED = 'LOGIN_SUCCEEDED'
 export const LOGIN_FAILED = 'LOGIN_FAILED'
+export const AUTH_CHANGED = 'AUTH_CHANGED'
 
 export const LOGOUT_STARTED = 'LOGOUT_STARTED'
 export const LOGOUT_SUCCEEDED = 'LOGOUT_SUCCEEDED'
@@ -77,11 +78,11 @@ export function createUser(user) {
       types: [CREATE_USER_STARTED, CREATE_USER_SUCCEEDED, CREATE_USER_FAILED],
       collection: 'users',
       action: 'set',
-      id: user.uid,
+      id: user.uid || user.id,
       body: {
         displayName: user.displayName,
         email: user.email,
-        imgUrl: user.photoURL
+        imgUrl: user.photoURL || user.imgUrl
       }
     }
   }
@@ -105,6 +106,18 @@ export function onLoginSuccess(user) {
       displayName: user.displayName,
       email: user.email,
       imgUrl: user.photoURL
+    }
+  }
+}
+
+export function onAuthChanged(user) {
+  return {
+    type: AUTH_CHANGED,
+    payload: {
+      id: user && user.uid,
+      displayName: user && user.displayName,
+      email: user && user.email,
+      imgUrl: user && user.photoURL
     }
   }
 }
