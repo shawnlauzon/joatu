@@ -32,6 +32,10 @@ export const LOGOUT_STARTED = 'LOGOUT_STARTED'
 export const LOGOUT_SUCCEEDED = 'LOGOUT_SUCCEEDED'
 export const LOGOUT_FAILED = 'LOGOUT_FAILED'
 
+export const ADD_PARTICIPANT_STARTED = 'ADD_PARTICIPANT_STARTED'
+export const ADD_PARTICIPANT_SUCCEEDED = 'ADD_PARTICIPANT_SUCCEEDED'
+export const ADD_PARTICIPANT_FAILED = 'ADD_PARTICIPANT_FAILED'
+
 export function fetchCommunities() {
   return {
     [CALL_API]: {
@@ -140,6 +144,21 @@ export function deleteProject(id) {
       collection: 'projects',
       action: 'delete',
       id
+    }
+  }
+}
+
+export function addParticipant(userId, projectId) {
+  return {
+    [CALL_API]: {
+      types: [
+        ADD_PARTICIPANT_STARTED,
+        ADD_PARTICIPANT_SUCCEEDED,
+        ADD_PARTICIPANT_FAILED
+      ],
+      action: 'addParticipant',
+      userId,
+      projectId
     }
   }
 }

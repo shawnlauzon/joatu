@@ -8,7 +8,8 @@ import {
   CREATE_PROJECT_SUCCEEDED,
   DELETE_PROJECT_SUCCEEDED,
   LOGIN_SUCCEEDED,
-  LOGOUT_SUCCEEDED
+  LOGOUT_SUCCEEDED,
+  ADD_PARTICIPANT_SUCCEEDED
 } from '../actions'
 
 export function communities(state = {}, action) {
@@ -35,6 +36,16 @@ export function projects(state = {}, action) {
     case DELETE_PROJECT_SUCCEEDED:
       newState = R.dissoc(action.payload, state)
       break
+    case ADD_PARTICIPANT_SUCCEEDED:
+      const project = state[action.payload.projectId]
+      if (!project.participants) {
+        project.participants = {}
+      }
+      project.participants[action.payload.userId] = true
+      newState = Object.assign({}, state, {
+        [action.payload.projectId]: project
+      })
+      break
     default:
       newState = state
   }
@@ -49,6 +60,14 @@ export function users(state = {}, action) {
       break
     case CREATE_USER_SUCCEEDED:
       newState = Object.assign({}, state, action.payload)
+      break
+    case ADD_PARTICIPANT_SUCCEEDED:
+      const user = state[action.payload.userId]
+      if (!user.projects) {
+        user.projects = {}
+      }
+      user.projects[action.payload.projectId] = true
+      newState = Object.assign({}, state, { [action.payload.userId]: user })
       break
     default:
       newState = state

@@ -4,9 +4,6 @@ import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
 import { withStyles } from 'material-ui/styles'
 
-// Obviously need a different way of storing / accessing these
-import user0 from './images/0.jpg'
-
 const styles = theme => ({
   chip: {
     margin: theme.spacing.unit
@@ -17,14 +14,17 @@ const Participant = props => (
   <span>
     <Chip
       className={props.classes.chip}
-      avatar={<Avatar src={user0} />}
-      label={`${props.user.name.first} ${props.user.name.last}`}
+      avatar={<Avatar src={props.user.imgUrl} />}
+      label={`${props.user.displayName}`}
     />
   </span>
 )
 
 Participant.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.shape({
+    displayName: PropTypes.string.isRequired,
+    imgUrl: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default withStyles(styles)(Participant)

@@ -11,7 +11,7 @@ import ParticipantList from './components/ParticipantList'
 
 const ProjectInfo = props => {
   const handleJoin = e => {
-    console.log('JOIN US!')
+    props.onJoinProject(props.id)
   }
 
   const handleDelete = e => {
@@ -30,7 +30,7 @@ const ProjectInfo = props => {
           props.duration && <ProjectDetails {...props} hourlyAward={15} />}
       </div>
       <div>
-        <ButtonJoin handleClick={handleJoin} />
+        <ButtonJoin handleClick={handleJoin} user={props.user} />
         <ButtonDelete handleClick={handleDelete} />
       </div>
       <ParticipantList {...props} />
@@ -40,7 +40,8 @@ const ProjectInfo = props => {
 
 ProjectInfo.propTypes = {
   id: PropTypes.string.isRequired,
-  onDeleteProject: PropTypes.func.isRequired
+  onDeleteProject: PropTypes.func.isRequired,
+  onJoinProject: PropTypes.func.isRequired
 }
 
 export default ProjectInfo

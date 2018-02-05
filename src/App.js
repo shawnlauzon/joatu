@@ -17,7 +17,8 @@ import {
   loginUser,
   logoutUser,
   createUser,
-  onLoginSuccess
+  onLoginSuccess,
+  addParticipant
 } from './actions'
 import './App.css'
 
@@ -25,11 +26,24 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      user: {
+        authenticated: false
+      }
+    }
+
     // TODO Integrate better with the API; it seems weird to be here
     props.firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.dispatch(onLoginSuccess(user))
+        this.setState({
+          user: {
+            id: user.uid,
+            authenticated: true
+          }
+        })
 
+        // FIXME Race condition this.props.users isn't set yet
         if (!this.props.users[user.uid]) {
           this.props.dispatch(createUser(user))
         }
@@ -51,6 +65,10 @@ class App extends React.Component {
     this.props.dispatch(logoutUser())
   }
 
+  onJoinProject = projectId => {
+    this.props.dispatch(addParticipant(this.state.user.id, projectId))
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -66,12 +84,14 @@ class App extends React.Component {
               key={id}
               id={id}
               name={community.name}
+              user={this.state.user}
               // TODO Filter projects & trades for this community
               projects={this.props.projects}
               trades={this.props.trades}
               users={this.props.users}
               onCreateProject={body => this.props.dispatch(createProject(body))}
               onDeleteProject={body => this.props.dispatch(deleteProject(body))}
+              onJoinProject={this.onJoinProject}
             />
           ))}
       </MuiThemeProvider>

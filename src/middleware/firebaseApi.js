@@ -92,6 +92,19 @@ const apiMiddleware = store => next => action => {
           error: error.message
         })
     )
+  } else if (callApi.action === 'addParticipant') {
+    return addParticipant(callApi.projectId, callApi.userId).then(
+      response =>
+        next({
+          type: successType,
+          payload: response
+        }),
+      error =>
+        next({
+          type: failureType,
+          error: error.message
+        })
+    )
   } else {
     return doGet(callApi.collection).then(
       response =>
@@ -138,17 +151,20 @@ function doAdd(collectionName, data) {
 }
 
 function doSet(collectionName, id, data) {
-  return db
-    .collection(collectionName)
-    .doc(id)
-    .set(data)
-    .then(docRef => ({
-      // Return id: { ...data }
-      [docRef.id]: data
-    }))
-    .catch(err => {
-      return err
-    })
+  return (
+    db
+      .collection(collectionName)
+      .doc(id)
+      // FIXME only calling update because I'm setting the user every time and don't want to wipe out the projects set
+      .update(data)
+      .then(docRef => ({
+        // Return id: { ...data }
+        [docRef.id]: data
+      }))
+      .catch(err => {
+        return err
+      })
+  )
 }
 
 function doDelete(collectionName, id) {
@@ -189,6 +205,25 @@ function doLogin(provider) {
         })
     default:
       throw Error('Unknown provider ' + provider)
+  }
+}
+
+async function addParticipant(projectId, userId) {
+  const pathToUser = ['participants', userId].join('.')
+  const pathToProject = ['projects', projectId].join('.')
+
+  const project = await db.collection('projects').doc(projectId)
+  await project.update({
+    [pathToUser]: true
+  })
+  const user = await db.collection('users').doc(userId)
+  await user.update({
+    [pathToProject]: true
+  })
+
+  return {
+    projectId,
+    userId
   }
 }
 

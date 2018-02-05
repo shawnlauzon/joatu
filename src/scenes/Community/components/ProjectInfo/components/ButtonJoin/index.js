@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import { withStyles } from 'material-ui/styles'
 
@@ -17,10 +18,17 @@ function ButtonJoin(props) {
       onClick={props.handleClick}
       raised
       color="primary"
+      disabled={!props.user.authenticated}
     >
       I'm in!
     </Button>
   )
+}
+
+ButtonJoin.propTypes = {
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 export default withStyles(styles)(ButtonJoin)
