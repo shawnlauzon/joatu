@@ -26,22 +26,10 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      user: {
-        authenticated: false
-      }
-    }
-
     // TODO Integrate better with the API; it seems weird to be here
     props.firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.dispatch(onLoginSuccess(user))
-        this.setState({
-          user: {
-            id: user.uid,
-            authenticated: true
-          }
-        })
 
         // FIXME Race condition this.props.users isn't set yet
         if (!this.props.users[user.uid]) {
@@ -66,7 +54,7 @@ class App extends React.Component {
   }
 
   onJoinProject = projectId => {
-    this.props.dispatch(addParticipant(this.state.user.id, projectId))
+    this.props.dispatch(addParticipant(this.props.user.id, projectId))
   }
 
   render() {
@@ -84,7 +72,7 @@ class App extends React.Component {
               key={id}
               id={id}
               name={community.name}
-              user={this.state.user}
+              user={this.props.user}
               // TODO Filter projects & trades for this community
               projects={this.props.projects}
               trades={this.props.trades}

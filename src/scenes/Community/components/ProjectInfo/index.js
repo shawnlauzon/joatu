@@ -31,7 +31,7 @@ const ProjectInfo = props => {
       </div>
       <div>
         <ButtonJoin handleClick={handleJoin} user={props.user} />
-        <ButtonDelete handleClick={handleDelete} />
+        <ButtonDelete handleClick={handleDelete} user={props.user} />
       </div>
       <ParticipantList {...props} />
     </div>

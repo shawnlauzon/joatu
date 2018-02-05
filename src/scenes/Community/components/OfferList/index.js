@@ -86,6 +86,7 @@ class OfferList extends React.Component {
           className={classes.fab}
           color="primary"
           aria-label="add"
+          disabled={!this.props.user.authenticated}
           component={Link}
           to="/create-project"
         >

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import Delete from 'material-ui-icons/Delete'
 import { withStyles } from 'material-ui/styles'
@@ -20,12 +21,19 @@ function ButtonDelete(props) {
       className={classes.button}
       raised
       color="secondary"
+      disabled={!props.user.authenticated}
       onClick={props.handleClick}
     >
       Delete
       <Delete className={classes.rightIcon} />
     </Button>
   )
+}
+
+ButtonDelete.propTypes = {
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 export default withStyles(styles)(ButtonDelete)
