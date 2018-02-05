@@ -172,4 +172,4 @@ function doLogout(provider) {
   })
 }
 
-export default apiMiddleware
+export { firebase, apiMiddleware }

@@ -88,6 +88,17 @@ export function loginUser(provider) {
   }
 }
 
+export function onLoginSuccess(user) {
+  return {
+    type: LOGIN_SUCCEEDED,
+    payload: {
+      displayName: user.displayName,
+      email: user.email,
+      imgUrl: user.photoURL
+    }
+  }
+}
+
 export function logoutUser() {
   return {
     [CALL_API]: {

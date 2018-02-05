@@ -15,11 +15,23 @@ import {
   createProject,
   deleteProject,
   loginUser,
-  logoutUser
+  logoutUser,
+  onLoginSuccess
 } from './actions'
 import './App.css'
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+
+    // TODO Integrate better with the API; it seems weird to be here
+    props.firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.dispatch(onLoginSuccess(user))
+      }
+    })
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchUsers())
     this.props.dispatch(fetchCommunities())
