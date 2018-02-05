@@ -67,13 +67,18 @@ export function fetchUsers() {
   }
 }
 
-export function createUser(body) {
+export function createUser(user) {
   return {
     [CALL_API]: {
       types: [CREATE_USER_STARTED, CREATE_USER_SUCCEEDED, CREATE_USER_FAILED],
       collection: 'users',
-      action: 'add',
-      body
+      action: 'set',
+      id: user.uid,
+      body: {
+        displayName: user.displayName,
+        email: user.email,
+        imgUrl: user.photoURL
+      }
     }
   }
 }
@@ -92,6 +97,7 @@ export function onLoginSuccess(user) {
   return {
     type: LOGIN_SUCCEEDED,
     payload: {
+      id: user.uid,
       displayName: user.displayName,
       email: user.email,
       imgUrl: user.photoURL

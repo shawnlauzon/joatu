@@ -16,6 +16,7 @@ import {
   deleteProject,
   loginUser,
   logoutUser,
+  createUser,
   onLoginSuccess
 } from './actions'
 import './App.css'
@@ -28,6 +29,10 @@ class App extends React.Component {
     props.firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.dispatch(onLoginSuccess(user))
+
+        if (!this.props.users[user.uid]) {
+          this.props.dispatch(createUser(user))
+        }
       }
     })
   }

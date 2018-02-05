@@ -40,6 +40,19 @@ const apiMiddleware = store => next => action => {
           error: error.message
         })
     )
+  } else if (callApi.action === 'set') {
+    return doSet(callApi.collection, callApi.id, callApi.body).then(
+      response =>
+        next({
+          type: successType,
+          payload: response
+        }),
+      error =>
+        next({
+          type: failureType,
+          error: error.message
+        })
+    )
   } else if (callApi.action === 'delete') {
     return doDelete(callApi.collection, callApi.id).then(
       response =>
@@ -115,6 +128,20 @@ function doAdd(collectionName, data) {
   return db
     .collection(collectionName)
     .add(data)
+    .then(docRef => ({
+      // Return id: { ...data }
+      [docRef.id]: data
+    }))
+    .catch(err => {
+      return err
+    })
+}
+
+function doSet(collectionName, id, data) {
+  return db
+    .collection(collectionName)
+    .doc(id)
+    .set(data)
     .then(docRef => ({
       // Return id: { ...data }
       [docRef.id]: data
