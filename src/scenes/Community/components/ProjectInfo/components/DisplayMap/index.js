@@ -8,6 +8,7 @@ class DisplayMap extends React.Component {
     super(props)
 
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY
+    this.mapboxglSupported = mapboxgl.supported()
 
     this.state = {
       coordinates: props.coordinates,
@@ -16,18 +17,20 @@ class DisplayMap extends React.Component {
   }
 
   componentDidMount() {
-    const { longitude, latitude } = this.state.coordinates
-    const zoom = this.state.zoom
-    this.map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: 'mapbox://styles/mapbox/streets-v10',
-      center: [longitude, latitude],
-      zoom
-    })
+    if (this.mapboxglSupported) {
+      const { longitude, latitude } = this.state.coordinates
+      const zoom = this.state.zoom
+      this.map = new mapboxgl.Map({
+        container: this.mapContainer,
+        style: 'mapbox://styles/mapbox/streets-v10',
+        center: [longitude, latitude],
+        zoom
+      })
 
-    this.marker = new mapboxgl.Marker()
-      .setLngLat([longitude, latitude])
-      .addTo(this.map)
+      this.marker = new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(this.map)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,14 +46,18 @@ class DisplayMap extends React.Component {
   updateCoordinates(coordinates) {
     const { longitude, latitude } = coordinates
 
-    this.map.panTo([longitude, latitude])
-    this.marker.setLngLat([longitude, latitude])
+    if (this.mapboxglSupported) {
+      this.map.panTo([longitude, latitude])
+      this.marker.setLngLat([longitude, latitude])
+    }
 
     this.setState({ coordinates })
   }
 
   componentWillUnmount() {
-    this.map.remove()
+    if (this.mapboxglSupported) {
+      this.map.remove()
+    }
   }
 
   render() {
@@ -58,13 +65,15 @@ class DisplayMap extends React.Component {
       height: '200px'
     }
 
-    return (
+    return this.mapboxglSupported ? (
       <div
         style={style}
         ref={ref => {
           this.mapContainer = ref
         }}
       />
+    ) : (
+      <div>Your browser does not support Mapbox GL</div>
     )
   }
 }
