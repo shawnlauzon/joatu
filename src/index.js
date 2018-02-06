@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import logger from 'redux-logger'
 
 import { IntlProvider, addLocaleData } from 'react-intl'
 import fr from 'react-intl/locale-data/fr'
@@ -16,7 +17,7 @@ import registerServiceWorker from './registerServiceWorker'
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk, apiMiddleware))
+  composeWithDevTools(applyMiddleware(thunk, apiMiddleware, logger))
 )
 
 addLocaleData(fr)
