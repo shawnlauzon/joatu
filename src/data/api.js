@@ -1,4 +1,4 @@
-import firebase from './config'
+import { firebase } from './config'
 import 'firebase/firestore'
 import auth from './auth'
 
@@ -18,9 +18,6 @@ export function doGet(collectionName) {
       })
       return coll
     })
-    .catch(err => {
-      return err
-    })
 }
 
 export function doAdd(collectionName, data) {
@@ -31,9 +28,6 @@ export function doAdd(collectionName, data) {
       // Return id: { ...data }
       [docRef.id]: data
     }))
-    .catch(err => {
-      return err
-    })
 }
 
 export function doSet(collectionName, id, data) {
@@ -44,9 +38,6 @@ export function doSet(collectionName, id, data) {
     .then(docRef => ({
       [id]: data
     }))
-    .catch(err => {
-      return err
-    })
 }
 
 export function doDelete(collectionName, id) {
@@ -55,29 +46,20 @@ export function doDelete(collectionName, id) {
     .doc(id)
     .delete()
     .then(() => id)
-    .catch(err => {
-      return err
-    })
 }
 
 export function doLogin(provider) {
   switch (provider) {
     case 'facebook':
-      return authFunctions
-        .loginWithFacebook()
-        .then(result => {
-          console.log(result)
-          return {
-            id: result.user.uid,
-            displayName: result.user.displayName,
-            email: result.user.email,
-            imgUrl: result.user.photoURL
-          }
-        })
-        .catch(err => {
-          console.err(err)
-          return err
-        })
+      return authFunctions.loginWithFacebook().then(result => {
+        console.log(result)
+        return {
+          id: result.user.uid,
+          displayName: result.user.displayName,
+          email: result.user.email,
+          imgUrl: result.user.photoURL
+        }
+      })
     default:
       throw Error('Unknown provider ' + provider)
   }
@@ -103,8 +85,5 @@ export async function addParticipant(projectId, userId) {
 }
 
 export function doLogout(provider) {
-  return authFunctions.logUserOut().catch(err => {
-    console.err(err)
-    return err
-  })
+  return authFunctions.logUserOut()
 }

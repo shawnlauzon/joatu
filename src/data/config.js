@@ -16,4 +16,4 @@ try {
   console.error('Could not initialize firebase', e)
 }
 
-export default firebase
+export { firebase }

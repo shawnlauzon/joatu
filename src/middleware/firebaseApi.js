@@ -20,7 +20,7 @@ const apiMiddleware = store => next => action => {
 
   next({ type: requestStartedType })
 
-  // FIXME I think this should be in a selector
+  // FIXME Unsure where the connection between Component and API should be handled
   // if (callApi.collection === 'projects' && callApi.action === 'add') {
   //   callApi.body = {
   //     ...callApi.body,
@@ -31,97 +31,48 @@ const apiMiddleware = store => next => action => {
   //   }
   // }
 
+  const handleResponse = response => {
+    return next({
+      type: successType,
+      payload: response
+    })
+  }
+
+  const handleError = err => {
+    return next({
+      type: failureType,
+      error: err.message
+    })
+  }
+
   if (callApi.action === 'add') {
-    return doAdd(callApi.collection, callApi.body).then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return doAdd(callApi.collection, callApi.body)
+      .then(handleResponse)
+      .catch(handleError)
   } else if (callApi.action === 'set') {
-    return doSet(callApi.collection, callApi.id, callApi.body).then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return doSet(callApi.collection, callApi.id, callApi.body)
+      .then(handleResponse)
+      .catch(handleError)
   } else if (callApi.action === 'delete') {
-    return doDelete(callApi.collection, callApi.id).then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return doDelete(callApi.collection, callApi.id)
+      .then(handleResponse)
+      .catch(handleError)
   } else if (callApi.action === 'login') {
-    return doLogin(callApi.provider).then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return doLogin(callApi.provider)
+      .then(handleResponse)
+      .catch(handleError)
   } else if (callApi.action === 'logout') {
-    return doLogout().then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return doLogout()
+      .then(handleResponse)
+      .catch(handleError)
   } else if (callApi.action === 'addParticipant') {
-    return addParticipant(callApi.projectId, callApi.userId).then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return addParticipant(callApi.projectId, callApi.userId)
+      .then(handleResponse)
+      .catch(handleError)
   } else {
-    return doGet(callApi.collection).then(
-      response =>
-        next({
-          type: successType,
-          payload: response
-        }),
-      error =>
-        next({
-          type: failureType,
-          error: error.message
-        })
-    )
+    return doGet(callApi.collection)
+      .then(handleResponse)
+      .catch(handleError)
   }
 }
 

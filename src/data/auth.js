@@ -1,4 +1,4 @@
-const auth = firebase => {
+const auth = (firebase, onAuthChanged) => {
   const facebook = new firebase.auth.FacebookAuthProvider()
   facebook.addScope('email')
 
@@ -23,6 +23,11 @@ const auth = firebase => {
     }
     return currentUser.getIdToken(true)
   }
+
+  // TODO Who dispatches this?
+  firebase.auth().onAuthStateChanged(user => {
+    // this.props.dispatch(onAuthChanged(user))
+  })
 
   return { loginWithFacebook, logUserOut, getFirebaseUser, getFirebaseToken }
 }

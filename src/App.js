@@ -28,11 +28,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    // FIXME Integrate better with the API; it seems weird to be here
-    // props.firebase.auth().onAuthStateChanged(user => {
-    //   this.props.dispatch(onAuthChanged(user))
-    // })
-
+    // FIXME Hack (see below)
     this.creatingUser = false
   }
 
@@ -47,6 +43,7 @@ class App extends React.Component {
   // Still, this should be improved. Ideally after LOGIN_SUCCEEDED, the user
   // should be created if it doesn't yet exist.
   componentWillReceiveProps(nextProps) {
+    // If the user doesn't yet exist, create it
     if (
       !this.creatingUser &&
       nextProps.user &&
