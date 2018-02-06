@@ -1,11 +1,14 @@
-import firebase from './config'
-import 'firebase/firestore'
-import auth from './auth'
-
-export const CALL_API = 'CALL_API'
-
-const db = firebase.firestore()
-const authFunctions = auth(firebase)
+import {
+  CALL_API,
+  doGet,
+  doSet,
+  doAdd,
+  doDelete,
+  // These should be embedded
+  doLogin,
+  doLogout,
+  addParticipant
+} from '../data/api'
 
 const apiMiddleware = store => next => action => {
   const callApi = action[CALL_API]
@@ -17,15 +20,16 @@ const apiMiddleware = store => next => action => {
 
   next({ type: requestStartedType })
 
-  if (callApi.collection === 'projects' && callApi.action === 'add') {
-    callApi.body = {
-      ...callApi.body,
-      coordinates: new firebase.firestore.GeoPoint(
-        callApi.body.coordinates.latitude,
-        callApi.body.coordinates.longitude
-      )
-    }
-  }
+  // FIXME I think this should be in a selector
+  // if (callApi.collection === 'projects' && callApi.action === 'add') {
+  //   callApi.body = {
+  //     ...callApi.body,
+  //     coordinates: new firebase.firestore.GeoPoint(
+  //       callApi.body.coordinates.latitude,
+  //       callApi.body.coordinates.longitude
+  //     )
+  //   }
+  // }
 
   if (callApi.action === 'add') {
     return doAdd(callApi.collection, callApi.body).then(
@@ -121,106 +125,4 @@ const apiMiddleware = store => next => action => {
   }
 }
 
-function doGet(collectionName) {
-  const coll = {}
-  return db
-    .collection(collectionName)
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        coll[doc.id] = doc.data()
-      })
-      return coll
-    })
-    .catch(err => {
-      return err
-    })
-}
-
-function doAdd(collectionName, data) {
-  return db
-    .collection(collectionName)
-    .add(data)
-    .then(docRef => ({
-      // Return id: { ...data }
-      [docRef.id]: data
-    }))
-    .catch(err => {
-      return err
-    })
-}
-
-function doSet(collectionName, id, data) {
-  return db
-    .collection(collectionName)
-    .doc(id)
-    .set(data)
-    .then(docRef => ({
-      [id]: data
-    }))
-    .catch(err => {
-      return err
-    })
-}
-
-function doDelete(collectionName, id) {
-  return db
-    .collection(collectionName)
-    .doc(id)
-    .delete()
-    .then(() => id)
-    .catch(err => {
-      return err
-    })
-}
-
-function doLogin(provider) {
-  switch (provider) {
-    case 'facebook':
-      return authFunctions
-        .loginWithFacebook()
-        .then(result => {
-          console.log(result)
-          return {
-            id: result.user.uid,
-            displayName: result.user.displayName,
-            email: result.user.email,
-            imgUrl: result.user.photoURL
-          }
-        })
-        .catch(err => {
-          console.err(err)
-          return err
-        })
-    default:
-      throw Error('Unknown provider ' + provider)
-  }
-}
-
-async function addParticipant(projectId, userId) {
-  const pathToUser = ['participants', userId].join('.')
-  const pathToProject = ['projects', projectId].join('.')
-
-  const project = await db.collection('projects').doc(projectId)
-  await project.update({
-    [pathToUser]: true
-  })
-  const user = await db.collection('users').doc(userId)
-  await user.update({
-    [pathToProject]: true
-  })
-
-  return {
-    projectId,
-    userId
-  }
-}
-
-function doLogout(provider) {
-  return authFunctions.logUserOut().catch(err => {
-    console.err(err)
-    return err
-  })
-}
-
-export { firebase, apiMiddleware }
+export default apiMiddleware

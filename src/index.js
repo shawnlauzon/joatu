@@ -10,7 +10,7 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import fr from 'react-intl/locale-data/fr'
 
 import rootReducer from './data'
-import { firebase, apiMiddleware } from './middleware/firebaseApi'
+import apiMiddleware from './middleware/firebaseApi'
 import App from './App'
 
 import registerServiceWorker from './registerServiceWorker'
@@ -25,7 +25,7 @@ addLocaleData(fr)
 ReactDOM.render(
   <Provider store={store}>
     <IntlProvider locale={navigator.language} defaultLocale="en">
-      <App firebase={firebase} />
+      <App />
     </IntlProvider>
   </Provider>,
   document.getElementById('root')

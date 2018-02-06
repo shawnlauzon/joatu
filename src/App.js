@@ -11,26 +11,27 @@ import Community from './scenes/Community'
 
 import {
   fetchCommunities,
-  fetchProjects,
   fetchUsers,
-  createProject,
-  deleteProject,
   loginUser,
   logoutUser,
   createUser,
-  onAuthChanged,
+  // onAuthChanged,
   addParticipant
 } from './actions'
 import './App.css'
+
+import { actions as projectActions } from './data/projects'
+
+const { fetchProjects, createProject, deleteProject } = projectActions
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
-    // TODO Integrate better with the API; it seems weird to be here
-    props.firebase.auth().onAuthStateChanged(user => {
-      this.props.dispatch(onAuthChanged(user))
-    })
+    // FIXME Integrate better with the API; it seems weird to be here
+    // props.firebase.auth().onAuthStateChanged(user => {
+    //   this.props.dispatch(onAuthChanged(user))
+    // })
 
     this.creatingUser = false
   }
@@ -60,6 +61,9 @@ class App extends React.Component {
     }
   }
 
+  // TODO should this be more like
+  // onLogin = provider => dispatch => dispatch(loginUser(provider)) ??
+  // See Redux docs (Reducing boilerplate)
   onLogin = provider => {
     this.props.dispatch(loginUser(provider))
   }

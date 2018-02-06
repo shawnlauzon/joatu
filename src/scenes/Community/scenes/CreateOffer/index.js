@@ -46,6 +46,7 @@ class CreateOffer extends React.Component {
   }
 
   onSaveOffer = e => {
+    // FIXME Set the community on the project
     this.props.onCreateProject({
       name: this.state.name,
       location: this.state.location,
