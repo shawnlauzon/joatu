@@ -6,16 +6,12 @@ import { Typography } from 'material-ui'
 import DisplayMap from './components/DisplayMap'
 import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
-import ButtonDelete from './components/ButtonDelete'
+import ButtonDelete from '../../../../components/ButtonDelete'
 import ParticipantList from './components/ParticipantList'
 
 const ProjectInfo = props => {
   const handleJoin = e => {
     props.onJoinProject(props.id)
-  }
-
-  const handleDelete = e => {
-    props.onDeleteProject(props.id)
   }
 
   return (
@@ -32,11 +28,11 @@ const ProjectInfo = props => {
       <div>
         <ButtonJoin
           handleClick={handleJoin}
-          authenticated={props.authenticated}
+          authenticated={props.authenticated.authenticated}
         />
         <ButtonDelete
-          handleClick={handleDelete}
-          authenticated={props.authenticated}
+          handleClick={props.onDelete}
+          authenticated={props.authenticated.authenticated}
         />
       </div>
       <ParticipantList {...props} />
@@ -45,11 +41,13 @@ const ProjectInfo = props => {
 }
 
 ProjectInfo.propTypes = {
+  authenticated: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
-  authenticated: PropTypes.object,
-  onDeleteProject: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   onJoinProject: PropTypes.func.isRequired
 }
 

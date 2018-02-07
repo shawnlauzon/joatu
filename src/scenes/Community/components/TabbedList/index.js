@@ -67,32 +67,42 @@ class TabbedList extends React.Component {
     const { tabNum } = this.state
 
     const ProjectInfoPane = routeInfo => {
-      const project = this.props.projects[routeInfo.match.params.id]
+      const id = routeInfo.match.params.id
+      const project = this.props.projects[id]
 
       return (
         <ProjectInfo
           {...this.props}
-          id={routeInfo.match.params.id}
+          id={id}
+          onDelete={() => this.props.onDeleteProject(id)}
           {...project}
         />
       )
     }
 
     const OfferInfoPane = routeInfo => {
-      const offer = this.props.offers[routeInfo.match.params.id]
+      const id = routeInfo.match.params.id
+      const offer = this.props.offers[id]
 
       return (
-        <OfferInfo {...this.props} id={routeInfo.match.params.id} {...offer} />
+        <OfferInfo
+          {...this.props}
+          id={id}
+          onDelete={() => this.props.onDeleteOffer(id)}
+          {...offer}
+        />
       )
     }
 
     const RequestInfoPane = routeInfo => {
-      const request = this.props.requests[routeInfo.match.params.id]
+      const id = routeInfo.match.params.id
+      const request = this.props.requests[id]
 
       return (
         <RequestInfo
           {...this.props}
-          id={routeInfo.match.params.id}
+          id={id}
+          onDelete={() => this.props.onDeleteRequest(id)}
           {...request}
         />
       )
@@ -157,7 +167,10 @@ TabbedList.propTypes = {
   requests: PropTypes.object.isRequired,
   onCreateProject: PropTypes.func.isRequired,
   onCreateRequest: PropTypes.func.isRequired,
-  onCreateOffer: PropTypes.func.isRequired
+  onCreateOffer: PropTypes.func.isRequired,
+  onDeleteProject: PropTypes.func.isRequired,
+  onDeleteRequest: PropTypes.func.isRequired,
+  onDeleteOffer: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(TabbedList)
