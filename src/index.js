@@ -15,9 +15,15 @@ import App from './App'
 
 import registerServiceWorker from './registerServiceWorker'
 
+const middlewares = [thunk, apiMiddleware]
+
+if (false) {
+  middlewares.push(logger)
+}
+
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk, apiMiddleware, logger))
+  composeWithDevTools(applyMiddleware(...middlewares))
 )
 
 addLocaleData(fr)
