@@ -1,9 +1,10 @@
 import * as R from 'ramda'
 import React from 'react'
-import { MuiThemeProvider } from 'material-ui/styles'
-import theme from './theme'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
+
+import { MuiThemeProvider } from 'material-ui/styles'
+import theme from './theme'
 
 import Reboot from 'material-ui/Reboot'
 

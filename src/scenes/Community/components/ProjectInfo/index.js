@@ -6,7 +6,7 @@ import { Typography } from 'material-ui'
 import DisplayMap from './components/DisplayMap'
 import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
-import ButtonDelete from '../../../../components/ButtonDelete'
+import ButtonDelete from '../ButtonDelete'
 import ParticipantList from './components/ParticipantList'
 
 const ProjectInfo = props => {
@@ -17,7 +17,7 @@ const ProjectInfo = props => {
   return (
     <div>
       <Typography type="display2">{props.name}</Typography>
-      <Typography type="subheading">{props.location}</Typography>
+      <Typography type="subheading">{props.place}</Typography>
       <div>
         {props.coordinates && <DisplayMap {...props} />}
         {/* TODO the hourly award needs to be calculated */}
@@ -46,7 +46,7 @@ ProjectInfo.propTypes = {
   }).isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
+  place: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
   onJoinProject: PropTypes.func.isRequired
 }

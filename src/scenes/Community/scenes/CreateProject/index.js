@@ -25,7 +25,7 @@ class CreateProject extends React.Component {
     super(props)
     this.state = {
       name: '',
-      location: 'the community center',
+      place: 'the community center',
       start: moment()
         .add(2, 'weeks')
         .minute(0)
@@ -51,7 +51,7 @@ class CreateProject extends React.Component {
       community: this.props.community.id,
       owner: this.props.authenticated.id,
       name: this.state.name,
-      location: this.state.location,
+      place: this.state.place,
       start: new Date(this.state.start),
       duration: Number(this.state.duration),
       coordinates: {
@@ -85,9 +85,9 @@ class CreateProject extends React.Component {
         <Grid item className={classes.text}>
           We will meet at{' '}
           <TextField
-            id="location"
+            id="place"
             helperText="Where?"
-            value={this.state.location}
+            value={this.state.place}
             onChange={this.onInputChange}
             required
           />{' '}

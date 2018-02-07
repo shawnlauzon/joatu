@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ButtonOffering from '../../../../../../components/ButtonOffering'
+import ButtonOffering from '../ButtonOffering'
 
 const RequestList = props => (
   <div>

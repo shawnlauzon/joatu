@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography } from 'material-ui'
-import ButtonDelete from '../../../../components/ButtonDelete'
+import ButtonDelete from '../ButtonDelete'
 
 const OfferInfo = props => (
   <div>
