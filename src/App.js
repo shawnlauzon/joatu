@@ -95,7 +95,7 @@ class App extends React.Component {
                 this.props.dispatch(projectActions.create(body))
               }
               onDeleteProject={body =>
-                this.props.dispatch(projectActions.delete(body))
+                this.props.dispatch(projectActions.remove(body))
               }
               onJoinProject={this.onJoinProject}
             />
