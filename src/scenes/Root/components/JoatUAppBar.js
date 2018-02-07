@@ -11,7 +11,7 @@ import MenuIcon from 'material-ui-icons/Menu'
 import Avatar from 'material-ui/Avatar'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
-import LoginModal from '../LoginModal'
+import LoginModal from './LoginModal'
 
 const styles = {
   root: {
