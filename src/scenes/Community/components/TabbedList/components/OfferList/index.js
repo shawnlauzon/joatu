@@ -4,20 +4,14 @@ import ButtonOffering from '../../../../../../components/ButtonOffering'
 
 const OfferList = props => (
   <div>
-    {props.trades &&
-      Object.entries(props.offers).map(([id, offer]) => (
-        <ButtonOffering
-          key={id}
-          id={id}
-          name={offer.name}
-          to={`/offers/${id}`}
-        />
-      ))}
+    {Object.entries(props.offers).map(([id, offer]) => (
+      <ButtonOffering key={id} id={id} name={offer.name} to={`/offers/${id}`} />
+    ))}
   </div>
 )
 
 OfferList.propTypes = {
-  offers: PropTypes.object
+  offers: PropTypes.object.isRequired
 }
 
 export default OfferList

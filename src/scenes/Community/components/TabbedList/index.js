@@ -15,7 +15,8 @@ import ProjectInfo from '../ProjectInfo'
 import OfferInfo from '../OfferInfo'
 import RequestInfo from '../RequestInfo'
 import CreateProject from './scenes/CreateProject'
-// import CreateRequest from './scenes/CreateRequest'
+import CreateOffer from './scenes/CreateOffer'
+import CreateRequest from './scenes/CreateRequest'
 
 const TAB_NAMES = ['Projects', 'Offers', 'Requests']
 
@@ -30,6 +31,12 @@ const styles = theme => ({
   }
 })
 
+const CREATE_PATHS_BY_TAB = [
+  '/create-project',
+  '/create-offer',
+  '/create-request'
+]
+
 class TabbedList extends React.Component {
   constructor(props) {
     super(props)
@@ -42,8 +49,6 @@ class TabbedList extends React.Component {
   renderTab = () => {
     // TODO Understand why I can't use an array or object for this
     switch (this.state.tabNum) {
-      case 0:
-        return <ProjectList projects={this.props.projects} />
       case 1:
         return <OfferList offers={this.props.offers} />
       case 2:
@@ -62,55 +67,51 @@ class TabbedList extends React.Component {
     const { tabNum } = this.state
 
     const ProjectInfoPane = routeInfo => {
-      if (this.props.projects) {
-        const project = this.props.projects[routeInfo.match.params.id]
+      const project = this.props.projects[routeInfo.match.params.id]
 
-        return (
-          <ProjectInfo
-            {...this.props}
-            id={routeInfo.match.params.id}
-            {...project}
-          />
-        )
-      } else {
-        return null
-      }
+      return (
+        <ProjectInfo
+          {...this.props}
+          id={routeInfo.match.params.id}
+          {...project}
+        />
+      )
     }
 
     const OfferInfoPane = routeInfo => {
-      if (this.props.offers) {
-        const offer = this.props.offer[routeInfo.match.params.id]
+      const offer = this.props.offers[routeInfo.match.params.id]
 
-        return (
-          <OfferInfo
-            {...this.props}
-            id={routeInfo.match.params.id}
-            offer={offer}
-          />
-        )
-      } else {
-        return null
-      }
+      return (
+        <OfferInfo {...this.props} id={routeInfo.match.params.id} {...offer} />
+      )
     }
 
     const RequestInfoPane = routeInfo => {
-      if (this.props.requests) {
-        const request = this.props.requests[routeInfo.match.params.id]
+      const request = this.props.requests[routeInfo.match.params.id]
 
-        return (
-          <RequestInfo
-            {...this.props}
-            id={routeInfo.match.params.id}
-            request={request}
-          />
-        )
-      } else {
-        return null
-      }
+      return (
+        <RequestInfo
+          {...this.props}
+          id={routeInfo.match.params.id}
+          {...request}
+        />
+      )
     }
 
     const CreateProjectPane = routeInfo => {
-      return <CreateProject onCreateProject={this.props.onCreateProject} />
+      return (
+        <CreateProject {...this.props} onCreate={this.props.onCreateProject} />
+      )
+    }
+
+    const CreateOfferPane = routeInfo => {
+      return <CreateOffer {...this.props} onCreate={this.props.onCreateOffer} />
+    }
+
+    const CreateRequestPane = routeInfo => {
+      return (
+        <CreateRequest {...this.props} onCreate={this.props.onCreateRequest} />
+      )
     }
 
     return (
@@ -122,7 +123,7 @@ class TabbedList extends React.Component {
           aria-label="add"
           disabled={!this.props.authenticated.authenticated}
           component={Link}
-          to="/create-project"
+          to={CREATE_PATHS_BY_TAB[this.state.tabNum]}
         >
           <AddIcon />
         </Button>
@@ -138,6 +139,8 @@ class TabbedList extends React.Component {
             <Route path="/offers/:id" render={OfferInfoPane} />
             <Route path="/requests/:id" render={RequestInfoPane} />
             <Route path="/create-project" render={CreateProjectPane} />
+            <Route path="/create-request" render={CreateRequestPane} />
+            <Route path="/create-offer" render={CreateOfferPane} />
           </Grid>
         </Grid>
       </div>
@@ -148,7 +151,13 @@ class TabbedList extends React.Component {
 TabbedList.propTypes = {
   authenticated: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired
-  }).isRequired
+  }).isRequired,
+  projects: PropTypes.object.isRequired,
+  offers: PropTypes.object.isRequired,
+  requests: PropTypes.object.isRequired,
+  onCreateProject: PropTypes.func.isRequired,
+  onCreateRequest: PropTypes.func.isRequired,
+  onCreateOffer: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(TabbedList)

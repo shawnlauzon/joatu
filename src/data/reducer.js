@@ -5,7 +5,7 @@ import users from './users/reducer'
 import projects from './projects/reducer'
 import authenticated from './authenticated/reducer'
 import offers from './offers/reducer'
-import requests from './offers/reducer'
+import requests from './requests/reducer'
 
 export default combineReducers({
   authenticated,

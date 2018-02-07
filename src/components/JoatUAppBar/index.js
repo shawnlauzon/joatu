@@ -29,7 +29,7 @@ const styles = {
 class JoatUAppBar extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
+
     this.state = {
       loginModalOpen: false,
       anchorEl: null

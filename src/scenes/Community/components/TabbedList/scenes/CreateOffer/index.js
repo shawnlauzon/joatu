@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import moment from 'moment'
-
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
@@ -20,19 +18,11 @@ const styles = theme => ({
   }
 })
 
-class CreateProject extends React.Component {
+class CreateOffer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: '',
-      location: 'the community center',
-      start: moment()
-        .add(2, 'weeks')
-        .minute(0)
-        .format('YYYY-MM-DDTHH:mm'),
-      duration: 120,
-      latitude: 45.5288239,
-      longitude: -73.591279
+      name: ''
     }
   }
 
@@ -50,14 +40,7 @@ class CreateProject extends React.Component {
     this.props.onCreate({
       community: this.props.community.id,
       owner: this.props.authenticated.id,
-      name: this.state.name,
-      location: this.state.location,
-      start: new Date(this.state.start),
-      duration: Number(this.state.duration),
-      coordinates: {
-        latitude: Number(this.state.latitude),
-        longitude: Number(this.state.longitude)
-      }
+      name: this.state.name
     })
   }
 
@@ -68,7 +51,7 @@ class CreateProject extends React.Component {
       <Grid container direction="column">
         <Grid item>
           <Typography type="display2" gutterBottom>
-            Create Project
+            Create Offer
           </Typography>
         </Grid>
         <Grid item>
@@ -80,53 +63,6 @@ class CreateProject extends React.Component {
             required
             fullWidth
             autoFocus
-          />
-        </Grid>
-        <Grid item className={classes.text}>
-          We will meet at{' '}
-          <TextField
-            id="location"
-            helperText="Where?"
-            value={this.state.location}
-            onChange={this.onInputChange}
-            required
-          />{' '}
-          at{' '}
-          <TextField
-            id="start"
-            type="datetime-local"
-            helperText="When?"
-            value={this.state.start}
-            onChange={this.onInputChange}
-            required
-          />{' '}
-          for{' '}
-          <TextField
-            id="duration"
-            type="number"
-            helperText="How long?"
-            value={this.state.duration}
-            onChange={this.onInputChange}
-            required
-          />{' '}
-          minutes.
-        </Grid>
-        <Grid item>
-          <TextField
-            id="latitude"
-            type="number"
-            label="Latitude"
-            value={this.state.latitude}
-            onChange={this.onInputChange}
-            required
-          />
-          <TextField
-            id="longitude"
-            type="number"
-            label="Longitude"
-            value={this.state.longitude}
-            onChange={this.onInputChange}
-            required
           />
         </Grid>
 
@@ -151,7 +87,7 @@ class CreateProject extends React.Component {
   }
 }
 
-CreateProject.propTypes = {
+CreateOffer.propTypes = {
   authenticated: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
@@ -161,4 +97,4 @@ CreateProject.propTypes = {
   onCreate: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(CreateProject)
+export default withStyles(styles)(CreateOffer)

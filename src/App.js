@@ -92,6 +92,7 @@ class App extends React.Component {
                 <Community
                   key={id}
                   id={id}
+                  community={R.assoc('id', id, community)}
                   name={community.name}
                   authenticated={this.props.authenticated}
                   // TODO Filter projects & trades for this community
@@ -103,8 +104,20 @@ class App extends React.Component {
                   onCreateProject={body =>
                     this.props.dispatch(projectActions.create(body))
                   }
-                  onDeleteProject={body =>
-                    this.props.dispatch(projectActions.remove(body))
+                  onDeleteProject={id =>
+                    this.props.dispatch(projectActions.remove(id))
+                  }
+                  onCreateRequest={body =>
+                    this.props.dispatch(requestActions.create(body))
+                  }
+                  onDeleteRequest={id =>
+                    this.props.dispatch(requestActions.remove(id))
+                  }
+                  onCreateOffer={body =>
+                    this.props.dispatch(offerActions.create(body))
+                  }
+                  onDeleteOffer={id =>
+                    this.props.dispatch(offerActions.remove(id))
                   }
                   onJoinProject={this.onJoinProject}
                 />
@@ -121,7 +134,8 @@ function mapStateToProps(state) {
     authenticated: state.authenticated,
     communities: state.communities,
     projects: state.projects,
-    trades: state.trades,
+    offers: state.offers,
+    requests: state.requests,
     users: state.users
   }
 }
