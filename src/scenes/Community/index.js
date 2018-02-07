@@ -1,18 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { BrowserRouter as Router } from 'react-router-dom'
 import Typography from 'material-ui/Typography'
 
-import OfferList from './components/OfferList'
+import TabbedList from './components/TabbedList'
 
 const Community = props => (
   <div>
     <Typography type="display3" gutterBottom>
       {props.name}
     </Typography>
-    <Router>
-      <OfferList {...props} />
-    </Router>
+    <TabbedList {...props} />
   </div>
 )
 

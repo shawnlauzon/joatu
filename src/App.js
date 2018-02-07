@@ -3,6 +3,7 @@ import React from 'react'
 import { MuiThemeProvider } from 'material-ui/styles'
 import theme from './theme'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import Reboot from 'material-ui/Reboot'
 
@@ -16,7 +17,9 @@ import {
   projectActions,
   userActions,
   authActions,
-  addParticipant
+  addParticipant,
+  offerActions,
+  requestActions
 } from './data/actions'
 
 import './App.css'
@@ -33,6 +36,8 @@ class App extends React.Component {
     this.props.dispatch(userActions.fetch())
     this.props.dispatch(communityActions.fetch())
     this.props.dispatch(projectActions.fetch())
+    this.props.dispatch(offerActions.fetch())
+    this.props.dispatch(requestActions.fetch())
 
     firebase.auth().onAuthStateChanged(user => {
       this.props.dispatch(authActions.onAuthChanged(user))
@@ -74,32 +79,38 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <Reboot />
-        <JoatUAppBar
-          {...this.props}
-          onLogin={this.onLogin}
-          onLogout={this.onLogout}
-        />
-        {this.props.communities &&
-          Object.entries(this.props.communities).map(([id, community]) => (
-            <Community
-              key={id}
-              id={id}
-              name={community.name}
-              authenticated={this.props.authenticated}
-              // TODO Filter projects & trades for this community
-              projects={this.props.projects}
-              trades={this.props.trades}
-              users={this.props.users}
-              onCreateProject={body =>
-                this.props.dispatch(projectActions.create(body))
-              }
-              onDeleteProject={body =>
-                this.props.dispatch(projectActions.remove(body))
-              }
-              onJoinProject={this.onJoinProject}
+        <Router>
+          <div>
+            <Reboot />
+            <JoatUAppBar
+              {...this.props}
+              onLogin={this.onLogin}
+              onLogout={this.onLogout}
             />
-          ))}
+            {this.props.communities &&
+              Object.entries(this.props.communities).map(([id, community]) => (
+                <Community
+                  key={id}
+                  id={id}
+                  name={community.name}
+                  authenticated={this.props.authenticated}
+                  // TODO Filter projects & trades for this community
+                  projects={this.props.projects}
+                  trades={this.props.trades}
+                  users={this.props.users}
+                  offers={this.props.offers}
+                  requests={this.props.requests}
+                  onCreateProject={body =>
+                    this.props.dispatch(projectActions.create(body))
+                  }
+                  onDeleteProject={body =>
+                    this.props.dispatch(projectActions.remove(body))
+                  }
+                  onJoinProject={this.onJoinProject}
+                />
+              ))}
+          </div>
+        </Router>
       </MuiThemeProvider>
     )
   }

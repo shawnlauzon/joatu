@@ -9,12 +9,15 @@ import AddIcon from 'material-ui-icons/Add'
 import { withStyles } from 'material-ui/styles'
 
 import ProjectList from './components/ProjectList'
-import TradeList from './components/TradeList'
+import OfferList from './components/OfferList'
+import RequestList from './components/RequestList'
 import ProjectInfo from '../ProjectInfo'
-import TradeDetail from '../TradeDetail'
-import CreateOffer from '../../scenes/CreateOffer'
+import OfferInfo from '../OfferInfo'
+import RequestInfo from '../RequestInfo'
+import CreateProject from './scenes/CreateProject'
+// import CreateRequest from './scenes/CreateRequest'
 
-const TAB_NAMES = ['Projects', 'Trades']
+const TAB_NAMES = ['Projects', 'Offers', 'Requests']
 
 const styles = theme => ({
   fab: {
@@ -27,12 +30,26 @@ const styles = theme => ({
   }
 })
 
-class OfferList extends React.Component {
-  constructor() {
-    super()
+class TabbedList extends React.Component {
+  constructor(props) {
+    super(props)
 
     this.state = {
       tabNum: 0
+    }
+  }
+
+  renderTab = () => {
+    // TODO Understand why I can't use an array or object for this
+    switch (this.state.tabNum) {
+      case 0:
+        return <ProjectList projects={this.props.projects} />
+      case 1:
+        return <OfferList offers={this.props.offers} />
+      case 2:
+        return <RequestList requests={this.props.requests} />
+      default:
+        return <ProjectList projects={this.props.projects} />
     }
   }
 
@@ -60,15 +77,15 @@ class OfferList extends React.Component {
       }
     }
 
-    const TradeDetailPane = routeInfo => {
-      if (this.props.trades) {
-        const trade = this.props.trades[routeInfo.match.params.id]
+    const OfferInfoPane = routeInfo => {
+      if (this.props.offers) {
+        const offer = this.props.offer[routeInfo.match.params.id]
 
         return (
-          <TradeDetail
+          <OfferInfo
             {...this.props}
             id={routeInfo.match.params.id}
-            trade={trade}
+            offer={offer}
           />
         )
       } else {
@@ -76,8 +93,24 @@ class OfferList extends React.Component {
       }
     }
 
-    const CreateOfferPane = routeInfo => {
-      return <CreateOffer onCreateProject={this.props.onCreateProject} />
+    const RequestInfoPane = routeInfo => {
+      if (this.props.requests) {
+        const request = this.props.requests[routeInfo.match.params.id]
+
+        return (
+          <RequestInfo
+            {...this.props}
+            id={routeInfo.match.params.id}
+            request={request}
+          />
+        )
+      } else {
+        return null
+      }
+    }
+
+    const CreateProjectPane = routeInfo => {
+      return <CreateProject onCreateProject={this.props.onCreateProject} />
     }
 
     return (
@@ -94,20 +127,17 @@ class OfferList extends React.Component {
           <AddIcon />
         </Button>
         <Grid container>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={5}>
             <Tabs value={tabNum} onChange={this.onTabChanged}>
               {TAB_NAMES.map((name, idx) => <Tab key={idx} label={name} />)}
             </Tabs>
-            {tabNum === 0 ? (
-              <ProjectList projects={this.props.projects} />
-            ) : (
-              <TradeList trades={this.props.trades} />
-            )}
+            {this.renderTab()}
           </Grid>
-          <Grid xs={12} sm={8} item>
+          <Grid xs={12} sm={7} item>
             <Route path="/projects/:id" render={ProjectInfoPane} />
-            <Route path="/trades/:id" render={TradeDetailPane} />
-            <Route path="/create-project" render={CreateOfferPane} />
+            <Route path="/offers/:id" render={OfferInfoPane} />
+            <Route path="/requests/:id" render={RequestInfoPane} />
+            <Route path="/create-project" render={CreateProjectPane} />
           </Grid>
         </Grid>
       </div>
@@ -115,10 +145,10 @@ class OfferList extends React.Component {
   }
 }
 
-OfferList.propTypes = {
+TabbedList.propTypes = {
   authenticated: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired
   }).isRequired
 }
 
-export default withStyles(styles)(OfferList)
+export default withStyles(styles)(TabbedList)

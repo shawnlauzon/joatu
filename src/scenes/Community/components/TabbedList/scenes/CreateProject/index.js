@@ -19,7 +19,7 @@ const styles = theme => ({
   }
 })
 
-class CreateOffer extends React.Component {
+class CreateProject extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -66,7 +66,7 @@ class CreateOffer extends React.Component {
       <Grid container direction="column">
         <Grid item>
           <Typography type="display2" gutterBottom>
-            Create Offer
+            Create Project
           </Typography>
         </Grid>
         <Grid item>
@@ -149,4 +149,4 @@ class CreateOffer extends React.Component {
   }
 }
 
-export default withStyles(styles)(CreateOffer)
+export default withStyles(styles)(CreateProject)

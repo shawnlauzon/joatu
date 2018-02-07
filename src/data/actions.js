@@ -2,8 +2,17 @@ import * as communityActions from './communities/actions'
 import * as projectActions from './projects/actions'
 import * as userActions from './users/actions'
 import * as authActions from './authenticated/actions'
+import * as offerActions from './offers/actions'
+import * as requestActions from './requests/actions'
 
-export { communityActions, projectActions, userActions, authActions }
+export {
+  communityActions,
+  projectActions,
+  userActions,
+  authActions,
+  offerActions,
+  requestActions
+}
 
 export const CALL_API = 'CALL_API'
 

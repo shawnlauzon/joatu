@@ -2,22 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ButtonOffering from '../../../../../../components/ButtonOffering'
 
-const TradeList = props => (
+const OfferList = props => (
   <div>
     {props.trades &&
-      Object.entries(props.trades).map(([id, trade]) => (
+      Object.entries(props.offers).map(([id, offer]) => (
         <ButtonOffering
           key={id}
           id={id}
-          name={trade.name}
-          to={`/trades/${id}`}
+          name={offer.name}
+          to={`/offers/${id}`}
         />
       ))}
   </div>
 )
 
-TradeList.propTypes = {
-  trades: PropTypes.object
+OfferList.propTypes = {
+  offers: PropTypes.object
 }
 
-export default TradeList
+export default OfferList
