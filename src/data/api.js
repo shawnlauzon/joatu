@@ -1,9 +1,22 @@
+import * as R from 'ramda'
+
 import { firebase } from './config'
 import 'firebase/firestore'
 import auth from './auth'
 
 const db = firebase.firestore()
 const authFunctions = auth(firebase)
+
+const toFirestore = body => {
+  const makeGeoPoint = coords =>
+    new firebase.firestore.GeoPoint(coords.latitude, coords.longitude)
+
+  const transformations = {
+    coordinates: makeGeoPoint
+  }
+
+  return R.evolve(transformations, body)
+}
 
 export function doGet(collectionName) {
   const coll = {}
@@ -21,7 +34,7 @@ export function doGet(collectionName) {
 export function doAdd(collectionName, data) {
   return db
     .collection(collectionName)
-    .add(data)
+    .add(toFirestore(data))
     .then(docRef => ({
       // Return id: { ...data }
       [docRef.id]: data
@@ -32,7 +45,7 @@ export function doSet(collectionName, id, data) {
   return db
     .collection(collectionName)
     .doc(id)
-    .set(data)
+    .set(toFirestore(data))
     .then(docRef => ({
       [id]: data
     }))
@@ -50,7 +63,6 @@ export function doLogin(provider) {
   switch (provider) {
     case 'facebook':
       return authFunctions.loginWithFacebook().then(result => {
-        console.log(result)
         return {
           id: result.user.uid,
           displayName: result.user.displayName,

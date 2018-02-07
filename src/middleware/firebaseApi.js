@@ -21,17 +21,6 @@ const apiMiddleware = store => next => action => {
 
   next({ type: requestStartedType })
 
-  // FIXME Unsure where the connection between Component and API should be handled
-  // if (callApi.collection === 'projects' && callApi.action === 'add') {
-  //   callApi.body = {
-  //     ...callApi.body,
-  //     coordinates: new firebase.firestore.GeoPoint(
-  //       callApi.body.coordinates.latitude,
-  //       callApi.body.coordinates.longitude
-  //     )
-  //   }
-  // }
-
   const handleResponse = response => {
     return next({
       type: successType,
