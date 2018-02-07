@@ -61,7 +61,6 @@ class TabbedList extends React.Component {
   }
 
   onTabChanged = (event, value) => {
-    console.log('Change to tab ' + value + ' from ' + this.state.tabNum)
     this.setState({ tabNum: value })
   }
 

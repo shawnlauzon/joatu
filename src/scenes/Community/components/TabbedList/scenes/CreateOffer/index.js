@@ -77,6 +77,7 @@ class CreateOffer extends React.Component {
             onClick={this.onSave}
             // TODO Validate before navigating away
             component={Link}
+            // TODO Go to the newly created component after we know the id
             to=".."
           >
             Create
