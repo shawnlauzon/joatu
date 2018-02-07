@@ -6,7 +6,7 @@ import { Typography } from 'material-ui'
 import DisplayMap from './components/DisplayMap'
 import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
-import ButtonDelete from '../ButtonDelete'
+import ButtonDelete from '../../components/ButtonDelete'
 import ParticipantList from './components/ParticipantList'
 
 const ProjectInfo = props => {

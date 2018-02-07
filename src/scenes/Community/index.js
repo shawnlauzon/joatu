@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography'
 import TabbedList from './components/TabbedList'
 import ResponsivePage from './components/ResponsivePage'
 
-import ProjectInfo from './components/ProjectInfo'
+import ProjectInfo from './containers/ProjectInfo'
 import OfferInfo from './components/OfferInfo'
 import RequestInfo from './components/RequestInfo'
 import CreateProject from './scenes/CreateProject'

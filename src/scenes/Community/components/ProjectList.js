@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ButtonOffering from '../ButtonOffering'
+import ButtonOffering from './ButtonOffering'
 
 const ProjectList = ({ projects }) => (
   <div>
