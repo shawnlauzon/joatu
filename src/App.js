@@ -95,13 +95,6 @@ class App extends React.Component {
                   id={id}
                   community={R.assoc('id', id, community)}
                   name={community.name}
-                  authenticated={this.props.authenticated}
-                  // TODO Filter projects & trades for this community
-                  projects={this.props.projects}
-                  trades={this.props.trades}
-                  users={this.props.users}
-                  offers={this.props.offers}
-                  requests={this.props.requests}
                   onCreateProject={body =>
                     this.props.dispatch(projectActions.create(body))
                   }

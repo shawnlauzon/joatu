@@ -91,9 +91,24 @@ export class Community extends React.Component {
         <ResponsivePage
           left={
             <TabbedList {...this.props}>
-              <ProjectList projects={this.props.projects} />
-              <OfferList offers={this.props.offers} />
-              <RequestList requests={this.props.requests} />
+              <ProjectList
+                projects={this.props.projects}
+                tabName="Projects"
+                viewUrl="/create"
+                createUrl="/create-project"
+              />
+              <OfferList
+                offers={this.props.offers}
+                tabName="Offers"
+                viewUrl="/offers"
+                createUrl="/create-offer"
+              />
+              <RequestList
+                requests={this.props.requests}
+                tabName="Requests"
+                viewUrl="/requests"
+                createUrl="/create-request"
+              />
             </TabbedList>
           }
           right={
