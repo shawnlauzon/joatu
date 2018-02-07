@@ -37,6 +37,8 @@ const CREATE_PATHS_BY_TAB = [
   '/create-request'
 ]
 
+const VIEW_PATHS_BY_TAB = ['/projects', '/offers', '/requests']
+
 class TabbedList extends React.Component {
   constructor(props) {
     super(props)
@@ -59,7 +61,8 @@ class TabbedList extends React.Component {
   }
 
   onTabChanged = (event, value) => {
-    this.setState(prevState => ({ tabNum: value }))
+    console.log('Change to tab ' + value + ' from ' + this.state.tabNum)
+    this.setState({ tabNum: value })
   }
 
   render() {
@@ -140,7 +143,14 @@ class TabbedList extends React.Component {
         <Grid container>
           <Grid item xs={12} sm={5}>
             <Tabs value={tabNum} onChange={this.onTabChanged}>
-              {TAB_NAMES.map((name, idx) => <Tab key={idx} label={name} />)}
+              {TAB_NAMES.map((name, idx) => (
+                <Tab
+                  component={Link}
+                  to={VIEW_PATHS_BY_TAB[idx]}
+                  key={idx}
+                  label={name}
+                />
+              ))}
             </Tabs>
             {this.renderTab()}
           </Grid>
