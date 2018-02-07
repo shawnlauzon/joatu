@@ -12,8 +12,8 @@ import ParticipantList from './components/ParticipantList'
 
 const ProjectInfo = props => (
   <div>
-    <Typography type="display2">{props.name}</Typography>
-    <Typography type="subheading">{props.place}</Typography>
+    <Typography variant="display2">{props.name}</Typography>
+    <Typography variant="subheading">{props.place}</Typography>
     <div>
       {props.coordinates && <DisplayMap {...props} />}
       {/* FIXME Understand why start and duration are initially undefined */}

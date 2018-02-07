@@ -16,7 +16,7 @@ function ButtonJoin(props) {
     <Button
       className={classes.button}
       onClick={props.handleClick}
-      raised
+      variant="raised"
       color="primary"
       disabled={!props.authenticated}
     >

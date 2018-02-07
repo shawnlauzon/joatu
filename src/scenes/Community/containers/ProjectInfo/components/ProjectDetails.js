@@ -4,7 +4,7 @@ import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
 import { Typography } from 'material-ui'
 
 const ProjectDetails = props => (
-  <Typography type="body1" component="div" gutterBottom>
+  <Typography variant="body1" component="div" gutterBottom>
     <div>
       <FormattedDate
         value={props.start}

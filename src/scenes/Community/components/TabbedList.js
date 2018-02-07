@@ -40,7 +40,7 @@ class TabbedList extends React.Component {
     return (
       <div>
         <Button
-          fab
+          variant="fab"
           className={classes.fab}
           color="primary"
           aria-label="add"

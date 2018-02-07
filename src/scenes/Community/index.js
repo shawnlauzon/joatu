@@ -98,7 +98,7 @@ export class Community extends React.Component {
   render() {
     return (
       <div>
-        <Typography type="display3" gutterBottom>
+        <Typography variant="display3" gutterBottom>
           {this.props.name}
         </Typography>
         <ResponsivePage

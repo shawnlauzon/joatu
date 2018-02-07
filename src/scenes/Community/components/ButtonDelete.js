@@ -20,7 +20,7 @@ function ButtonDelete(props) {
   return (
     <Button
       className={classes.button}
-      raised
+      variant="raised"
       component={Link}
       to=".."
       color="secondary"

@@ -5,7 +5,7 @@ import ButtonDelete from './ButtonDelete'
 
 const OfferInfo = props => (
   <div>
-    <Typography type="display2">{props.name}</Typography>
+    <Typography variant="display2">{props.name}</Typography>
     <ButtonDelete
       handleClick={props.onDelete}
       authenticated={props.authenticated.authenticated}

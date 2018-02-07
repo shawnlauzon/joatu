@@ -67,7 +67,7 @@ class CreateProject extends React.Component {
     return (
       <Grid container direction="column">
         <Grid item>
-          <Typography type="display2" gutterBottom>
+          <Typography variant="display2" gutterBottom>
             Create Project
           </Typography>
         </Grid>
@@ -136,7 +136,7 @@ class CreateProject extends React.Component {
           </Button>
           <Button
             className={classes.button}
-            raised
+            variant="raised"
             color="primary"
             onClick={this.onSave}
             // TODO Validate before navigating away
