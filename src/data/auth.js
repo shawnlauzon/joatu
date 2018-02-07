@@ -24,11 +24,6 @@ const auth = (firebase, onAuthChanged) => {
     return currentUser.getIdToken(true)
   }
 
-  // TODO Who dispatches this?
-  firebase.auth().onAuthStateChanged(user => {
-    // this.props.dispatch(onAuthChanged(user))
-  })
-
   return { loginWithFacebook, logUserOut, getFirebaseUser, getFirebaseToken }
 }
 

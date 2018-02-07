@@ -29,6 +29,7 @@ const styles = {
 class JoatUAppBar extends React.Component {
   constructor(props) {
     super(props)
+    console.log(props)
     this.state = {
       loginModalOpen: false,
       anchorEl: null
@@ -81,11 +82,11 @@ class JoatUAppBar extends React.Component {
               <Hidden xsDown>The Jack of all Trades Universe</Hidden>
               <Hidden smUp>JoatU</Hidden>
             </Typography>
-            {this.props.user.authenticated ? (
+            {this.props.authenticated.authenticated ? (
               <div>
                 <Avatar
-                  alt={this.props.user.displayName}
-                  src={this.props.user.imgUrl}
+                  alt={this.props.authenticated.displayName}
+                  src={this.props.authenticated.imgUrl}
                   aria-owns={openLogoutModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.showLogoutModal}
@@ -126,7 +127,7 @@ class JoatUAppBar extends React.Component {
 
 JoatUAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.shape({
+  authenticated: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     displayName: PropTypes.string,
     imgUrl: PropTypes.string

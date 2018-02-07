@@ -6,23 +6,20 @@ import { connect } from 'react-redux'
 
 import Reboot from 'material-ui/Reboot'
 
+import firebase from 'firebase'
+
 import JoatUAppBar from './components/JoatUAppBar'
 import Community from './scenes/Community'
 
 import {
-  fetchCommunities,
-  fetchUsers,
-  loginUser,
-  logoutUser,
-  createUser,
-  // onAuthChanged,
+  communityActions,
+  projectActions,
+  userActions,
+  authActions,
   addParticipant
-} from './actions'
+} from './data/actions'
+
 import './App.css'
-
-import { actions as projectActions } from './data/projects'
-
-const { fetchProjects, createProject, deleteProject } = projectActions
 
 class App extends React.Component {
   constructor(props) {
@@ -33,9 +30,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchUsers())
-    this.props.dispatch(fetchCommunities())
-    this.props.dispatch(fetchProjects())
+    this.props.dispatch(userActions.fetch())
+    this.props.dispatch(communityActions.fetch())
+    this.props.dispatch(projectActions.fetch())
+
+    firebase.auth().onAuthStateChanged(user => {
+      this.props.dispatch(authActions.onAuthChanged(user))
+    })
   }
 
   // FIXME This works unless the user is deleted from the backend without
@@ -51,26 +52,23 @@ class App extends React.Component {
       !R.isEmpty(nextProps.users) &&
       !nextProps.users[nextProps.user.id]
     ) {
-      this.props.dispatch(createUser(nextProps.user))
+      this.props.dispatch(userActions.create(nextProps.user))
       // Note that this is never set to false unless app is reloaded. But if we
       // don't have this flag, an infinite loop occurs
       this.creatingUser = true
     }
   }
 
-  // TODO should this be more like
-  // onLogin = provider => dispatch => dispatch(loginUser(provider)) ??
-  // See Redux docs (Reducing boilerplate)
   onLogin = provider => {
-    this.props.dispatch(loginUser(provider))
+    this.props.dispatch(authActions.loginUser(provider))
   }
 
   onLogout = () => {
-    this.props.dispatch(logoutUser())
+    this.props.dispatch(authActions.logoutUser())
   }
 
   onJoinProject = projectId => {
-    this.props.dispatch(addParticipant(this.props.user.id, projectId))
+    this.props.dispatch(addParticipant(this.props.authenticated.id, projectId))
   }
 
   render() {
@@ -88,13 +86,17 @@ class App extends React.Component {
               key={id}
               id={id}
               name={community.name}
-              user={this.props.user}
+              authenticated={this.props.authenticated}
               // TODO Filter projects & trades for this community
               projects={this.props.projects}
               trades={this.props.trades}
               users={this.props.users}
-              onCreateProject={body => this.props.dispatch(createProject(body))}
-              onDeleteProject={body => this.props.dispatch(deleteProject(body))}
+              onCreateProject={body =>
+                this.props.dispatch(projectActions.create(body))
+              }
+              onDeleteProject={body =>
+                this.props.dispatch(projectActions.delete(body))
+              }
               onJoinProject={this.onJoinProject}
             />
           ))}
@@ -105,7 +107,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
+    authenticated: state.authenticated,
     communities: state.communities,
     projects: state.projects,
     trades: state.trades,

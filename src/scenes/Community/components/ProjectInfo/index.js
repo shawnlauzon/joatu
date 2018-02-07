@@ -30,8 +30,14 @@ const ProjectInfo = props => {
           props.duration && <ProjectDetails {...props} hourlyAward={15} />}
       </div>
       <div>
-        <ButtonJoin handleClick={handleJoin} user={props.user} />
-        <ButtonDelete handleClick={handleDelete} user={props.user} />
+        <ButtonJoin
+          handleClick={handleJoin}
+          authenticated={props.authenticated}
+        />
+        <ButtonDelete
+          handleClick={handleDelete}
+          authenticated={props.authenticated}
+        />
       </div>
       <ParticipantList {...props} />
     </div>
@@ -40,6 +46,9 @@ const ProjectInfo = props => {
 
 ProjectInfo.propTypes = {
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  authenticated: PropTypes.object,
   onDeleteProject: PropTypes.func.isRequired,
   onJoinProject: PropTypes.func.isRequired
 }

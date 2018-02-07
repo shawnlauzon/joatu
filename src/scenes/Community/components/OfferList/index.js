@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link, Route } from 'react-router-dom'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -86,7 +87,7 @@ class OfferList extends React.Component {
           className={classes.fab}
           color="primary"
           aria-label="add"
-          disabled={!this.props.user.authenticated}
+          disabled={!this.props.authenticated.authenticated}
           component={Link}
           to="/create-project"
         >
@@ -112,6 +113,12 @@ class OfferList extends React.Component {
       </div>
     )
   }
+}
+
+OfferList.propTypes = {
+  authenticated: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 export default withStyles(styles)(OfferList)

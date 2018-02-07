@@ -1,5 +1,6 @@
+import { CALL_API } from '../data/actions'
+
 import {
-  CALL_API,
   doGet,
   doSet,
   doAdd,

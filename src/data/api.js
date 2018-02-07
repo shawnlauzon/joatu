@@ -2,8 +2,6 @@ import { firebase } from './config'
 import 'firebase/firestore'
 import auth from './auth'
 
-export const CALL_API = 'CALL_API'
-
 const db = firebase.firestore()
 const authFunctions = auth(firebase)
 

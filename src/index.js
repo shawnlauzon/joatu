@@ -9,7 +9,7 @@ import logger from 'redux-logger'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import fr from 'react-intl/locale-data/fr'
 
-import rootReducer from './data'
+import rootReducer from './data/reducer'
 import apiMiddleware from './middleware/firebaseApi'
 import App from './App'
 
