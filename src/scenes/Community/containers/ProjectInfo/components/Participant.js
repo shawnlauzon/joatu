@@ -10,17 +10,18 @@ const styles = theme => ({
   }
 })
 
-const Participant = props => (
+const Participant = ({ classes, user }) => (
   <span>
     <Chip
-      className={props.classes.chip}
-      avatar={<Avatar src={props.user.imgUrl} />}
-      label={`${props.user.displayName}`}
+      className={classes.chip}
+      avatar={<Avatar src={user.imgUrl} />}
+      label={`${user.displayName}`}
     />
   </span>
 )
 
 Participant.propTypes = {
+  classes: PropTypes.object.isRequired,
   user: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
     imgUrl: PropTypes.string.isRequired

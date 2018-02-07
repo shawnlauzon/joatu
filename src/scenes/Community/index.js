@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -27,14 +28,26 @@ export class Community extends React.Component {
       const id = routeInfo.match.params.id
       const project = this.props.projects[id]
 
-      return (
-        <ProjectInfo
-          {...this.props}
-          id={id}
-          onDelete={() => this.props.onDeleteProject(id)}
-          {...project}
-        />
-      )
+      const resolve = (participants, users) => {
+        return R.pick(R.keys(participants), users)
+      }
+
+      if (project) {
+        return (
+          <ProjectInfo
+            id={id}
+            {...project}
+            // TODO the hourly award needs to be calculated
+            hourlyAward={15}
+            onJoin={() => this.props.onJoinProject(id)}
+            onDelete={() => this.props.onDeleteProject(id)}
+            authenticated={this.props.authenticated}
+            participants={resolve(project.participants, this.props.users)}
+          />
+        )
+      } else {
+        return null
+      }
     }
 
     this.OfferInfoPane = routeInfo => {

@@ -17,7 +17,7 @@ import registerServiceWorker from './registerServiceWorker'
 
 const middlewares = [thunk, apiMiddleware]
 
-if (true) {
+if (false) {
   middlewares.push(logger)
 }
 
