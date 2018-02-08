@@ -7,8 +7,8 @@ import DisplayMap from './components/DisplayMap'
 import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
 import ButtonDelete from '../../components/ButtonDelete'
-import Participant from './components/Participant'
 import ParticipantList from './components/ParticipantList'
+import UserChip from 'joatu-components/UserChip'
 
 const ProjectInfo = props => (
   <div>
@@ -32,7 +32,7 @@ const ProjectInfo = props => (
     <ParticipantList>
       {props.participants &&
         Object.keys(props.participants).map(id => (
-          <Participant key={id} user={props.participants[id]} />
+          <UserChip key={id} user={props.participants[id]} />
         ))}
     </ParticipantList>
   </div>

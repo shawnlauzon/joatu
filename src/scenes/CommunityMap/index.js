@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -18,6 +19,10 @@ class CommunityMap extends React.Component {
     this.setState({ activeCommunityId: id })
   }
 
+  resolve = (participants, users) => {
+    return R.pick(R.keys(participants), users)
+  }
+
   render() {
     return (
       <div>
@@ -36,6 +41,9 @@ class CommunityMap extends React.Component {
         {this.state.activeCommunityId && (
           <CommunityInfo
             name={this.props.communities[this.state.activeCommunityId].name}
+            members={this.props.membersOfCommunity(
+              this.state.activeCommunityId
+            )}
           />
         )}
       </div>
@@ -43,11 +51,19 @@ class CommunityMap extends React.Component {
   }
 }
 
+// TODO Find a better place for these helper functions
+const resolve = (keyMap, values) => {
+  return R.pick(R.keys(keyMap), values)
+}
+
 function mapStateToProps(state) {
   return {
     authenticated: state.authenticated,
     communities: state.communities,
-    users: state.users
+    users: state.users,
+
+    membersOfCommunity: communityId =>
+      resolve(state.communities[communityId].members, state.users)
   }
 }
 

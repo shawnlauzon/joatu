@@ -10,7 +10,7 @@ const styles = theme => ({
   }
 })
 
-const Participant = ({ classes, user }) => (
+const UserChip = ({ classes, user }) => (
   <span>
     <Chip
       className={classes.chip}
@@ -20,7 +20,7 @@ const Participant = ({ classes, user }) => (
   </span>
 )
 
-Participant.propTypes = {
+UserChip.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
@@ -28,4 +28,4 @@ Participant.propTypes = {
   }).isRequired
 }
 
-export default withStyles(styles)(Participant)
+export default withStyles(styles)(UserChip)

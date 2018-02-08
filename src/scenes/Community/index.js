@@ -28,8 +28,9 @@ export class Community extends React.Component {
       const id = routeInfo.match.params.id
       const project = this.props.projects[id]
 
-      const resolve = (participants, users) => {
-        return R.pick(R.keys(participants), users)
+      // TODO Find a better place for these helper functions
+      const resolve = (keyMap, values) => {
+        return R.pick(R.keys(keyMap), values)
       }
 
       if (project) {
