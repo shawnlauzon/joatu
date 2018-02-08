@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React from 'react'
 
 import mapboxgl from 'mapbox-gl'
@@ -19,8 +20,7 @@ class DisplayMap extends React.Component {
 
     this.state = {
       zoom: 11,
-      popups: [],
-      layers: []
+      markers: []
     }
   }
 
@@ -28,6 +28,7 @@ class DisplayMap extends React.Component {
     if (!this.mapboxglSupported) {
       return
     }
+
     const zoom = this.state.zoom
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -49,24 +50,13 @@ class DisplayMap extends React.Component {
     this.map.addControl(geolocate)
     // See https://github.com/mapbox/mapbox-gl-js/issues/5464
     // setTimeout(geolocate._onClickGeolocate.bind(geolocate), 5)
+
+    this.addMarkers(this.props)
   }
 
-  componentWillUnmount() {
-    if (this.mapboxglSupported) {
-      this.map.remove()
-    }
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (!this.mapboxglSupported) {
-      return
-    }
-
-    this.state.popups.forEach(popup => {
-      popup.remove()
-    })
-    const popups = []
-    React.Children.map(this.props.children, geoPoint => {
+  addMarkers = props => {
+    const markers = []
+    React.Children.map(props.children, geoPoint => {
       const marker = new mapboxgl.Marker()
         .setLngLat([geoPoint.props.lng, geoPoint.props.lat])
         .addTo(this.map)
@@ -81,8 +71,29 @@ class DisplayMap extends React.Component {
         })
       })
 
-      popups.push(marker)
+      markers.push(marker)
     })
+  }
+
+  removeMarkers = () => {
+    this.state.markers.forEach(marker => marker.remove())
+  }
+
+  componentWillUnmount() {
+    if (this.mapboxglSupported) {
+      this.map.remove()
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (!this.mapboxglSupported) {
+      return
+    }
+
+    if (!R.equals(newProps.children, this.props.children)) {
+      this.removeMarkers()
+      this.addMarkers(newProps)
+    }
   }
 
   render() {

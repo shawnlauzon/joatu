@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
@@ -42,4 +43,12 @@ class CommunityMap extends React.Component {
   }
 }
 
-export default CommunityMap
+function mapStateToProps(state) {
+  return {
+    authenticated: state.authenticated,
+    communities: state.communities,
+    users: state.users
+  }
+}
+
+export default connect(mapStateToProps)(CommunityMap)

@@ -81,9 +81,7 @@ class Root extends React.Component {
           onLogin={this.onLogin}
           onLogout={this.onLogout}
         />
-        {this.props.communities && (
-          <CommunityMap communities={this.props.communities} />
-        )}
+        <CommunityMap />
         {/* {this.props.communities &&
           Object.entries(this.props.communities).map(([id, community]) => (
             <Community
