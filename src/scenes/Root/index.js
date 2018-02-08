@@ -9,6 +9,7 @@ import Reboot from 'material-ui/Reboot'
 
 import JoatUAppBar from './components/JoatUAppBar'
 import Community from '../Community'
+import CommunityMap from '../CommunityMap'
 
 import {
   communityActions,
@@ -80,7 +81,10 @@ class Root extends React.Component {
           onLogin={this.onLogin}
           onLogout={this.onLogout}
         />
-        {this.props.communities &&
+        {this.props.communities && (
+          <CommunityMap communities={this.props.communities} />
+        )}
+        {/* {this.props.communities &&
           Object.entries(this.props.communities).map(([id, community]) => (
             <Community
               key={id}
@@ -105,7 +109,7 @@ class Root extends React.Component {
               onDeleteOffer={id => this.props.dispatch(offerActions.remove(id))}
               onJoinProject={this.onJoinProject}
             />
-          ))}
+          ))} */}
       </div>
     )
   }
