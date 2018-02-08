@@ -67,16 +67,21 @@ class DisplayMap extends React.Component {
     })
     const popups = []
     React.Children.map(this.props.children, geoPoint => {
-      popups.push(
-        new mapboxgl.Marker()
-          .setLngLat([geoPoint.props.lng, geoPoint.props.lat])
-          .setPopup(
-            new mapboxgl.Popup({ closeButton: false }).setText(
-              geoPoint.props.name
-            )
-          )
-          .addTo(this.map)
-      )
+      const marker = new mapboxgl.Marker()
+        .setLngLat([geoPoint.props.lng, geoPoint.props.lat])
+        .addTo(this.map)
+
+      marker.getElement().addEventListener('click', e => {
+        geoPoint.props.onClick()
+
+        this.map.easeTo({
+          zoom: 13,
+          center: marker.getLngLat(),
+          duration: 500
+        })
+      })
+
+      popups.push(marker)
     })
   }
 
