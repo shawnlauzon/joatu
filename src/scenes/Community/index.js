@@ -26,6 +26,8 @@ import {
   addParticipant
 } from '../../data/actions'
 
+import { getHubProjects, getHubOffers, getHubRequests } from '../../data/hub'
+
 export class Community extends React.Component {
   projectInfoPane = routeInfo => {
     const id = routeInfo.match.params.projectId
@@ -52,7 +54,7 @@ export class Community extends React.Component {
         onDelete={() => this.props.dispatch(projectActions.remove(id))}
         authUser={this.props.authUser}
         participants={resolve(project.participants, this.props.users)}
-        returnUrl={this.props.match.url}
+        returnUrl={this.props.match.url + '/projects'}
       />
     )
   }
@@ -70,7 +72,7 @@ export class Community extends React.Component {
         {...routeInfo}
         authUser={this.props.authUser}
         onDelete={() => this.props.dispatch(offerActions.remove(id))}
-        returnUrl={this.props.match.url}
+        returnUrl={this.props.match.url + '/offers'}
         {...offer}
       />
     )
@@ -89,7 +91,7 @@ export class Community extends React.Component {
         {...routeInfo}
         authUser={this.props.authUser}
         onDelete={() => this.props.dispatch(requestActions.remove(id))}
-        returnUrl={this.props.match.url}
+        returnUrl={this.props.match.url + '/requests'}
         {...request}
       />
     )
@@ -101,7 +103,7 @@ export class Community extends React.Component {
         {...routeInfo}
         authUser={this.props.authUser}
         onCreate={body => this.props.dispatch(projectActions.create(body))}
-        cancelUrl={this.props.match.url}
+        cancelUrl={this.props.match.url + '/projects'}
       />
     )
   }
@@ -112,7 +114,7 @@ export class Community extends React.Component {
         {...routeInfo}
         authUser={this.props.authUser}
         onCreate={body => this.props.dispatch(offerActions.create(body))}
-        cancelUrl={this.props.match.url}
+        cancelUrl={this.props.match.url + '/offers'}
       />
     )
   }
@@ -123,7 +125,7 @@ export class Community extends React.Component {
         {...routeInfo}
         authUser={this.props.authUser}
         onCreate={body => this.props.dispatch(requestActions.create(body))}
-        cancelUrl={this.props.match.url}
+        cancelUrl={this.props.match.url + '/requests'}
       />
     )
   }
@@ -201,9 +203,9 @@ function mapStateToProps(state) {
   return {
     authUser: state.authUser,
     communities: state.communities,
-    projects: state.projects,
-    offers: state.offers,
-    requests: state.requests,
+    projects: getHubProjects(state),
+    offers: getHubOffers(state),
+    requests: getHubRequests(state),
     users: state.users
   }
 }

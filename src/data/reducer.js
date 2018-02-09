@@ -6,6 +6,7 @@ import projects from './projects/reducer'
 import authUser from './authUser/reducer'
 import offers from './offers/reducer'
 import requests from './requests/reducer'
+import hub from './hub/reducer'
 
 export default combineReducers({
   authUser,
@@ -13,5 +14,6 @@ export default combineReducers({
   projects,
   users,
   offers,
-  requests
+  requests,
+  hub
 })

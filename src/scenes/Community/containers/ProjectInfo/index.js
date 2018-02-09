@@ -8,7 +8,7 @@ import ProjectDetails from './components/ProjectDetails'
 import ButtonJoin from './components/ButtonJoin'
 import ButtonDelete from '../../components/ButtonDelete'
 import ParticipantList from './components/ParticipantList'
-import UserChip from 'joatu-components/UserChip'
+import UserChip from '../../../../components/UserChip'
 
 const ProjectInfo = props => (
   <div>

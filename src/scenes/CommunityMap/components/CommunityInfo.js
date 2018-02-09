@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { Typography } from 'material-ui'
 
-import UserChip from 'joatu-components/UserChip'
+import UserChip from '../../../components/UserChip'
 
 const CommunityInfo = props => (
   <div>
