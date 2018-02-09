@@ -1,4 +1,4 @@
-import { CHANGE_HUB } from '../../../data/hub/reducer'
+export const CHANGE_HUB = 'CHANGE_HUB'
 
 export function changeHub(communityId) {
   return {

@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { changeHub } from './data/actions'
+import { hubActions } from '../../data/actions'
 
 import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
@@ -19,7 +19,7 @@ class CommunityMap extends React.Component {
 
   onClick = id => {
     this.setState({ activeCommunityId: id })
-    this.props.dispatch(changeHub(id))
+    this.props.dispatch(hubActions.changeHub(id))
   }
 
   resolve = (participants, users) => {

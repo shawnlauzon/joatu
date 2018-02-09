@@ -4,6 +4,7 @@ import * as userActions from './users/actions'
 import * as authActions from './authUser/actions'
 import * as offerActions from './offers/actions'
 import * as requestActions from './requests/actions'
+import * as hubActions from './hub/actions'
 
 export {
   communityActions,
@@ -11,7 +12,8 @@ export {
   userActions,
   authActions,
   offerActions,
-  requestActions
+  requestActions,
+  hubActions
 }
 
 export const CALL_API = 'CALL_API'

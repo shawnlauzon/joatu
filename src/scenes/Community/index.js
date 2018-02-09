@@ -23,12 +23,26 @@ import {
   projectActions,
   offerActions,
   requestActions,
-  addParticipant
+  addParticipant,
+  hubActions
 } from '../../data/actions'
 
-import { getHubProjects, getHubOffers, getHubRequests } from '../../data/hub'
+import {
+  getHubCommunity,
+  getHubProjects,
+  getHubOffers,
+  getHubRequests
+} from '../../data/hub'
 
 export class Community extends React.Component {
+  constructor(props) {
+    super(props)
+
+    if (props.match.params.communityId !== props.community.id) {
+      props.dispatch(hubActions.changeHub(props.match.params.communityId))
+    }
+  }
+
   projectInfoPane = routeInfo => {
     const id = routeInfo.match.params.projectId
     const project = this.props.projects[id]
@@ -130,14 +144,12 @@ export class Community extends React.Component {
     )
   }
 
-  community = () => this.props.communities[this.props.match.params.communityId]
-
   render() {
     return (
       <div>
-        {this.community() && (
+        {this.props.community && (
           <Typography variant="display3" gutterBottom>
-            {this.community().name}
+            {this.props.community.name}
           </Typography>
         )}
         <ResponsivePage
@@ -202,7 +214,7 @@ export class Community extends React.Component {
 function mapStateToProps(state) {
   return {
     authUser: state.authUser,
-    communities: state.communities,
+    community: getHubCommunity(state),
     projects: getHubProjects(state),
     offers: getHubOffers(state),
     requests: getHubRequests(state),

@@ -1,4 +1,4 @@
-export const CHANGE_HUB = 'CHANGE_HUB'
+import { CHANGE_HUB } from './actions'
 
 // hub: {
 //   communityId: ...
