@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route, withRouter } from 'react-router-dom'
+import { Link, Route, withRouter } from 'react-router-dom'
 
 import Typography from 'material-ui/Typography'
 
@@ -147,6 +147,7 @@ export class Community extends React.Component {
   render() {
     return (
       <div>
+        <Link to="/">Back to community map</Link>
         {this.props.community && (
           <Typography variant="display3" gutterBottom>
             {this.props.community.name}
