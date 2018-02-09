@@ -86,11 +86,11 @@ class JoatUAppBar extends React.Component {
               <Hidden xsDown>The Jack of all Trades Universe</Hidden>
               <Hidden smUp>JoatU</Hidden>
             </Typography>
-            {this.props.authenticated.authenticated ? (
+            {this.props.authUser.authenticated ? (
               <div>
                 <Avatar
-                  alt={this.props.authenticated.displayName}
-                  src={this.props.authenticated.imgUrl}
+                  alt={this.props.authUser.displayName}
+                  src={this.props.authUser.imgUrl}
                   aria-owns={openLogoutModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.showLogoutModal}
@@ -131,7 +131,7 @@ class JoatUAppBar extends React.Component {
 
 JoatUAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  authenticated: PropTypes.shape({
+  authUser: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     displayName: PropTypes.string,
     imgUrl: PropTypes.string

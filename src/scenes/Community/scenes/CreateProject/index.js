@@ -48,8 +48,8 @@ class CreateProject extends React.Component {
 
   onSave = e => {
     this.props.onCreate({
-      community: this.props.community.id,
-      owner: this.props.authenticated.id,
+      community: this.props.match.params.communityId,
+      owner: this.props.authUser.id,
       name: this.state.name,
       place: this.state.place,
       start: new Date(this.state.start),
@@ -131,7 +131,11 @@ class CreateProject extends React.Component {
         </Grid>
 
         <Grid item>
-          <Button className={classes.button} component={Link} to="..">
+          <Button
+            className={classes.button}
+            component={Link}
+            to={this.props.cancelUrl}
+          >
             Cancel
           </Button>
           <Button
@@ -141,7 +145,7 @@ class CreateProject extends React.Component {
             onClick={this.onSave}
             // TODO Validate before navigating away
             component={Link}
-            to=".."
+            to={this.props.cancelUrl}
           >
             Create
           </Button>
@@ -152,10 +156,7 @@ class CreateProject extends React.Component {
 }
 
 CreateProject.propTypes = {
-  authenticated: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
-  community: PropTypes.shape({
+  authUser: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
   onCreate: PropTypes.func.isRequired

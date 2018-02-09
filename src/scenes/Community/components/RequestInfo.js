@@ -5,16 +5,17 @@ import ButtonDelete from './ButtonDelete'
 
 const RequestInfo = props => (
   <div>
-    <Typography type="display2">{props.name}</Typography>
+    <Typography variant="display2">{props.name}</Typography>
     <ButtonDelete
       handleClick={props.onDelete}
-      authenticated={props.authenticated.authenticated}
+      authenticated={props.authUser.authenticated}
+      returnUrl={props.returnUrl}
     />
   </div>
 )
 
 RequestInfo.propTypes = {
-  authenticated: PropTypes.shape({
+  authUser: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
   name: PropTypes.string.isRequired,

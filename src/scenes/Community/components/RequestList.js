@@ -9,14 +9,20 @@ const RequestList = props => (
         key={id}
         id={id}
         name={request.name}
-        to={`/requests/${id}`}
+        to={props.viewUrl + '/' + id}
       />
     ))}
   </div>
 )
 
 RequestList.propTypes = {
-  requests: PropTypes.object.isRequired
+  requests: PropTypes.objectOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  viewUrl: PropTypes.string.isRequired,
+  createUrl: PropTypes.string.isRequired
 }
 
 export default RequestList

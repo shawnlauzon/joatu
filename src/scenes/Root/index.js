@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 import firebase from 'firebase'
 
@@ -16,7 +16,6 @@ import {
   projectActions,
   userActions,
   authActions,
-  addParticipant,
   offerActions,
   requestActions
 } from '../../data/actions'
@@ -69,9 +68,6 @@ class Root extends React.Component {
     this.props.dispatch(authActions.logoutUser())
   }
 
-  onJoinProject = projectId => {
-    this.props.dispatch(addParticipant(this.props.authenticated.id, projectId))
-  }
   render() {
     return (
       <div>
@@ -81,33 +77,10 @@ class Root extends React.Component {
           onLogin={this.onLogin}
           onLogout={this.onLogout}
         />
-        <CommunityMap />
-        {/* {this.props.communities &&
-          Object.entries(this.props.communities).map(([id, community]) => (
-            <Community
-              key={id}
-              id={id}
-              community={R.assoc('id', id, community)}
-              name={community.name}
-              onCreateProject={body =>
-                this.props.dispatch(projectActions.create(body))
-              }
-              onDeleteProject={id =>
-                this.props.dispatch(projectActions.remove(id))
-              }
-              onCreateRequest={body =>
-                this.props.dispatch(requestActions.create(body))
-              }
-              onDeleteRequest={id =>
-                this.props.dispatch(requestActions.remove(id))
-              }
-              onCreateOffer={body =>
-                this.props.dispatch(offerActions.create(body))
-              }
-              onDeleteOffer={id => this.props.dispatch(offerActions.remove(id))}
-              onJoinProject={this.onJoinProject}
-            />
-          ))} */}
+        <Switch>
+          <Route path="/communities/:communityId" component={Community} />
+          <Route path="/" component={CommunityMap} />
+        </Switch>
       </div>
     )
   }
@@ -115,7 +88,7 @@ class Root extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.authenticated,
+    authUser: state.authUser,
     communities: state.communities,
     projects: state.projects,
     offers: state.offers,

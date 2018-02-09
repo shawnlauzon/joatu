@@ -44,6 +44,7 @@ class CommunityMap extends React.Component {
             members={this.props.membersOfCommunity(
               this.state.activeCommunityId
             )}
+            url={`/communities/${this.state.activeCommunityId}`}
           />
         )}
       </div>
@@ -58,7 +59,6 @@ const resolve = (keyMap, values) => {
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.authenticated,
     communities: state.communities,
     users: state.users,
 

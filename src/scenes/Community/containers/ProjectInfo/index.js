@@ -22,11 +22,12 @@ const ProjectInfo = props => (
     <div>
       <ButtonJoin
         handleClick={props.onJoin}
-        authenticated={props.authenticated.authenticated}
+        authenticated={props.authUser.authenticated}
       />
       <ButtonDelete
         handleClick={props.onDelete}
-        authenticated={props.authenticated.authenticated}
+        authenticated={props.authUser.authenticated}
+        returnUrl={props.returnUrl}
       />
     </div>
     <ParticipantList>
@@ -39,10 +40,9 @@ const ProjectInfo = props => (
 )
 
 ProjectInfo.propTypes = {
-  authenticated: PropTypes.shape({
+  authUser: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   place: PropTypes.string,
   participants: PropTypes.object,

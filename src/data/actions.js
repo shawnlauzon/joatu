@@ -1,7 +1,7 @@
 import * as communityActions from './communities/actions'
 import * as projectActions from './projects/actions'
 import * as userActions from './users/actions'
-import * as authActions from './authenticated/actions'
+import * as authActions from './authUser/actions'
 import * as offerActions from './offers/actions'
 import * as requestActions from './requests/actions'
 
