@@ -11,7 +11,9 @@ import JoatUAppBar from './components/JoatUAppBar'
 import Community from '../Community'
 import CommunityMap from '../CommunityMap'
 import Profile from '../Profile'
+import ProjectContainer from '../ProjectContainer'
 import OfferContainer from '../OfferContainer'
+import RequestContainer from '../RequestContainer'
 
 import {
   communityActions,
@@ -82,8 +84,9 @@ class Root extends React.Component {
         <Switch>
           <Route path="/communities/:communityId" component={Community} />
           <Route path="/profiles/:profileId" component={Profile} />
-          <Route path="/projects/:projectId" component={Profile} />
+          <Route path="/projects/:projectId" component={ProjectContainer} />
           <Route path="/offers/:offerId" component={OfferContainer} />
+          <Route path="/requests/:requestId" component={RequestContainer} />
           <Route path="/" component={CommunityMap} />
         </Switch>
       </div>

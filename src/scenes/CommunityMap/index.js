@@ -7,7 +7,7 @@ import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
 import CommunityInfo from './components/CommunityInfo'
 
-import { resolveKeys } from '../../utils'
+import { getMembersOfCommunity } from '../../data/communities'
 
 class CommunityMap extends React.Component {
   constructor(props) {
@@ -41,9 +41,9 @@ class CommunityMap extends React.Component {
         {this.state.activeCommunityId && (
           <CommunityInfo
             name={this.props.communities[this.state.activeCommunityId].name}
-            members={this.props.membersOfCommunity(
-              this.state.activeCommunityId
-            )}
+            members={getMembersOfCommunity(this.state.activeCommunityId)({
+              users: this.props.users
+            })}
             url={`/communities/${this.state.activeCommunityId}`}
           />
         )}
@@ -52,13 +52,10 @@ class CommunityMap extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     communities: state.communities,
-    users: state.users,
-
-    membersOfCommunity: communityId =>
-      resolveKeys(state.communities[communityId].members, state.users)
+    users: state.users
   }
 }
 

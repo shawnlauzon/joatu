@@ -3,23 +3,23 @@ import PropTypes from 'prop-types'
 import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
 import { Typography } from 'material-ui'
 
-const ProjectDetails = props => (
+const ProjectDetails = ({ project, hourlyAward }) => (
   <Typography variant="body1" component="div" gutterBottom>
     <div>
       <FormattedDate
-        value={props.start}
+        value={project.start}
         year="numeric"
         month="short"
         day="numeric"
       />{' '}
-      at <FormattedTime value={props.start} /> for{' '}
-      <FormattedNumber value={props.duration / 60} maxmumFractionDigits={1} />{' '}
+      at <FormattedTime value={project.start} /> for{' '}
+      <FormattedNumber value={project.duration / 60} maxmumFractionDigits={1} />{' '}
       hours
     </div>
     <div>
       You will earn{' '}
       <FormattedNumber
-        value={props.hourlyAward * props.duration / 60}
+        value={hourlyAward * project.duration / 60}
         maxmumFractionDigits={1}
       />{' '}
       CAPS
@@ -28,8 +28,10 @@ const ProjectDetails = props => (
 )
 
 ProjectDetails.propTypes = {
-  start: PropTypes.any.isRequired,
-  duration: PropTypes.number.isRequired,
+  project: PropTypes.shape({
+    start: PropTypes.any.isRequired,
+    duration: PropTypes.number.isRequired
+  }).isRequired,
   hourlyAward: PropTypes.number.isRequired
 }
 

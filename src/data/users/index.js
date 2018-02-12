@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import { resolveKeys } from '../../utils'
+import { resolveKeys } from '../utils'
 
 const getUserById = id => state => state.users[id]
 

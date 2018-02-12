@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import Button from 'material-ui/Button'
 import Delete from 'material-ui-icons/Delete'
 import { withStyles } from 'material-ui/styles'

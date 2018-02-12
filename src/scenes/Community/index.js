@@ -7,10 +7,10 @@ import Typography from 'material-ui/Typography'
 import TabbedList from './components/TabbedList'
 import ResponsivePage from './components/ResponsivePage'
 
-import ProjectInfo from './containers/ProjectInfo'
 import CreateProject from './scenes/CreateProject'
 import CreateOffer from './scenes/CreateOffer'
 import CreateRequest from './scenes/CreateRequest'
+import ProjectContainer from '../ProjectContainer'
 import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 
@@ -18,13 +18,10 @@ import ProjectList from './components/ProjectList'
 import OfferList from './components/OfferList'
 import RequestList from './components/RequestList'
 
-import { resolveKeys } from '../../utils'
-
 import {
   projectActions,
   offerActions,
   requestActions,
-  addParticipant,
   hubActions
 } from '../../data/actions'
 
@@ -42,31 +39,6 @@ export class Community extends React.Component {
     if (props.match.params.communityId !== props.community.id) {
       props.dispatch(hubActions.changeHub(props.match.params.communityId))
     }
-  }
-
-  projectInfoPane = routeInfo => {
-    const id = routeInfo.match.params.projectId
-    const project = this.props.projects[id]
-
-    if (!project) {
-      return null
-    }
-
-    return (
-      <ProjectInfo
-        {...routeInfo}
-        {...project}
-        // TODO the hourly award needs to be calculated
-        hourlyAward={15}
-        onJoin={() =>
-          this.props.dispatch(addParticipant(this.props.authUser.id, id))
-        }
-        onDelete={() => this.props.dispatch(projectActions.remove(id))}
-        authUser={this.props.authUser}
-        participants={resolveKeys(project.participants, this.props.users)}
-        returnUrl={this.props.match.url + '/projects'}
-      />
-    )
   }
 
   createProjectPane = routeInfo => {
@@ -140,7 +112,7 @@ export class Community extends React.Component {
             <React.Fragment>
               <Route
                 path={this.props.match.path + '/projects/:projectId'}
-                render={this.projectInfoPane}
+                component={ProjectContainer}
               />
               <Route
                 path={this.props.match.path + '/offers/:offerId'}
