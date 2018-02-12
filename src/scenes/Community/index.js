@@ -8,11 +8,11 @@ import TabbedList from './components/TabbedList'
 import ResponsivePage from './components/ResponsivePage'
 
 import ProjectInfo from './containers/ProjectInfo'
-import OfferInfo from './components/OfferInfo'
-import RequestInfo from './components/RequestInfo'
 import CreateProject from './scenes/CreateProject'
 import CreateOffer from './scenes/CreateOffer'
 import CreateRequest from './scenes/CreateRequest'
+import OfferContainer from '../OfferContainer'
+import RequestContainer from '../RequestContainer'
 
 import ProjectList from './components/ProjectList'
 import OfferList from './components/OfferList'
@@ -65,44 +65,6 @@ export class Community extends React.Component {
         authUser={this.props.authUser}
         participants={resolveKeys(project.participants, this.props.users)}
         returnUrl={this.props.match.url + '/projects'}
-      />
-    )
-  }
-
-  offerInfoPane = routeInfo => {
-    const id = routeInfo.match.params.offerId
-    const offer = this.props.offers[id]
-
-    if (!offer) {
-      return null
-    }
-
-    return (
-      <OfferInfo
-        {...routeInfo}
-        authUser={this.props.authUser}
-        onDelete={() => this.props.dispatch(offerActions.remove(id))}
-        returnUrl={this.props.match.url + '/offers'}
-        {...offer}
-      />
-    )
-  }
-
-  requestInfoPane = routeInfo => {
-    const id = routeInfo.match.params.requestId
-    const request = this.props.requests[id]
-
-    if (!request) {
-      return null
-    }
-
-    return (
-      <RequestInfo
-        {...routeInfo}
-        authUser={this.props.authUser}
-        onDelete={() => this.props.dispatch(requestActions.remove(id))}
-        returnUrl={this.props.match.url + '/requests'}
-        {...request}
       />
     )
   }
@@ -182,11 +144,11 @@ export class Community extends React.Component {
               />
               <Route
                 path={this.props.match.path + '/offers/:offerId'}
-                render={this.offerInfoPane}
+                component={OfferContainer}
               />
               <Route
                 path={this.props.match.path + '/requests/:requestId'}
-                render={this.requestInfoPane}
+                component={RequestContainer}
               />
               <Route
                 path={this.props.match.path + '/create-project'}

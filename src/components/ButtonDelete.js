@@ -21,8 +21,6 @@ function ButtonDelete(props) {
     <Button
       className={classes.button}
       variant="raised"
-      component={Link}
-      to={props.returnUrl}
       color="secondary"
       disabled={!props.authenticated}
       onClick={props.handleClick}
@@ -35,8 +33,7 @@ function ButtonDelete(props) {
 
 ButtonDelete.propTypes = {
   authenticated: PropTypes.bool.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  returnUrl: PropTypes.string.isRequired
+  handleClick: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(ButtonDelete)
