@@ -10,6 +10,7 @@ import Reboot from 'material-ui/Reboot'
 import JoatUAppBar from './components/JoatUAppBar'
 import Community from '../Community'
 import CommunityMap from '../CommunityMap'
+import Profile from '../Profile'
 
 import {
   communityActions,
@@ -79,6 +80,7 @@ class Root extends React.Component {
         />
         <Switch>
           <Route path="/communities/:communityId" component={Community} />
+          <Route path="/profiles/:profileId" component={Profile} />
           <Route path="/" component={CommunityMap} />
         </Switch>
       </div>

@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, withRouter } from 'react-router-dom'
@@ -18,6 +17,8 @@ import CreateRequest from './scenes/CreateRequest'
 import ProjectList from './components/ProjectList'
 import OfferList from './components/OfferList'
 import RequestList from './components/RequestList'
+
+import { resolveKeys } from '../../utils'
 
 import {
   projectActions,
@@ -47,11 +48,6 @@ export class Community extends React.Component {
     const id = routeInfo.match.params.projectId
     const project = this.props.projects[id]
 
-    // TODO Find a better place for these helper functions
-    const resolve = (keyMap, values) => {
-      return R.pick(R.keys(keyMap), values)
-    }
-
     if (!project) {
       return null
     }
@@ -67,7 +63,7 @@ export class Community extends React.Component {
         }
         onDelete={() => this.props.dispatch(projectActions.remove(id))}
         authUser={this.props.authUser}
-        participants={resolve(project.participants, this.props.users)}
+        participants={resolveKeys(project.participants, this.props.users)}
         returnUrl={this.props.match.url + '/projects'}
       />
     )
@@ -182,15 +178,15 @@ export class Community extends React.Component {
             <React.Fragment>
               <Route
                 path={this.props.match.path + '/projects/:projectId'}
-                component={this.projectInfoPane}
+                render={this.projectInfoPane}
               />
               <Route
                 path={this.props.match.path + '/offers/:offerId'}
-                component={this.offerInfoPane}
+                render={this.offerInfoPane}
               />
               <Route
                 path={this.props.match.path + '/requests/:requestId'}
-                component={this.requestInfoPane}
+                render={this.requestInfoPane}
               />
               <Route
                 path={this.props.match.path + '/create-project'}

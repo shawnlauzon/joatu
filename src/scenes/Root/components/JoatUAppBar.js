@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -109,6 +110,12 @@ class JoatUAppBar extends React.Component {
                   open={openLogoutModal}
                   onClose={this.handleLogoutModalClose}
                 >
+                  <MenuItem
+                    component={Link}
+                    to={`/profiles/${this.props.authUser.id}`}
+                  >
+                    Profile
+                  </MenuItem>
                   <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>

@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -7,6 +6,8 @@ import { hubActions } from '../../data/actions'
 import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
 import CommunityInfo from './components/CommunityInfo'
+
+import { resolveKeys } from '../../utils'
 
 class CommunityMap extends React.Component {
   constructor(props) {
@@ -20,10 +21,6 @@ class CommunityMap extends React.Component {
   onClick = id => {
     this.setState({ activeCommunityId: id })
     this.props.dispatch(hubActions.changeHub(id))
-  }
-
-  resolve = (participants, users) => {
-    return R.pick(R.keys(participants), users)
   }
 
   render() {
@@ -55,18 +52,13 @@ class CommunityMap extends React.Component {
   }
 }
 
-// TODO Find a better place for these helper functions
-const resolve = (keyMap, values) => {
-  return R.pick(R.keys(keyMap), values)
-}
-
 function mapStateToProps(state) {
   return {
     communities: state.communities,
     users: state.users,
 
     membersOfCommunity: communityId =>
-      resolve(state.communities[communityId].members, state.users)
+      resolveKeys(state.communities[communityId].members, state.users)
   }
 }
 
