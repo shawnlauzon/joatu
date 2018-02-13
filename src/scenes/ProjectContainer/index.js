@@ -15,11 +15,7 @@ import { projectActions } from '../../data/actions'
 import { getParticipantsInProject } from '../../data/projects'
 
 class ProjectContainer extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.projectId = props.match.params.projectId
-  }
+  projectId = () => this.props.match.params.projectId
 
   render() {
     const {
@@ -45,11 +41,11 @@ class ProjectContainer extends React.Component {
         </div>
         <div>
           <ButtonJoin
-            handleClick={() => addParticipant(authUser.id, this.projectId)}
+            handleClick={() => addParticipant(authUser.id, this.projectId())}
             authenticated={authUser.authenticated}
           />
           <ButtonDelete
-            handleClick={() => removeProject(this.projectId)}
+            handleClick={() => removeProject(this.projectId())}
             authenticated={authUser.authenticated}
           />
         </div>

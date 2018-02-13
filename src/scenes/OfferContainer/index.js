@@ -6,11 +6,7 @@ import OfferInfo from './components/OfferInfo'
 import { offerActions } from '../../data/actions'
 
 class OfferContainer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.offerId = props.match.params.offerId
-  }
+  offerId = () => this.props.match.params.offerId
 
   render() {
     if (!this.props.offer) {
@@ -21,7 +17,7 @@ class OfferContainer extends Component {
         authUser={this.props.authUser}
         offer={this.props.offer}
         owner={this.props.owner}
-        onDelete={() => this.props.removeOffer(this.offerId)}
+        onDelete={() => this.props.removeOffer(this.offerId())}
       />
     )
   }

@@ -6,11 +6,7 @@ import RequestInfo from './components/RequestInfo'
 import { requestActions } from '../../data/actions'
 
 class RequestContainer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.requestId = props.match.params.requestId
-  }
+  requestId = () => this.props.match.params.requestId
 
   render() {
     if (!this.props.request) {
@@ -21,7 +17,7 @@ class RequestContainer extends Component {
         authUser={this.props.authUser}
         request={this.props.request}
         owner={this.props.owner}
-        onDelete={() => this.props.removeRequest(this.requestId)}
+        onDelete={() => this.props.removeRequest(this.requestId())}
       />
     )
   }

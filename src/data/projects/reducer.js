@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import { assoc, assocPath, dissoc } from 'ramda'
 
 import {
   FETCH_PROJECTS_SUCCEEDED,
@@ -13,18 +13,15 @@ const reducer = (state = {}, action) => {
     case FETCH_PROJECTS_SUCCEEDED:
       return action.payload
     case CREATE_PROJECT_SUCCEEDED:
-      return Object.assign({}, state, action.payload)
+      return assoc(action.payload.id, action.payload.data, state)
     case DELETE_PROJECT_SUCCEEDED:
-      return R.dissoc(action.payload, state)
+      return dissoc(action.payload.id, state)
     case ADD_PARTICIPANT_SUCCEEDED:
-      const project = state[action.payload.projectId]
-      if (!project.participants) {
-        project.participants = {}
-      }
-      project.participants[action.payload.userId] = true
-      return Object.assign({}, state, {
-        [action.payload.projectId]: project
-      })
+      return assocPath(
+        [action.payload.projectId, 'participants', action.payload.userId],
+        true,
+        state
+      )
     default:
       return state
   }

@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import { assoc, dissoc } from 'ramda'
 
 import {
   FETCH_REQUESTS_SUCCEEDED,
@@ -11,9 +11,10 @@ const reducer = (state = {}, action) => {
     case FETCH_REQUESTS_SUCCEEDED:
       return action.payload
     case CREATE_REQUEST_SUCCEEDED:
-      return Object.assign({}, state, action.payload)
+      return assoc(action.payload.id, action.payload.data, state)
+
     case DELETE_REQUEST_SUCCEEDED:
-      return R.dissoc(action.payload, state)
+      return dissoc(action.payload.id, state)
     default:
       return state
   }
