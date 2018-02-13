@@ -13,12 +13,26 @@ const Profile = props => (
       <div>
         <Avatar src={props.user.imgUrl} />
         <Typography variant="display3">{props.user.displayName}</Typography>
-        <Typography variant="display2">Projects</Typography>
-        {isEmpty(props.projects) ? (
+        <Typography variant="display2">My Projects</Typography>
+        {isEmpty(props.ownedProjects) ? (
           <Typography variant="body1">None</Typography>
         ) : (
           <List>
-            {Object.entries(props.projects).map(([id, value]) => (
+            {Object.entries(props.ownedProjects).map(([id, value]) => (
+              <ListItem key={id}>
+                <ListItemText
+                  primary={<Link to={`/projects/${id}`}>{value.name}</Link>}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
+        <Typography variant="display2">Volunteering for</Typography>
+        {isEmpty(props.memberProjects) ? (
+          <Typography variant="body1">None</Typography>
+        ) : (
+          <List>
+            {Object.entries(props.ownedProjects).map(([id, value]) => (
               <ListItem key={id}>
                 <ListItemText
                   primary={<Link to={`/projects/${id}`}>{value.name}</Link>}
@@ -65,7 +79,12 @@ Profile.propTypes = {
     displayName: PropTypes.string.isRequired,
     imgUrl: PropTypes.string.isRequired
   }),
-  projects: PropTypes.objectOf(
+  ownedProjects: PropTypes.objectOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  memberProjects: PropTypes.objectOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired
     })

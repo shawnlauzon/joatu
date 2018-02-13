@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import ProfileView from './components/ProfileView'
 
 import {
-  getProjectsForUser,
+  getOwnedProjectsForUser,
+  getMemberProjectsForUser,
   getOffersForUser,
   getRequestsForUser
 } from '../../data/users'
@@ -15,7 +16,8 @@ class Profile extends React.Component {
       <div>
         <ProfileView
           user={this.props.user}
-          projects={this.props.projects}
+          ownedProjects={this.props.ownedProjects}
+          memberProjects={this.props.memberProjects}
           offers={this.props.offers}
           requests={this.props.requests}
         />
@@ -29,7 +31,8 @@ function mapStateToProps(state, ownProps) {
 
   return {
     user: state.users[userId],
-    projects: getProjectsForUser(userId)(state),
+    ownedProjects: getOwnedProjectsForUser(userId)(state),
+    memberProjects: getMemberProjectsForUser(userId)(state),
     offers: getOffersForUser(userId)(state),
     requests: getRequestsForUser(userId)(state)
   }

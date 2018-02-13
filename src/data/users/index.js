@@ -8,9 +8,14 @@ const getProjects = state => state.projects
 const getOffers = state => state.offers
 const getRequests = state => state.requests
 
-export const getProjectsForUser = id =>
+export const getOwnedProjectsForUser = id =>
   createSelector([getUserById(id), getProjects], (user, projects) => {
-    return user ? resolveKeys(user.projects, projects) : {}
+    return user ? resolveKeys(user.ownedProjects, projects) : {}
+  })
+
+export const getMemberProjectsForUser = id =>
+  createSelector([getUserById(id), getProjects], (user, projects) => {
+    return user ? resolveKeys(user.memberProjects, projects) : {}
   })
 
 export const getRequestsForUser = id =>

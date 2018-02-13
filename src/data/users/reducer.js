@@ -55,7 +55,7 @@ const reducer = (state = {}, action) => {
     case ADD_NEW_REQUEST_TO_USER_SUCCEEDED:
       return addRefToCollection(action, 'requests', state)
     case REMOVE_PROJECT_FROM_USER_SUCCEEDED:
-      return removeRefFromCollection(action, 'projects', state)
+      return removeRefFromCollection(action, 'memberProjects', state)
     case REMOVE_OFFER_FROM_USER_SUCCEEDED:
       return removeRefFromCollection(action, 'offers', state)
     case REMOVE_REQUEST_FROM_USER_SUCCEEDED:

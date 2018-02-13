@@ -80,7 +80,7 @@ export function doLogin(provider) {
 
 export async function addParticipant(projectId, userId) {
   const pathToUser = ['participants', userId].join('.')
-  const pathToProject = ['projects', projectId].join('.')
+  const pathToProject = ['memberProjects', projectId].join('.')
 
   // TODO Dispatch 2 actions rather than separate here; can then
   // be done in parallel
@@ -101,7 +101,7 @@ export async function addParticipant(projectId, userId) {
 
 export async function addRef(data) {
   const { collection, category, fromId, toId } = data
-  const path = category + '.' + toId
+  const path = [category, toId].join('.')
 
   return db
     .collection(collection)
@@ -114,7 +114,7 @@ export async function addRef(data) {
 
 export async function removeRef(data) {
   const { collection, category, fromId, toId } = data
-  const path = category + '.' + toId
+  const path = [category, toId].join('.')
 
   return db
     .collection(collection)
