@@ -1,3 +1,4 @@
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/shawnlauzon/joatu.png?columns=all)](https://waffle.io/shawnlauzon/joatu?utm_source=badge)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
