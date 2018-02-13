@@ -90,7 +90,7 @@ export async function addParticipant(projectId, userId) {
   })
   const user = await db.collection('users').doc(userId)
   await user.update({
-    [pathToProject]: true
+    [pathToProject]: Date.now()
   })
 
   return {
@@ -107,7 +107,7 @@ export async function addRef(data) {
     .collection(collection)
     .doc(fromId)
     .update({
-      [path]: true
+      [path]: Date.now()
     })
     .then(() => data)
 }

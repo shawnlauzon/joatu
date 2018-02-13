@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import ProfileView from './components/ProfileView'
+import EditComment from './components/EditComment'
 
 import {
   getOwnedProjectsForUser,
@@ -10,7 +11,19 @@ import {
   getRequestsForUser
 } from '../../data/users'
 
+import { create } from '../../data/comments/actions'
+
 class Profile extends React.Component {
+  profileUserId = () => this.props.match.params.profileId
+
+  handleNewComment = text => {
+    this.props.create({
+      from: this.props.authUser.id,
+      to: this.profileUserId(),
+      text
+    })
+  }
+
   render() {
     return (
       <div>
@@ -21,6 +34,7 @@ class Profile extends React.Component {
           offers={this.props.offers}
           requests={this.props.requests}
         />
+        <EditComment onSave={this.handleNewComment} />
       </div>
     )
   }
@@ -30,6 +44,7 @@ function mapStateToProps(state, ownProps) {
   const userId = ownProps.match.params.profileId
 
   return {
+    authUser: state.authUser,
     user: state.users[userId],
     ownedProjects: getOwnedProjectsForUser(userId)(state),
     memberProjects: getMemberProjectsForUser(userId)(state),
@@ -38,4 +53,8 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(Profile)
+const mapDispatchToProps = {
+  create
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
