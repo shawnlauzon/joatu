@@ -11,6 +11,7 @@ const Profile = props => (
   <div>
     {props.user && (
       <div>
+        <Link to="/">Return to Home</Link>
         <Avatar src={props.user.imgUrl} />
         <Typography variant="display3">{props.user.displayName}</Typography>
         <Typography variant="display2">My Projects</Typography>
