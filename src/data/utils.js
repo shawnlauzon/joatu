@@ -8,3 +8,10 @@ import * as R from 'ramda'
 export const resolveKeys = (keyMap, values) => {
   return R.pick(R.keys(keyMap), values)
 }
+
+export const addRefToCollection = (action, collection, state) =>
+  R.assocPath(
+    [action.payload.data.owner, collection, action.payload.id],
+    true,
+    state
+  )

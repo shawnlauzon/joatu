@@ -8,7 +8,8 @@ import {
   // These should be embedded
   doLogin,
   doLogout,
-  addParticipant
+  addParticipant,
+  addRef
 } from '../data/api'
 
 const apiMiddleware = store => next => action => {
@@ -59,6 +60,8 @@ const apiMiddleware = store => next => action => {
     return addParticipant(callApi.projectId, callApi.userId)
       .then(handleResponse)
       .catch(handleError)
+  } else if (callApi.action === 'addRef') {
+    return addRef(callApi)
   } else {
     return doGet(callApi.collection)
       .then(handleResponse)

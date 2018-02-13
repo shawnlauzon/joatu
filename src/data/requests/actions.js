@@ -8,6 +8,18 @@ export const CREATE_REQUEST_STARTED = 'CREATE_REQUEST_STARTED'
 export const CREATE_REQUEST_SUCCEEDED = 'CREATE_REQUEST_SUCCEEDED'
 export const CREATE_REQUEST_FAILED = 'CREATE_REQUEST_FAILED'
 
+export const ADD_NEW_REQUEST_TO_USER_STARTED = 'ADD_NEW_REQUEST_TO_USER_STARTED'
+export const ADD_NEW_REQUEST_TO_USER_SUCCEEDED =
+  'ADD_NEW_REQUEST_TO_USER_SUCCEEDED'
+export const ADD_NEW_REQUEST_TO_USER_FAILED = 'ADD_NEW_REQUEST_TO_USER_FAILED'
+
+export const ADD_NEW_REQUEST_TO_COMMUNITY_STARTED =
+  'ADD_NEW_REQUEST_TO_COMMUNITY_STARTED'
+export const ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED =
+  'ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED'
+export const ADD_NEW_REQUEST_TO_COMMUNITY_FAILED =
+  'ADD_NEW_REQUEST_TO_COMMUNITY_FAILED'
+
 export const UPDATE_REQUEST_STARTED = 'UPDATE_REQUEST_STARTED'
 export const UPDATE_REQUEST_SUCCEEDED = 'UPDATE_REQUEST_SUCCEEDED'
 export const UPDATE_REQUEST_FAILED = 'UPDATE_REQUEST_FAILED'
@@ -44,8 +56,50 @@ const doCreateRequest = body => ({
   }
 })
 
+const doAddNewRequestToUser = (requestId, ownerId) => ({
+  [CALL_API]: {
+    types: [
+      ADD_NEW_REQUEST_TO_USER_STARTED,
+      ADD_NEW_REQUEST_TO_USER_SUCCEEDED,
+      ADD_NEW_REQUEST_TO_USER_FAILED
+    ],
+    collection: 'users',
+    action: 'addRef',
+    category: 'requests',
+    fromId: ownerId,
+    toId: requestId
+  }
+})
+
+const doAddNewRequestToCommunity = (projectId, communityId) => ({
+  [CALL_API]: {
+    types: [
+      ADD_NEW_REQUEST_TO_COMMUNITY_STARTED,
+      ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED,
+      ADD_NEW_REQUEST_TO_COMMUNITY_FAILED
+    ],
+    collection: 'communities',
+    action: 'addRef',
+    category: 'requests',
+    fromId: communityId,
+    toId: projectId
+  }
+})
+
 export const create = body => (dispatch, getState) => {
-  return dispatch(doCreateRequest(body))
+  return dispatch(doCreateRequest(body)).then(result =>
+    Promise.all([
+      dispatch(
+        doAddNewRequestToUser(result.payload.id, result.payload.data.owner)
+      ),
+      dispatch(
+        doAddNewRequestToCommunity(
+          result.payload.id,
+          result.payload.data.community
+        )
+      )
+    ])
+  )
 }
 
 const doUpdateRequest = (id, body) => ({

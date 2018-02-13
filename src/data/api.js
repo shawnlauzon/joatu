@@ -36,8 +36,8 @@ export function doAdd(collectionName, data) {
     .collection(collectionName)
     .add(toFirestore(data))
     .then(docRef => ({
-      // Return id: { ...data }
-      [docRef.id]: data
+      id: docRef.id,
+      data
     }))
 }
 
@@ -47,7 +47,8 @@ export function doSet(collectionName, id, data) {
     .doc(id)
     .set(toFirestore(data))
     .then(docRef => ({
-      [id]: data
+      id,
+      data
     }))
 }
 
@@ -56,7 +57,9 @@ export function doDelete(collectionName, id) {
     .collection(collectionName)
     .doc(id)
     .delete()
-    .then(() => id)
+    .then(() => ({
+      id
+    }))
 }
 
 export function doLogin(provider) {
@@ -79,6 +82,8 @@ export async function addParticipant(projectId, userId) {
   const pathToUser = ['participants', userId].join('.')
   const pathToProject = ['projects', projectId].join('.')
 
+  // TODO Dispatch 2 actions rather than separate here; can then
+  // be done in parallel
   const project = await db.collection('projects').doc(projectId)
   await project.update({
     [pathToUser]: true
@@ -92,6 +97,17 @@ export async function addParticipant(projectId, userId) {
     projectId,
     userId
   }
+}
+
+export async function addRef(data) {
+  const { collection, category, fromId, toId } = data
+  return db
+    .collection(collection)
+    .doc(fromId)
+    .update({
+      [category]: { [toId]: true }
+    })
+    .then(() => data)
 }
 
 export function doLogout(provider) {

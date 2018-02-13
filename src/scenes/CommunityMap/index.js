@@ -42,6 +42,7 @@ class CommunityMap extends React.Component {
           <CommunityInfo
             name={this.props.communities[this.state.activeCommunityId].name}
             members={getMembersOfCommunity(this.state.activeCommunityId)({
+              communities: this.props.communities,
               users: this.props.users
             })}
             url={`/communities/${this.state.activeCommunityId}`}

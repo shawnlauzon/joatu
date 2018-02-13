@@ -10,7 +10,7 @@ import ButtonDelete from '../../components/ButtonDelete'
 import ParticipantList from './components/ParticipantList'
 import UserChip from '../../components/UserChip'
 
-import { addParticipant, projectActions } from '../../data/actions'
+import { projectActions } from '../../data/actions'
 
 import { getParticipantsInProject } from '../../data/projects'
 
@@ -80,7 +80,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  addParticipant,
+  addParticipant: projectActions.addParticipant,
   removeProject: projectActions.remove
 }
 

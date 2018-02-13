@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import { assoc, assocPath, dissoc } from 'ramda'
 
 import {
   FETCH_USERS_SUCCEEDED,
@@ -6,23 +6,47 @@ import {
   DELETE_USER_SUCCEEDED
 } from './actions'
 
-import { ADD_PARTICIPANT_SUCCEEDED } from '../actions'
+import {
+  ADD_NEW_PROJECT_TO_USER_SUCCEEDED,
+  ADD_PARTICIPANT_SUCCEEDED
+} from '../projects/actions'
+import { ADD_NEW_OFFER_TO_USER_SUCCEEDED } from '../offers/actions'
+import { ADD_NEW_REQUEST_TO_USER_SUCCEEDED } from '../requests/actions'
 
+import { addRefToCollection } from '../utils'
+
+//
+// {
+//   userId: {
+//     displayName,
+//     email,
+//     imgUrl,
+//     projects: { projectId1: true, projectId2: true ... },
+//     offers: { offerId1: true, offerId2: true ... },
+//     requests: { requestId1: true, requestId2: true ... }
+//   }
+// }
+//
 const reducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_USERS_SUCCEEDED:
       return action.payload
     case CREATE_USER_SUCCEEDED:
-      return Object.assign({}, state, action.payload)
+      return assoc(action.payload.id, action.payload.data, state)
     case DELETE_USER_SUCCEEDED:
-      return R.dissoc(action.payload, state)
+      return dissoc(action.payload.id, state)
     case ADD_PARTICIPANT_SUCCEEDED:
-      const user = state[action.payload.userId]
-      if (!user.projects) {
-        user.projects = {}
-      }
-      user.projects[action.payload.projectId] = true
-      return Object.assign({}, state, { [action.payload.userId]: user })
+      return assocPath(
+        [action.payload.userId, 'addedProjects', action.payload.projectId],
+        true,
+        state
+      )
+    case ADD_NEW_PROJECT_TO_USER_SUCCEEDED:
+      return addRefToCollection(action, 'ownedProjects', state)
+    case ADD_NEW_OFFER_TO_USER_SUCCEEDED:
+      return addRefToCollection(action, 'offers', state)
+    case ADD_NEW_REQUEST_TO_USER_SUCCEEDED:
+      return addRefToCollection(action, 'requests', state)
     default:
       return state
   }

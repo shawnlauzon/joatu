@@ -6,7 +6,7 @@ import {
   DELETE_PROJECT_SUCCEEDED
 } from './actions'
 
-import { ADD_PARTICIPANT_SUCCEEDED } from '../actions'
+import { ADD_PARTICIPANT_SUCCEEDED } from './actions'
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
