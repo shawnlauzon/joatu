@@ -9,7 +9,8 @@ import {
   doLogin,
   doLogout,
   addParticipant,
-  addRef
+  addRef,
+  removeRef
 } from '../data/api'
 
 const apiMiddleware = store => next => action => {
@@ -62,6 +63,8 @@ const apiMiddleware = store => next => action => {
       .catch(handleError)
   } else if (callApi.action === 'addRef') {
     return addRef(callApi)
+  } else if (callApi.action === 'removeRef') {
+    return removeRef(callApi)
   } else {
     return doGet(callApi.collection)
       .then(handleResponse)

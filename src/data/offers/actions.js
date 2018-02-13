@@ -27,6 +27,18 @@ export const DELETE_OFFER_STARTED = 'DELETE_OFFER_STARTED'
 export const DELETE_OFFER_SUCCEEDED = 'DELETE_OFFER_SUCCEEDED'
 export const DELETE_OFFER_FAILED = 'DELETE_OFFER_FAILED'
 
+export const REMOVE_OFFER_FROM_USER_STARTED = 'REMOVE_OFFER_FROM_USER_STARTED'
+export const REMOVE_OFFER_FROM_USER_SUCCEEDED =
+  'REMOVE_OFFER_FROM_USER_SUCCEEDED'
+export const REMOVE_OFFER_FROM_USER_FAILED = 'REMOVE_OFFER_FROM_USER_FAILED'
+
+export const REMOVE_OFFER_FROM_COMMUNITY_STARTED =
+  'REMOVE_OFFER_FROM_COMMUNITY_STARTED'
+export const REMOVE_OFFER_FROM_COMMUNITY_SUCCEEDED =
+  'REMOVE_OFFER_FROM_COMMUNITY_SUCCEEDED'
+export const REMOVE_OFFER_FROM_COMMUNITY_FAILED =
+  'REMOVE_OFFER_FROM_COMMUNITY_FAILED'
+
 const doFetchOffers = () => ({
   [CALL_API]: {
     types: [FETCH_OFFERS_STARTED, FETCH_OFFERS_SUCCEEDED, FETCH_OFFERS_FAILED],
@@ -62,7 +74,7 @@ const doAddNewOfferToUser = (offerId, ownerId) => ({
   }
 })
 
-const doAddNewOfferToCommunity = (projectId, communityId) => ({
+const doAddNewOfferToCommunity = (offerId, communityId) => ({
   [CALL_API]: {
     types: [
       ADD_NEW_OFFER_TO_COMMUNITY_STARTED,
@@ -73,7 +85,7 @@ const doAddNewOfferToCommunity = (projectId, communityId) => ({
     action: 'addRef',
     category: 'offers',
     fromId: communityId,
-    toId: projectId
+    toId: offerId
   }
 })
 
@@ -116,6 +128,41 @@ const doDeleteOffer = id => ({
   }
 })
 
+const doRemoveOfferFromUser = (offerId, ownerId) => ({
+  [CALL_API]: {
+    types: [
+      REMOVE_OFFER_FROM_USER_STARTED,
+      REMOVE_OFFER_FROM_USER_SUCCEEDED,
+      REMOVE_OFFER_FROM_USER_FAILED
+    ],
+    collection: 'users',
+    action: 'removeRef',
+    category: 'offers',
+    fromId: ownerId,
+    toId: offerId
+  }
+})
+
+const doRemoveOfferFromCommunity = (offerId, ownerId) => ({
+  [CALL_API]: {
+    types: [
+      REMOVE_OFFER_FROM_COMMUNITY_STARTED,
+      REMOVE_OFFER_FROM_COMMUNITY_SUCCEEDED,
+      REMOVE_OFFER_FROM_COMMUNITY_FAILED
+    ],
+    collection: 'communities',
+    action: 'removeRef',
+    category: 'offers',
+    fromId: ownerId,
+    toId: offerId
+  }
+})
+
 export const remove = id => (dispatch, getState) => {
-  return dispatch(doDeleteOffer(id))
+  const offer = getState().offers[id]
+  return Promise.all([
+    dispatch(doDeleteOffer(id)),
+    dispatch(doRemoveOfferFromUser(id, offer.owner)),
+    dispatch(doRemoveOfferFromCommunity(id, offer.community))
+  ])
 }

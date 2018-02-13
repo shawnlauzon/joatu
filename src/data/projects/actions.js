@@ -28,6 +28,19 @@ export const DELETE_PROJECT_STARTED = 'DELETE_PROJECT_STARTED'
 export const DELETE_PROJECT_SUCCEEDED = 'DELETE_PROJECT_SUCCEEDED'
 export const DELETE_PROJECT_FAILED = 'DELETE_PROJECT_FAILED'
 
+export const REMOVE_PROJECT_FROM_USER_STARTED =
+  'REMOVE_PROJECT_FROM_USER_STARTED'
+export const REMOVE_PROJECT_FROM_USER_SUCCEEDED =
+  'REMOVE_PROJECT_FROM_USER_SUCCEEDED'
+export const REMOVE_PROJECT_FROM_USER_FAILED = 'REMOVE_PROJECT_FROM_USER_FAILED'
+
+export const REMOVE_PROJECT_FROM_COMMUNITY_STARTED =
+  'REMOVE_PROJECT_FROM_COMMUNITY_STARTED'
+export const REMOVE_PROJECT_FROM_COMMUNITY_SUCCEEDED =
+  'REMOVE_PROJECT_FROM_COMMUNITY_SUCCEEDED'
+export const REMOVE_PROJECT_FROM_COMMUNITY_FAILED =
+  'REMOVE_PROJECT_FROM_COMMUNITY_FAILED'
+
 export const ADD_PARTICIPANT_STARTED = 'ADD_PARTICIPANT_STARTED'
 export const ADD_PARTICIPANT_SUCCEEDED = 'ADD_PARTICIPANT_SUCCEEDED'
 export const ADD_PARTICIPANT_FAILED = 'ADD_PARTICIPANT_FAILED'
@@ -137,8 +150,43 @@ const doDeleteProject = id => ({
   }
 })
 
+const doRemoveProjectFromUser = (projectId, ownerId) => ({
+  [CALL_API]: {
+    types: [
+      REMOVE_PROJECT_FROM_USER_STARTED,
+      REMOVE_PROJECT_FROM_USER_SUCCEEDED,
+      REMOVE_PROJECT_FROM_USER_FAILED
+    ],
+    collection: 'users',
+    action: 'removeRef',
+    category: 'projects',
+    fromId: ownerId,
+    toId: projectId
+  }
+})
+
+const doRemoveProjectFromCommunity = (projectId, ownerId) => ({
+  [CALL_API]: {
+    types: [
+      REMOVE_PROJECT_FROM_COMMUNITY_STARTED,
+      REMOVE_PROJECT_FROM_COMMUNITY_SUCCEEDED,
+      REMOVE_PROJECT_FROM_COMMUNITY_FAILED
+    ],
+    collection: 'communities',
+    action: 'removeRef',
+    category: 'projects',
+    fromId: ownerId,
+    toId: projectId
+  }
+})
+
 export const remove = id => (dispatch, getState) => {
-  return dispatch(doDeleteProject(id))
+  const project = getState().projects[id]
+  return Promise.all([
+    dispatch(doDeleteProject(id)),
+    dispatch(doRemoveProjectFromUser(id, project.owner)),
+    dispatch(doRemoveProjectFromCommunity(id, project.community))
+  ])
 }
 
 export function addParticipant(userId, projectId) {

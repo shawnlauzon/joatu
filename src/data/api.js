@@ -101,11 +101,26 @@ export async function addParticipant(projectId, userId) {
 
 export async function addRef(data) {
   const { collection, category, fromId, toId } = data
+  const path = category + '.' + toId
+
   return db
     .collection(collection)
     .doc(fromId)
     .update({
-      [category]: { [toId]: true }
+      [path]: true
+    })
+    .then(() => data)
+}
+
+export async function removeRef(data) {
+  const { collection, category, fromId, toId } = data
+  const path = category + '.' + toId
+
+  return db
+    .collection(collection)
+    .doc(fromId)
+    .update({
+      [path]: firebase.firestore.FieldValue.delete()
     })
     .then(() => data)
 }
