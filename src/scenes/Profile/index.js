@@ -2,13 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import ProfileView from './components/ProfileView'
+import ViewComments from './components/ViewComments'
 import EditComment from './components/EditComment'
 
 import {
   getOwnedProjectsForUser,
   getMemberProjectsForUser,
   getOffersForUser,
-  getRequestsForUser
+  getRequestsForUser,
+  getCommentsWithCommenterForUser
 } from '../../data/users'
 
 import { create } from '../../data/comments/actions'
@@ -34,6 +36,8 @@ class Profile extends React.Component {
           offers={this.props.offers}
           requests={this.props.requests}
         />
+        {/* FIXME: A refresh is required to see a new comment */}
+        <ViewComments comments={this.props.comments} />
         <EditComment onSave={this.handleNewComment} />
       </div>
     )
@@ -46,6 +50,7 @@ function mapStateToProps(state, ownProps) {
   return {
     authUser: state.authUser,
     user: state.users[userId],
+    comments: getCommentsWithCommenterForUser(userId)(state),
     ownedProjects: getOwnedProjectsForUser(userId)(state),
     memberProjects: getMemberProjectsForUser(userId)(state),
     offers: getOffersForUser(userId)(state),

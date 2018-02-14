@@ -21,7 +21,8 @@ import {
   userActions,
   authActions,
   offerActions,
-  requestActions
+  requestActions,
+  commentActions
 } from '../../data/actions'
 
 class Root extends React.Component {
@@ -38,6 +39,7 @@ class Root extends React.Component {
     this.props.dispatch(projectActions.fetch())
     this.props.dispatch(offerActions.fetch())
     this.props.dispatch(requestActions.fetch())
+    this.props.dispatch(commentActions.fetch())
 
     firebase.auth().onAuthStateChanged(user => {
       this.props.dispatch(authActions.onAuthChanged(user))
@@ -94,6 +96,7 @@ class Root extends React.Component {
   }
 }
 
+// TODO I think I can remove most of these
 function mapStateToProps(state) {
   return {
     authUser: state.authUser,

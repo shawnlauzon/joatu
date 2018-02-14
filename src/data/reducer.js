@@ -7,6 +7,7 @@ import authUser from './authUser/reducer'
 import offers from './offers/reducer'
 import requests from './requests/reducer'
 import hub from './hub/reducer'
+import comments from './comments/reducer'
 
 export default combineReducers({
   authUser,
@@ -15,5 +16,6 @@ export default combineReducers({
   users,
   offers,
   requests,
-  hub
+  hub,
+  comments
 })
