@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import ProfileView from './components/ProfileView'
 import ViewComments from './components/ViewComments'
-import EditComment from './components/EditComment'
+import AddComment from './components/AddComment'
 
 import {
   getOwnedProjectsForUser,
@@ -17,6 +17,8 @@ import { create } from '../../data/comments/actions'
 
 class Profile extends React.Component {
   profileUserId = () => this.props.match.params.profileId
+
+  isProfileOfCurrentUser = () => this.props.authUser.id === this.profileUserId()
 
   handleNewComment = text => {
     this.props.create({
@@ -38,7 +40,9 @@ class Profile extends React.Component {
         />
         {/* FIXME: A refresh is required to see a new comment */}
         <ViewComments comments={this.props.comments} />
-        <EditComment onSave={this.handleNewComment} />
+        {!this.isProfileOfCurrentUser() && (
+          <AddComment onSave={this.handleNewComment} />
+        )}
       </div>
     )
   }

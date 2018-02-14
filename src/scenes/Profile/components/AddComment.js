@@ -6,7 +6,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 
-const EditCommentForm = props => {
+const AddCommentForm = props => {
   const {
     values,
     dirty,
@@ -55,7 +55,7 @@ const EditCommentForm = props => {
   )
 }
 
-const EditComment = withFormik({
+const AddComment = withFormik({
   // Transform outer props into form values
   mapPropsToValues: props => ({
     text: props.text
@@ -68,11 +68,11 @@ const EditComment = withFormik({
       text: ''
     })
   }
-})(EditCommentForm)
+})(AddCommentForm)
 
-EditComment.propTypes = {
+AddComment.propTypes = {
   text: PropTypes.string,
   onSave: PropTypes.func.isRequired
 }
 
-export default EditComment
+export default AddComment
