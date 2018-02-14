@@ -52,7 +52,7 @@ class ProjectContainer extends React.Component {
         <ParticipantList>
           {participants &&
             Object.keys(participants).map(id => (
-              <UserChip key={id} user={participants[id]} />
+              <UserChip id={id} key={id} user={participants[id]} />
             ))}
         </ParticipantList>
       </div>
