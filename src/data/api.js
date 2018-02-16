@@ -18,10 +18,23 @@ const toFirestore = body => {
   return R.evolve(transformations, body)
 }
 
-export function doGet(collectionName) {
+const getCollection = collection => {
+  if (typeof collection === 'string') {
+    return db.collection(collection)
+  } else {
+    return db
+      .collection(collection.root)
+      .doc(collection.ofDocument)
+      .collection(collection.subcollection)
+  }
+}
+
+export function doGet(collection, metadata) {
   const coll = {}
-  return db
-    .collection(collectionName)
+  if (metadata) {
+    coll.metadata = metadata
+  }
+  return getCollection(collection)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
@@ -32,8 +45,7 @@ export function doGet(collectionName) {
 }
 
 export function doAdd(collectionName, data) {
-  return db
-    .collection(collectionName)
+  return getCollection(collectionName)
     .add(toFirestore(data))
     .then(docRef => ({
       id: docRef.id,
@@ -42,8 +54,7 @@ export function doAdd(collectionName, data) {
 }
 
 export function doSet(collectionName, id, data) {
-  return db
-    .collection(collectionName)
+  return getCollection(collectionName)
     .doc(id)
     .set(toFirestore(data))
     .then(docRef => ({
@@ -53,8 +64,7 @@ export function doSet(collectionName, id, data) {
 }
 
 export function doDelete(collectionName, id) {
-  return db
-    .collection(collectionName)
+  return getCollection(collectionName)
     .doc(id)
     .delete()
     .then(() => ({
@@ -84,11 +94,11 @@ export async function addParticipant(projectId, userId) {
 
   // TODO Dispatch 2 actions rather than separate here; can then
   // be done in parallel
-  const project = await db.collection('projects').doc(projectId)
+  const project = await getCollection('projects').doc(projectId)
   await project.update({
     [pathToUser]: true
   })
-  const user = await db.collection('users').doc(userId)
+  const user = await getCollection('users').doc(userId)
   await user.update({
     [pathToProject]: Date.now()
   })
@@ -100,14 +110,13 @@ export async function addParticipant(projectId, userId) {
 }
 
 export async function addRef(data) {
-  const { collection, category, fromId, toId } = data
+  const { collection, category, fromId, toId, withData } = data
   const path = [category, toId].join('.')
 
-  return db
-    .collection(collection)
+  return getCollection(collection)
     .doc(fromId)
     .update({
-      [path]: Date.now()
+      [path]: withData || Date.now()
     })
     .then(() => data)
 }
@@ -116,8 +125,7 @@ export async function removeRef(data) {
   const { collection, category, fromId, toId } = data
   const path = [category, toId].join('.')
 
-  return db
-    .collection(collection)
+  return getCollection(collection)
     .doc(fromId)
     .update({
       [path]: firebase.firestore.FieldValue.delete()

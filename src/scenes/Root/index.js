@@ -14,6 +14,7 @@ import Profile from '../Profile'
 import ProjectContainer from '../ProjectContainer'
 import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
+import ChatContainer from '../ChatContainer'
 
 import {
   communityActions,
@@ -22,7 +23,8 @@ import {
   authActions,
   offerActions,
   requestActions,
-  commentActions
+  commentActions,
+  chatActions
 } from '../../data/actions'
 
 class Root extends React.Component {
@@ -34,12 +36,14 @@ class Root extends React.Component {
   }
 
   componentDidMount() {
+    // TODO We will need to somehow only load what is necessary
     this.props.dispatch(userActions.fetch())
     this.props.dispatch(communityActions.fetch())
     this.props.dispatch(projectActions.fetch())
     this.props.dispatch(offerActions.fetch())
     this.props.dispatch(requestActions.fetch())
     this.props.dispatch(commentActions.fetch())
+    this.props.dispatch(chatActions.fetch())
 
     firebase.auth().onAuthStateChanged(user => {
       this.props.dispatch(authActions.onAuthChanged(user))
@@ -89,6 +93,8 @@ class Root extends React.Component {
           <Route path="/projects/:projectId" component={ProjectContainer} />
           <Route path="/offers/:offerId" component={OfferContainer} />
           <Route path="/requests/:requestId" component={RequestContainer} />
+          <Route path="/chat-with/:userId" component={ChatContainer} />
+          <Route path="/chats/:chatId" component={ChatContainer} />
           <Route path="/" component={CommunityMap} />
         </Switch>
       </div>

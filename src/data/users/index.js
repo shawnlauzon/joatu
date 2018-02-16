@@ -10,6 +10,7 @@ const getOffers = state => state.offers
 const getRequests = state => state.requests
 const getComments = state => state.comments
 const getUsers = state => state.users
+const getChats = state => state.chats
 
 export const getOwnedProjectsForUser = id =>
   createSelector([getUserById(id), getProjects], (user, projects) => {
@@ -51,4 +52,9 @@ export const getCommentsForUser = id =>
 export const getCommentsWithCommenterForUser = id =>
   createSelector([getCommentsForUser(id), getUsers], (comments, users) => {
     return map(resolve('from', users), comments)
+  })
+
+export const getChatsForUser = id =>
+  createSelector([getUserById(id), getChats], (user, chats) => {
+    return user ? pickAndSortBy(user.chats, chats) : []
   })

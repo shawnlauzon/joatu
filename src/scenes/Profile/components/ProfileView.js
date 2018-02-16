@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import Typography from 'material-ui/Typography'
-import Avatar from 'material-ui/Avatar'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
 const Profile = props => (
@@ -12,7 +11,6 @@ const Profile = props => (
     {props.user && (
       <div>
         <Link to="/">Return to Home</Link>
-        <Avatar src={props.user.imgUrl} />
         <Typography variant="display3">{props.user.displayName}</Typography>
         <Typography variant="display2">My Projects</Typography>
         {isEmpty(props.ownedProjects) ? (

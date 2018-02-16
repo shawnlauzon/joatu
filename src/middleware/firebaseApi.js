@@ -66,7 +66,7 @@ const apiMiddleware = store => next => action => {
   } else if (callApi.action === 'removeRef') {
     return removeRef(callApi)
   } else {
-    return doGet(callApi.collection)
+    return doGet(callApi.collection, callApi.metadata)
       .then(handleResponse)
       .catch(handleError)
   }

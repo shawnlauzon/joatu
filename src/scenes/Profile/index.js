@@ -1,9 +1,12 @@
+import { path } from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
+import Avatar from 'material-ui/Avatar'
 
 import ProfileView from './components/ProfileView'
 import ViewComments from './components/ViewComments'
 import AddComment from './components/AddComment'
+import ButtonStartChat from './components/ButtonStartChat'
 
 import {
   getOwnedProjectsForUser,
@@ -31,6 +34,21 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
+        {this.props.user && (
+          <div>
+            <Avatar src={this.props.user.imgUrl} />
+            {this.props.chatId && (
+              <ButtonStartChat
+                name={this.props.user.displayName}
+                url={`/chats/${this.props.chatId}`}
+              />
+            )}
+            {/* <ButtonStartChat
+              name={this.props.user.displayName}
+              url={`/chat-with/${this.profileUserId()}`}
+            /> */}
+          </div>
+        )}
         <ProfileView
           user={this.props.user}
           ownedProjects={this.props.ownedProjects}
@@ -58,7 +76,8 @@ function mapStateToProps(state, ownProps) {
     ownedProjects: getOwnedProjectsForUser(userId)(state),
     memberProjects: getMemberProjectsForUser(userId)(state),
     offers: getOffersForUser(userId)(state),
-    requests: getRequestsForUser(userId)(state)
+    requests: getRequestsForUser(userId)(state),
+    chatId: path(['users', userId, 'chats', userId], state)
   }
 }
 
