@@ -44,12 +44,13 @@ export function doGet(collection, metadata) {
     })
 }
 
-export function doAdd(collectionName, data) {
-  return getCollection(collectionName)
+export function doAdd(collection, data, metadata) {
+  return getCollection(collection)
     .add(toFirestore(data))
     .then(docRef => ({
       id: docRef.id,
-      data
+      data,
+      metadata
     }))
 }
 

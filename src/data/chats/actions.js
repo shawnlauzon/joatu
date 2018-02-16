@@ -165,9 +165,11 @@ const doCreateMessage = ({ chatId, text, from }) => ({
       ofDocument: chatId
     },
     action: 'add',
-    sentAt: Date.now(),
-    text,
-    from,
+    body: {
+      sentAt: Date.now(),
+      text,
+      from
+    },
     metadata: {
       chatId
     }
@@ -177,11 +179,8 @@ const doCreateMessage = ({ chatId, text, from }) => ({
 // {
 //   chat: chatId,
 //   text: text,
-//   from: userId
+//   from: userId,
 // }
-export const createMessage = body => async (dispatch, getState) => {
-  const result = await dispatch(doCreateMessage(body))
-  result.participants.forEach(participant => {
-    dispatch(doAddNewChatToUser(result.payload.id, participant))
-  })
+export const createMessage = body => (dispatch, getState) => {
+  return dispatch(doCreateMessage(body))
 }
