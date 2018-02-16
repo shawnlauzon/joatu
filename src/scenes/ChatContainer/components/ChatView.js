@@ -17,10 +17,9 @@ const ChatView = ({ messages }) => (
 )
 
 ChatView.propTypes = {
-  messages: PropTypes.objectOf(
+  messages: PropTypes.arrayOf(
     PropTypes.shape({
       from: PropTypes.string.isRequired,
-      sentAt: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired
     })
   )

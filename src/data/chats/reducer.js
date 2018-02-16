@@ -1,4 +1,4 @@
-import { assoc, dissoc, assocPath, mergeDeepLeft } from 'ramda'
+import { assoc, dissoc, assocPath, mergeDeepLeft, append } from 'ramda'
 
 import {
   FETCH_CHATS_SUCCEEDED,
@@ -28,14 +28,16 @@ const reducer = (state = {}, action) => {
     case FETCH_MESSAGES_SUCCEEDED: {
       return assocPath(
         [action.payload.metadata.chatId, 'messages'],
-        dissoc('metadata', action.payload),
+        action.payload.data,
         state
       )
     }
     case CREATE_MESSAGE_SUCCEEDED: {
+      const messages = state[action.payload.metadata.chatId].messages
+
       return assocPath(
-        [action.payload.metadata.chatId, 'messages', action.payload.id],
-        action.payload.data,
+        [action.payload.metadata.chatId, 'messages'],
+        append(action.payload.data, messages),
         state
       )
     }

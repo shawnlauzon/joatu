@@ -57,12 +57,15 @@ export function doGet({ collection, metadata }) {
     })
 }
 
-// { [
-//   { id, ...data },
-//   ...
-// } ]
+// { data: [
+//     { id, ...data },
+//     ...
+//   ],
+//   metadata
+// }
+
 export function doGetSorted({ collection, metadata, orderBy }) {
-  const coll = []
+  const coll = { data: [] }
   if (metadata) {
     coll.metadata = metadata
   }
@@ -71,7 +74,7 @@ export function doGetSorted({ collection, metadata, orderBy }) {
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        coll.push({ id: doc.id, ...doc.data() })
+        coll.data.push({ id: doc.id, ...doc.data() })
       })
       return coll
     })

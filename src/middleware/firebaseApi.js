@@ -32,14 +32,17 @@ const apiMiddleware = store => next => action => {
   }
 
   const handleError = err => {
+    console.log('Error calling API', err)
     return next({
       type: failureType,
       error: err.message
     })
   }
 
+  // TODO Just pass the entire callApi to each of them, and replace with
+  // something like R.call
   if (callApi.action === 'add') {
-    return doAdd(callApi.collection, callApi.body)
+    return doAdd(callApi.collection, callApi.body, callApi.metadata)
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'set') {

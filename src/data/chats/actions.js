@@ -179,8 +179,8 @@ const doCreateMessage = ({ chatId, text, from }) => ({
 })
 
 // {
-//   chat: chatId,
-//   text: text,
+//   chatId,
+//   text,
 //   from: userId,
 // }
 export const createMessage = body => (dispatch, getState) => {
