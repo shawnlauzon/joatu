@@ -29,16 +29,49 @@ const getCollection = collection => {
   }
 }
 
-export function doGet(collection, metadata) {
+const getStatement = ({ collection, orderBy }) => {
+  let statement = getCollection(collection)
+  if (orderBy) {
+    statement = statement.orderBy(orderBy)
+  }
+  return statement
+}
+
+// {
+//   id: { ...data },
+//   ...
+// }
+export function doGet({ collection, metadata }) {
   const coll = {}
   if (metadata) {
     coll.metadata = metadata
   }
+
   return getCollection(collection)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
         coll[doc.id] = doc.data()
+      })
+      return coll
+    })
+}
+
+// { [
+//   { id, ...data },
+//   ...
+// } ]
+export function doGetSorted({ collection, metadata, orderBy }) {
+  const coll = []
+  if (metadata) {
+    coll.metadata = metadata
+  }
+
+  return getStatement({ collection, orderBy })
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        coll.push({ id: doc.id, ...doc.data() })
       })
       return coll
     })

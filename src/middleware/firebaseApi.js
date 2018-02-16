@@ -2,6 +2,7 @@ import { CALL_API } from '../data/actions'
 
 import {
   doGet,
+  doGetSorted,
   doSet,
   doAdd,
   doDelete,
@@ -63,10 +64,18 @@ const apiMiddleware = store => next => action => {
       .catch(handleError)
   } else if (callApi.action === 'addRef') {
     return addRef(callApi)
+      .then(handleResponse)
+      .catch(handleError)
   } else if (callApi.action === 'removeRef') {
     return removeRef(callApi)
+      .then(handleResponse)
+      .catch(handleError)
+  } else if (callApi.action === 'getSorted') {
+    return doGetSorted(callApi)
+      .then(handleResponse)
+      .catch(handleError)
   } else {
-    return doGet(callApi.collection, callApi.metadata)
+    return doGet(callApi)
       .then(handleResponse)
       .catch(handleError)
   }

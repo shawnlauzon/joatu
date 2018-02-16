@@ -137,11 +137,13 @@ const doFetchMessages = chatId => ({
       FETCH_MESSAGES_SUCCEEDED,
       FETCH_MESSAGES_FAILED
     ],
+    action: 'getSorted',
     collection: {
       root: 'chats',
       subcollection: 'messages',
       ofDocument: chatId
     },
+    orderBy: 'sentAt',
     metadata: {
       chatId
     }

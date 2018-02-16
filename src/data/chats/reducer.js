@@ -8,6 +8,15 @@ import {
   CREATE_MESSAGE_SUCCEEDED
 } from './actions'
 
+// chats:
+// {
+//   chatId: {
+//     participants: [ id, id ]
+//     messages: [
+//       { id, from, text, sentAt }
+//     ]
+//   }, ...
+// }
 const reducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_CHATS_SUCCEEDED:
