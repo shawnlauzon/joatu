@@ -15,6 +15,8 @@ import App from './App'
 
 import registerServiceWorker from './registerServiceWorker'
 
+import { bootstrap } from './data'
+
 const middlewares = [thunk, apiMiddleware]
 
 if (false) {
@@ -23,6 +25,7 @@ if (false) {
 
 const store = createStore(
   rootReducer,
+  bootstrap(),
   composeWithDevTools(applyMiddleware(...middlewares))
 )
 

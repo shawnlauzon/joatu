@@ -1,4 +1,4 @@
-import * as communityActions from './communities/actions'
+import * as communityActions from './community/actions'
 import * as projectActions from './projects/actions'
 import * as userActions from './users/actions'
 import * as authActions from './authUser/actions'

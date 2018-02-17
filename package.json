@@ -20,6 +20,8 @@
     "react-scripts": "1.1.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
+    "redux-orm": "^0.9.4",
+    "redux-orm-proptypes": "^0.1.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   },

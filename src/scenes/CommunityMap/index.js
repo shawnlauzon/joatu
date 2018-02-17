@@ -7,45 +7,47 @@ import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
 import CommunityInfo from './components/CommunityInfo'
 
-import { getMembersOfCommunity } from '../../data/communities'
+import { allCommunitiesSelector } from '../../data/community/selectors'
 
 class CommunityMap extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      activeCommunityId: undefined
+      activeCommunityIndex: undefined
     }
   }
 
-  onClick = id => {
-    this.setState({ activeCommunityId: id })
-    this.props.dispatch(hubActions.changeHub(id))
+  onClick = index => {
+    this.setState({ activeCommunityIndex: index })
+
+    // TODO Changing the hub should occur when someone clicks on the link,
+    // not just when they select one of these
+    this.props.dispatch(hubActions.changeHub(this.props.communities[index]))
   }
+
+  getSelectedCommunity = index =>
+    this.props.communities[this.state.activeCommunityIndex]
 
   render() {
     return (
       <div>
         <DisplayMap>
-          {Object.entries(this.props.communities).map(([id, community]) => (
+          {this.props.communities.map((community, index) => (
             <GeoPoint
-              key={id}
-              id={id}
+              key={community.id}
+              id={community.id}
               name={community.name}
               lat={community.coordinates.latitude}
               lng={community.coordinates.longitude}
-              onClick={() => this.onClick(id)}
+              onClick={() => this.onClick(index)}
             />
           ))}
         </DisplayMap>
-        {this.state.activeCommunityId && (
+        {this.state.activeCommunityIndex && (
           <CommunityInfo
-            name={this.props.communities[this.state.activeCommunityId].name}
-            members={getMembersOfCommunity(this.state.activeCommunityId)({
-              communities: this.props.communities,
-              users: this.props.users
-            })}
-            url={`/communities/${this.state.activeCommunityId}`}
+            name={this.getSelectedCommunity().name}
+            url={`/communities/${this.getSelectedCommunity().id}`}
           />
         )}
       </div>
@@ -55,8 +57,7 @@ class CommunityMap extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    communities: state.communities,
-    users: state.users
+    communities: allCommunitiesSelector(state)
   }
 }
 

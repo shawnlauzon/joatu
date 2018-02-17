@@ -12,7 +12,7 @@ const CommunityInfo = props => (
     <Link to={props.url}>
       <Typography variant="display2">{props.name}</Typography>
     </Link>
-    {R.isEmpty(props.members) ? (
+    {!props.members || R.isEmpty(props.members) ? (
       <div>No members :(</div>
     ) : (
       <div>
@@ -34,7 +34,7 @@ CommunityInfo.propTypes = {
       displayName: PropTypes.string.isRequired,
       imgUrl: PropTypes.string.isRequired
     })
-  ).isRequired
+  )
 }
 
 export default CommunityInfo

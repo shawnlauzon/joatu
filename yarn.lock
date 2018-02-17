@@ -1227,7 +1227,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0, babel-runtime@^6.6.1:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -4269,6 +4269,12 @@ ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
+immutable-ops@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/immutable-ops/-/immutable-ops-0.5.2.tgz#3803d9bc65821bf4aaedf2f3542ec8714b73646a"
+  dependencies:
+    ramda "^0.22.1"
+
 import-lazy@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/import-lazy/-/import-lazy-2.1.0.tgz#05698e3d45c88e8d7e9d92cb0584e77f096f3e43"
@@ -5591,6 +5597,10 @@ lodash@^2.4.1:
 lodash@^3.10.0, lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+
+lodash@^4.1.0, lodash@^4.12.0:
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 log-driver@^1.2.5:
   version "1.2.5"
@@ -7111,6 +7121,10 @@ rafl@~1.2.1:
   dependencies:
     global "~4.3.0"
 
+ramda@^0.22.1:
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.22.1.tgz#031da0c3df417c5b33c96234757eb37033f36a0e"
+
 ramda@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
@@ -7480,6 +7494,21 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
+redux-orm-proptypes@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/redux-orm-proptypes/-/redux-orm-proptypes-0.1.0.tgz#f5303945419ae22bf1ad5f1a479a5ba1b6da5ba0"
+  dependencies:
+    lodash "^4.1.0"
+
+redux-orm@^0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/redux-orm/-/redux-orm-0.9.4.tgz#811d1ac8306782f06ee925ce0856e0a69271fe0d"
+  dependencies:
+    babel-runtime "^6.6.1"
+    immutable-ops "^0.5.2"
+    lodash "^4.12.0"
+    reselect "^2.5.4"
+
 redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
@@ -7672,6 +7701,10 @@ require-uncached@^1.0.3:
 requires-port@1.0.x, requires-port@1.x.x, requires-port@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+
+reselect@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-2.5.4.tgz#b7d23fdf00b83fa7ad0279546f8dbbbd765c7047"
 
 reselect@^3.0.1:
   version "3.0.1"

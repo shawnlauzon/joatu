@@ -87,7 +87,7 @@ class JoatUAppBar extends React.Component {
               <Hidden xsDown>The Jack of all Trades Universe</Hidden>
               <Hidden smUp>JoatU</Hidden>
             </Typography>
-            {this.props.authUser.authenticated ? (
+            {this.props.authUser && this.props.authUser.authenticated ? (
               <div>
                 <Avatar
                   alt={this.props.authUser.displayName}
