@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ButtonOffering from './ButtonOffering'
 
+import Request from '../../../data/request/model'
+
 const RequestList = props => (
   <div>
     {Object.entries(props.requests).map(([id, request]) => (
@@ -16,11 +18,7 @@ const RequestList = props => (
 )
 
 RequestList.propTypes = {
-  requests: PropTypes.objectOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  requests: PropTypes.arrayOf(PropTypes.instanceOf(Request)).isRequired,
   viewUrl: PropTypes.string.isRequired,
   createUrl: PropTypes.string.isRequired
 }

@@ -1,13 +1,9 @@
-// selectors.js
-// import { createSelector } from 'reselect';
-// import { createSelector as ormCreateSelector } from 'redux-orm';
-
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
 const dbStateSelector = state => state.db
 
-export const allCommunitiesSelector = createSelector(
+export const allCommunities = createSelector(
   orm,
   // The first input selector should always select the db-state.
   // Behind the scenes, `createSelector` begins a Redux-ORM session
@@ -34,6 +30,12 @@ export const allCommunitiesSelector = createSelector(
         })
       })
   }
+)
+
+export const selectedCommunity = createSelector(
+  orm,
+  state => state.selectedHubId,
+  (session, hubId) => hubId && session.Community.withId(hubId).ref
 )
 
 // Will result in something like this when run:

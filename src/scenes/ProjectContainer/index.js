@@ -12,7 +12,7 @@ import UserChip from '../../components/UserChip'
 
 import { projectActions } from '../../data/actions'
 
-import { getParticipantsInProject } from '../../data/projects'
+import { getParticipantsInProject } from '../../data/project'
 
 class ProjectContainer extends React.Component {
   projectId = () => this.props.match.params.projectId

@@ -24,10 +24,7 @@ export function onLoginSuccess(user) {
   return {
     type: LOGIN_SUCCEEDED,
     payload: {
-      id: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-      imgUrl: user.photoURL
+      userId: user.uid
     }
   }
 }
@@ -36,10 +33,7 @@ export function onAuthChanged(user) {
   return {
     type: AUTH_CHANGED,
     payload: {
-      id: user && user.uid,
-      displayName: user && user.displayName,
-      email: user && user.email,
-      imgUrl: user && user.photoURL
+      userId: user.uid
     }
   }
 }

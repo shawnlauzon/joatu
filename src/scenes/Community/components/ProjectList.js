@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ButtonOffering from './ButtonOffering'
 
+import Project from '../../../data/project/model'
+
 const ProjectList = props => (
   <div>
     {Object.entries(props.projects).map(([id, project]) => (
@@ -16,11 +18,7 @@ const ProjectList = props => (
 )
 
 ProjectList.propTypes = {
-  projects: PropTypes.objectOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  projects: PropTypes.arrayOf(PropTypes.instanceOf(Project)).isRequired,
   viewUrl: PropTypes.string.isRequired,
   createUrl: PropTypes.string.isRequired
 }

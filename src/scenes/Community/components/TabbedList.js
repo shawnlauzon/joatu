@@ -7,6 +7,8 @@ import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import { withStyles } from 'material-ui/styles'
 
+import User from '../../../data/user/model'
+
 const styles = theme => ({
   fab: {
     margin: 0,
@@ -44,7 +46,7 @@ class TabbedList extends React.Component {
           className={classes.fab}
           color="primary"
           aria-label="add"
-          disabled={!this.props.authUser.authenticated}
+          disabled={!this.props.authenticatedUser}
           component={Link}
           to={this.currentTab().props.createUrl}
         >
@@ -67,9 +69,7 @@ class TabbedList extends React.Component {
 }
 
 TabbedList.propTypes = {
-  authUser: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired
+  authenticatedUser: PropTypes.instanceOf(User)
 }
 
 export default withStyles(styles)(TabbedList)

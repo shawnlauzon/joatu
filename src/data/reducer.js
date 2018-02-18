@@ -3,31 +3,42 @@ import orm from './orm'
 import { combineReducers } from 'redux'
 import { createReducer } from 'redux-orm'
 
-// import communities from './communities/ormReducer'
-// import communities from './communities/reducer'
-// import users from './users/reducer'
-// import projects from './projects/reducer'
-// import authUser from './authUser/reducer'
-// import offers from './offers/reducer'
-// import requests from './requests/reducer'
-// import hub from './hub/reducer'
-// import comments from './comments/reducer'
-// import chats from './chats/reducer'
+import { CHANGE_HUB } from './actions'
 
-// export default combineReducers({
-//   authUser,
-//   communities,
-//   projects,
-//   users,
-//   offers,
-//   requests,
-//   hub,
-//   comments,
-//   chats
-// })
+// TODO move out of 'authUser'
+import {
+  LOGIN_SUCCEEDED,
+  LOGOUT_SUCCEEDED,
+  AUTH_CHANGED
+} from './authUser/actions'
+
+export function selectedCommunityIdReducer(state = 0, action) {
+  const { type, payload } = action
+  switch (type) {
+    case CHANGE_HUB:
+      return payload.communityId
+    default:
+      return state
+  }
+}
+
+export const authenticatedUserIdReducer = (state = '', action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case LOGIN_SUCCEEDED:
+      return payload.userId
+    case LOGOUT_SUCCEEDED:
+      return ''
+    case AUTH_CHANGED:
+      return payload ? payload.userId : ''
+    default:
+      return state
+  }
+}
 
 export default combineReducers({
-  db: createReducer(orm)
-  // authenticatedUserId: authenticatedUserIdReducer,
-  // selectedCommunityId: selectedCommunityIdReducer
+  db: createReducer(orm),
+  authenticatedUserId: authenticatedUserIdReducer,
+  selectedCommunityId: selectedCommunityIdReducer
 })

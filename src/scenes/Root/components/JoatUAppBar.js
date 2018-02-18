@@ -12,6 +12,7 @@ import MenuIcon from 'material-ui-icons/Menu'
 import Avatar from 'material-ui/Avatar'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
+import User from '../../../data/user/model'
 import LoginModal from './LoginModal'
 
 const styles = {
@@ -87,11 +88,11 @@ class JoatUAppBar extends React.Component {
               <Hidden xsDown>The Jack of all Trades Universe</Hidden>
               <Hidden smUp>JoatU</Hidden>
             </Typography>
-            {this.props.authUser && this.props.authUser.authenticated ? (
+            {this.props.authenticatedUser ? (
               <div>
                 <Avatar
-                  alt={this.props.authUser.displayName}
-                  src={this.props.authUser.imgUrl}
+                  alt={this.props.authenticatedUser.displayName}
+                  src={this.props.authenticatedUser.imgUrl}
                   aria-owns={openLogoutModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.showLogoutModal}
@@ -112,7 +113,7 @@ class JoatUAppBar extends React.Component {
                 >
                   <MenuItem
                     component={Link}
-                    to={`/profiles/${this.props.authUser.id}`}
+                    to={`/profiles/${this.props.authenticatedUser.id}`}
                   >
                     Profile
                   </MenuItem>
@@ -138,11 +139,7 @@ class JoatUAppBar extends React.Component {
 
 JoatUAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  authUser: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired,
-    displayName: PropTypes.string,
-    imgUrl: PropTypes.string
-  }).isRequired,
+  authenticatedUser: PropTypes.instanceOf(User),
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired
 }

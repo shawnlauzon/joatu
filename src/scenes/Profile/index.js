@@ -14,7 +14,7 @@ import {
   getOffersForUser,
   getRequestsForUser,
   getCommentsWithCommenterForUser
-} from '../../data/users'
+} from '../../data/user'
 
 import { create } from '../../data/comments/actions'
 

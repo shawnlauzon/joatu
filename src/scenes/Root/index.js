@@ -16,6 +16,8 @@ import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 import ChatContainer from '../ChatContainer'
 
+import { authenticatedUser } from '../../data/user/selectors'
+
 import {
   communityActions,
   projectActions,
@@ -83,7 +85,8 @@ class Root extends React.Component {
       <div>
         <Reboot />
         <JoatUAppBar
-          {...this.props}
+          {...this.props} // TODO Remove
+          authenticatedUser={this.props.authenticatedUser}
           onLogin={this.onLogin}
           onLogout={this.onLogout}
         />
@@ -105,7 +108,7 @@ class Root extends React.Component {
 // TODO I think I can remove most of these
 function mapStateToProps(state) {
   return {
-    authUser: state.authUser,
+    authenticatedUser: authenticatedUser(state),
     communities: state.communities,
     projects: state.projects,
     offers: state.offers,

@@ -18,26 +18,28 @@ import ProjectList from './components/ProjectList'
 import OfferList from './components/OfferList'
 import RequestList from './components/RequestList'
 
+import { authenticatedUser } from '../../data/user/selectors'
+import { selectedCommunity } from '../../data/community/selectors'
+import { projectsInCommunity } from '../../data/project/selectors'
+import { requestsInCommunity } from '../../data/request/selectors'
+import { offersInCommunity } from '../../data/offer/selectors'
+
 import {
   projectActions,
   offerActions,
   requestActions,
-  hubActions
+  changeHub
 } from '../../data/actions'
-
-import {
-  getHubCommunity,
-  getHubProjects,
-  getHubOffers,
-  getHubRequests
-} from '../../data/hub'
 
 export class Community extends React.Component {
   constructor(props) {
     super(props)
 
-    if (props.match.params.communityId !== props.community.id) {
-      props.dispatch(hubActions.changeHub(props.match.params.communityId))
+    if (
+      !props.community ||
+      props.match.params.communityId !== props.community.id
+    ) {
+      props.dispatch(changeHub(props.match.params.communityId))
     }
   }
 
@@ -45,7 +47,7 @@ export class Community extends React.Component {
     return (
       <CreateProject
         {...routeInfo}
-        authUser={this.props.authUser}
+        authenticatedUser={this.props.authenticatedUser}
         onCreate={body => this.props.dispatch(projectActions.create(body))}
         cancelUrl={this.props.match.url + '/projects'}
       />
@@ -56,7 +58,7 @@ export class Community extends React.Component {
     return (
       <CreateOffer
         {...routeInfo}
-        authUser={this.props.authUser}
+        authenticatedUser={this.props.authenticatedUser}
         onCreate={body => this.props.dispatch(offerActions.create(body))}
         cancelUrl={this.props.match.url + '/offers'}
       />
@@ -67,7 +69,7 @@ export class Community extends React.Component {
     return (
       <CreateRequest
         {...routeInfo}
-        authUser={this.props.authUser}
+        authenticatedUser={this.props.authenticatedUser}
         onCreate={body => this.props.dispatch(requestActions.create(body))}
         cancelUrl={this.props.match.url + '/requests'}
       />
@@ -144,12 +146,11 @@ export class Community extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    authUser: state.authUser,
-    community: getHubCommunity(state),
-    projects: getHubProjects(state),
-    offers: getHubOffers(state),
-    requests: getHubRequests(state),
-    users: state.users
+    authenticatedUser: authenticatedUser(state),
+    community: selectedCommunity(state),
+    projects: projectsInCommunity(state),
+    offers: offersInCommunity(state),
+    requests: requestsInCommunity(state)
   }
 }
 

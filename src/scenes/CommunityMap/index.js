@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { hubActions } from '../../data/actions'
+import { changeHub } from '../../data/actions'
 
 import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
 import CommunityInfo from './components/CommunityInfo'
 
-import { allCommunitiesSelector } from '../../data/community/selectors'
+import { allCommunities } from '../../data/community/selectors'
 
 class CommunityMap extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class CommunityMap extends React.Component {
 
     // TODO Changing the hub should occur when someone clicks on the link,
     // not just when they select one of these
-    this.props.dispatch(hubActions.changeHub(this.props.communities[index]))
+    this.props.dispatch(changeHub(this.props.communities[index]))
   }
 
   getSelectedCommunity = index =>
@@ -57,7 +57,7 @@ class CommunityMap extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    communities: allCommunitiesSelector(state)
+    communities: allCommunities(state)
   }
 }
 
