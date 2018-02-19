@@ -13,56 +13,62 @@ const Profile = props => (
         <Link to="/">Return to Home</Link>
         <Typography variant="display3">{props.user.displayName}</Typography>
         <Typography variant="display2">My Projects</Typography>
-        {isEmpty(props.ownedProjects) ? (
+        {!props.ownedProjects || isEmpty(props.ownedProjects) ? (
           <Typography variant="body1">None</Typography>
         ) : (
           <List>
-            {Object.entries(props.ownedProjects).map(([id, value]) => (
-              <ListItem key={id}>
+            {props.ownedProjects.map(value => (
+              <ListItem key={value.id}>
                 <ListItemText
-                  primary={<Link to={`/projects/${id}`}>{value.name}</Link>}
+                  primary={
+                    <Link to={`/projects/${value.id}`}>{value.name}</Link>
+                  }
                 />
               </ListItem>
             ))}
           </List>
         )}
         <Typography variant="display2">Volunteering for</Typography>
-        {isEmpty(props.memberProjects) ? (
+        {!props.memberProjects || isEmpty(props.memberProjects) ? (
           <Typography variant="body1">None</Typography>
         ) : (
           <List>
-            {Object.entries(props.ownedProjects).map(([id, value]) => (
-              <ListItem key={id}>
+            {props.ownedProjects.map(value => (
+              <ListItem key={value.id}>
                 <ListItemText
-                  primary={<Link to={`/projects/${id}`}>{value.name}</Link>}
+                  primary={
+                    <Link to={`/projects/${value.id}`}>{value.name}</Link>
+                  }
                 />
               </ListItem>
             ))}
           </List>
         )}
         <Typography variant="display2">Offers</Typography>
-        {isEmpty(props.offers) ? (
+        {!props.offers || isEmpty(props.offers) ? (
           <Typography variant="body1">None</Typography>
         ) : (
           <List>
-            {Object.entries(props.offers).map(([id, value]) => (
-              <ListItem key={id}>
+            {props.offers.map(value => (
+              <ListItem key={value.id}>
                 <ListItemText
-                  primary={<Link to={`/offers/${id}`}>{value.name}</Link>}
+                  primary={<Link to={`/offers/${value.id}`}>{value.name}</Link>}
                 />
               </ListItem>
             ))}
           </List>
         )}
         <Typography variant="display2">Requests</Typography>
-        {isEmpty(props.requests) ? (
+        {!props.requests || isEmpty(props.requests) ? (
           <Typography variant="body1">None</Typography>
         ) : (
           <List>
-            {Object.entries(props.requests).map(([id, value]) => (
-              <ListItem key={id}>
+            {props.requests.map(value => (
+              <ListItem key={value.id}>
                 <ListItemText
-                  primary={<Link to={`/requests/${id}`}>{value.name}</Link>}
+                  primary={
+                    <Link to={`/requests/${value.id}`}>{value.name}</Link>
+                  }
                 />
               </ListItem>
             ))}
@@ -74,30 +80,30 @@ const Profile = props => (
 )
 
 Profile.propTypes = {
-  user: PropTypes.shape({
+  authenticatedUser: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
     imgUrl: PropTypes.string.isRequired
   }),
-  ownedProjects: PropTypes.objectOf(
+  ownedProjects: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired
     })
-  ).isRequired,
-  memberProjects: PropTypes.objectOf(
+  ),
+  memberProjects: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired
     })
-  ).isRequired,
-  offers: PropTypes.objectOf(
+  ),
+  offers: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired
     })
-  ).isRequired,
-  requests: PropTypes.objectOf(
+  ),
+  requests: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired
     })
-  ).isRequired
+  )
 }
 
 export default Profile

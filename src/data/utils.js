@@ -9,6 +9,21 @@ export const inflateUser = ({ id, displayName, imgUrl }) => ({
   imgUrl
 })
 
+export const inflateRequest = ({ id, name }) => ({
+  id,
+  name
+})
+
+export const inflateOffer = ({ id, name }) => ({
+  id,
+  name
+})
+
+export const inflateProject = ({ id, name }) => ({
+  id,
+  name
+})
+
 export const refArrayLens = prop =>
   R.lens(R.compose(toRefArray, R.prop(prop)), R.assoc(prop))
 

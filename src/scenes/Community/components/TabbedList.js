@@ -7,8 +7,6 @@ import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import { withStyles } from 'material-ui/styles'
 
-import User from '../../../data/user/model'
-
 const styles = theme => ({
   fab: {
     margin: 0,
@@ -69,7 +67,7 @@ class TabbedList extends React.Component {
 }
 
 TabbedList.propTypes = {
-  authenticatedUser: PropTypes.instanceOf(User)
+  authenticatedUser: PropTypes.object
 }
 
 export default withStyles(styles)(TabbedList)

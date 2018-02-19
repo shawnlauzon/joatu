@@ -13,9 +13,9 @@ Project.modelName = 'Project'
 
 Project.fields = {
   id: attr(),
-  owner: fk('User', 'projects'),
+  owner: fk('User', 'ownedProjects'),
   community: fk('Community', 'projects'),
-  participants: many('User', 'projectsParticipating')
+  participants: many('User', 'memberProjects')
 }
 
 Project.propTypes = {

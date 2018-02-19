@@ -12,7 +12,6 @@ import MenuIcon from 'material-ui-icons/Menu'
 import Avatar from 'material-ui/Avatar'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
-import User from '../../../data/user/model'
 import LoginModal from './LoginModal'
 
 const styles = {
@@ -139,7 +138,7 @@ class JoatUAppBar extends React.Component {
 
 JoatUAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  authenticatedUser: PropTypes.instanceOf(User),
+  authenticatedUser: PropTypes.object,
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired
 }
