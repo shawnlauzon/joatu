@@ -8,15 +8,13 @@ const OfferInfo = props => (
     <Typography variant="display2">{props.offer.name}</Typography>
     <ButtonDelete
       handleClick={props.onDelete}
-      authenticated={props.authUser.authenticated}
+      authenticatedUser={props.authenticatedUser}
     />
   </div>
 )
 
 OfferInfo.propTypes = {
-  authUser: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
+  authenticatedUser: PropTypes.object,
   offer: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired,

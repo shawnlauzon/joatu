@@ -12,16 +12,17 @@ import UserChip from '../../components/UserChip'
 
 import { projectActions } from '../../data/actions'
 
-import { getParticipantsInProject } from '../../data/project'
+import { authenticatedUser } from '../../data/user/selectors'
+
+import { projectWithId } from '../../data/project/selectors'
 
 class ProjectContainer extends React.Component {
   projectId = () => this.props.match.params.projectId
 
   render() {
     const {
-      authUser,
+      authenticatedUser,
       project,
-      participants,
       addParticipant,
       removeProject
     } = this.props
@@ -41,19 +42,20 @@ class ProjectContainer extends React.Component {
         </div>
         <div>
           <ButtonJoin
-            handleClick={() => addParticipant(authUser.id, this.projectId())}
-            authenticated={authUser.authenticated}
+            handleClick={() =>
+              addParticipant(authenticatedUser.id, this.projectId())
+            }
+            authenticatedUser={authenticatedUser}
           />
           <ButtonDelete
             handleClick={() => removeProject(this.projectId())}
-            authenticated={authUser.authenticated}
+            authenticatedUser={authenticatedUser}
           />
         </div>
         <ParticipantList>
-          {participants &&
-            Object.keys(participants).map(id => (
-              <UserChip id={id} key={id} user={participants[id]} />
-            ))}
+          {project.participants.map(participant => (
+            <UserChip key={participant.id} user={participant} />
+          ))}
         </ParticipantList>
       </div>
     )
@@ -63,15 +65,9 @@ class ProjectContainer extends React.Component {
 function mapStateToProps(state, ownProps) {
   const projectId = ownProps.match.params.projectId
 
-  const project = state.projects[projectId]
-  const owner = project ? state.users[project.owner] : {}
-  const participants = getParticipantsInProject(projectId)(state)
-
   return {
-    authUser: state.authUser,
-    owner,
-    project,
-    participants
+    authenticatedUser: authenticatedUser(state),
+    project: projectWithId(projectId)(state)
   }
 }
 

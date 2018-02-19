@@ -5,6 +5,10 @@ import RequestInfo from './components/RequestInfo'
 
 import { requestActions } from '../../data/actions'
 
+import { authenticatedUser } from '../../data/user/selectors'
+
+import { requestWithId } from '../../data/request/selectors'
+
 class RequestContainer extends Component {
   requestId = () => this.props.match.params.requestId
 
@@ -14,9 +18,8 @@ class RequestContainer extends Component {
     }
     return (
       <RequestInfo
-        authUser={this.props.authUser}
+        authenticatedUser={this.props.authenticatedUser}
         request={this.props.request}
-        owner={this.props.owner}
         onDelete={() => this.props.removeRequest(this.requestId())}
       />
     )
@@ -26,13 +29,9 @@ class RequestContainer extends Component {
 function mapStateToProps(state, ownProps) {
   const requestId = ownProps.match.params.requestId
 
-  const request = state.requests[requestId]
-  const owner = request ? state.users[request.owner] : {}
-
   return {
-    authUser: state.authUser,
-    owner,
-    request
+    authenticatedUser: authenticatedUser(state),
+    request: requestWithId(requestId)(state)
   }
 }
 

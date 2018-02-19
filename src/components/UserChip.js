@@ -20,13 +20,12 @@ const UserChip = ({ id, classes, user }) => (
       avatar={<Avatar src={user.imgUrl} />}
       label={`${user.displayName}`}
       component={Link}
-      to={`/profiles/${id}`}
+      to={`/profiles/${user.id}`}
     />
   </span>
 )
 
 UserChip.propTypes = {
-  id: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   user: PropTypes.shape({
     displayName: PropTypes.string.isRequired,

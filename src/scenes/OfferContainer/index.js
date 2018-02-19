@@ -5,6 +5,10 @@ import OfferInfo from './components/OfferInfo'
 
 import { offerActions } from '../../data/actions'
 
+import { authenticatedUser } from '../../data/user/selectors'
+
+import { offerWithId } from '../../data/offer/selectors'
+
 class OfferContainer extends Component {
   offerId = () => this.props.match.params.offerId
 
@@ -14,9 +18,8 @@ class OfferContainer extends Component {
     }
     return (
       <OfferInfo
-        authUser={this.props.authUser}
+        authenticatedUser={this.props.authenticatedUser}
         offer={this.props.offer}
-        owner={this.props.owner}
         onDelete={() => this.props.removeOffer(this.offerId())}
       />
     )
@@ -26,16 +29,11 @@ class OfferContainer extends Component {
 function mapStateToProps(state, ownProps) {
   const offerId = ownProps.match.params.offerId
 
-  const offer = state.offers[offerId]
-  const owner = offer ? state.users[offer.owner] : {}
-
   return {
-    authUser: state.authUser,
-    owner,
-    offer
+    authenticatedUser: authenticatedUser(state),
+    offer: offerWithId(offerId)(state)
   }
 }
-
 const mapDispatchToProps = {
   removeOffer: offerActions.remove
 }

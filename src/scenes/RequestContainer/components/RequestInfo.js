@@ -8,15 +8,13 @@ const RequestInfo = props => (
     <Typography variant="display2">{props.request.name}</Typography>
     <ButtonDelete
       handleClick={props.onDelete}
-      authenticated={props.authUser.authenticated}
+      authenticatedUser={props.authenticatedUser}
     />
   </div>
 )
 
 RequestInfo.propTypes = {
-  authUser: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
+  authenticatedUser: PropTypes.object,
   request: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired,

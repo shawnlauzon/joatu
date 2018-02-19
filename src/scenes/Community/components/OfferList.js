@@ -6,12 +6,12 @@ import Offer from '../../../data/offer/model'
 
 const OfferList = props => (
   <div>
-    {Object.entries(props.offers).map(([id, offer]) => (
+    {props.offers.map(offer => (
       <ButtonOffering
-        key={id}
-        id={id}
+        key={offer.id}
+        id={offer.id}
         name={offer.name}
-        to={props.viewUrl + '/' + id}
+        to={props.viewUrl + '/' + offer.id}
       />
     ))}
   </div>

@@ -18,7 +18,7 @@ function ButtonJoin(props) {
       onClick={props.handleClick}
       variant="raised"
       color="primary"
-      disabled={!props.authenticated}
+      disabled={!props.authenticatedUser}
     >
       I'm in!
     </Button>
@@ -26,7 +26,7 @@ function ButtonJoin(props) {
 }
 
 ButtonJoin.propTypes = {
-  authenticated: PropTypes.bool.isRequired
+  authenticatedUser: PropTypes.object
 }
 
 export default withStyles(styles)(ButtonJoin)

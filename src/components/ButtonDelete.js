@@ -21,7 +21,7 @@ function ButtonDelete(props) {
       className={classes.button}
       variant="raised"
       color="secondary"
-      disabled={!props.authenticated}
+      disabled={!props.authenticatedUser}
       onClick={props.handleClick}
     >
       Delete
@@ -31,7 +31,7 @@ function ButtonDelete(props) {
 }
 
 ButtonDelete.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
+  authenticatedUser: PropTypes.object,
   handleClick: PropTypes.func.isRequired
 }
 

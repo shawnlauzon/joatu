@@ -39,7 +39,7 @@ export class Community extends React.Component {
       !props.community ||
       props.match.params.communityId !== props.community.id
     ) {
-      props.dispatch(changeHub(props.match.params.communityId))
+      props.changeHub(props.match.params.communityId)
     }
   }
 
@@ -48,7 +48,7 @@ export class Community extends React.Component {
       <CreateProject
         {...routeInfo}
         authenticatedUser={this.props.authenticatedUser}
-        onCreate={body => this.props.dispatch(projectActions.create(body))}
+        onCreate={body => this.props.createProject(body)}
         cancelUrl={this.props.match.url + '/projects'}
       />
     )
@@ -59,7 +59,7 @@ export class Community extends React.Component {
       <CreateOffer
         {...routeInfo}
         authenticatedUser={this.props.authenticatedUser}
-        onCreate={body => this.props.dispatch(offerActions.create(body))}
+        onCreate={body => this.props.createRequest(body)}
         cancelUrl={this.props.match.url + '/offers'}
       />
     )
@@ -70,7 +70,7 @@ export class Community extends React.Component {
       <CreateRequest
         {...routeInfo}
         authenticatedUser={this.props.authenticatedUser}
-        onCreate={body => this.props.dispatch(requestActions.create(body))}
+        onCreate={body => this.props.createRequest(body)}
         cancelUrl={this.props.match.url + '/requests'}
       />
     )
@@ -154,5 +154,15 @@ function mapStateToProps(state) {
   }
 }
 
+const mapDispatchToProps = {
+  addParticipant: projectActions.addParticipant,
+  removeProject: projectActions.remove,
+  createOffer: offerActions.create,
+  createRequest: requestActions.create,
+  changeHub
+}
+
 // TODO Using withRouter is not the most efficient solution
-export default withRouter(connect(mapStateToProps)(Community))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Community)
+)

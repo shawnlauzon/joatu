@@ -12,7 +12,7 @@ import {
   AUTH_CHANGED
 } from './authUser/actions'
 
-export function selectedCommunityIdReducer(state = 0, action) {
+export function selectedCommunityIdReducer(state = '', action) {
   const { type, payload } = action
   switch (type) {
     case CHANGE_HUB:

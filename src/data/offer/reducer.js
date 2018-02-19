@@ -8,10 +8,10 @@ import {
 } from './actions'
 
 const reducer = entityReducer({
-  fetch: FETCH_OFFERS_SUCCEEDED,
-  create: CREATE_OFFER_SUCCEEDED,
-  update: UPDATE_OFFER_SUCCEEDED,
-  remove: DELETE_OFFER_SUCCEEDED
+  fetchActionType: FETCH_OFFERS_SUCCEEDED,
+  createActionType: CREATE_OFFER_SUCCEEDED,
+  updateActionType: UPDATE_OFFER_SUCCEEDED,
+  removeActionType: DELETE_OFFER_SUCCEEDED
 })
 
 export default reducer

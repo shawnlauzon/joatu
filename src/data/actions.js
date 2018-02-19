@@ -11,7 +11,7 @@ export const CALL_API = 'CALL_API'
 
 export const CHANGE_HUB = 'CHANGE_HUB'
 
-function changeHub(communityId) {
+export function changeHub(communityId) {
   return {
     type: CHANGE_HUB,
     payload: {
@@ -28,6 +28,5 @@ export {
   offerActions,
   requestActions,
   commentActions,
-  chatActions,
-  changeHub
+  chatActions
 }

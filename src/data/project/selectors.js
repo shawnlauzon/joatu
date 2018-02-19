@@ -1,23 +1,14 @@
-// selectors.js
+import * as R from 'ramda'
+
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
-const assocParticipants = project => {
-  // Returns a reference to the raw object in the store,
-  // so it doesn't include any reverse or m2m fields.
-  const obj = project.ref
-  // Object.keys(obj) === ['id', 'name']
+import { refArrayLens, inflateUser } from '../utils'
 
-  return Object.assign({}, obj, {
-    participants: project.participants
-      .toRefArray()
-      .map(({ id, displayName, imgUrl }) => ({
-        id,
-        name: displayName,
-        imgUrl
-      }))
-  })
-}
+const resolveParticipants = R.over(
+  refArrayLens('participants'),
+  R.map(inflateUser)
+)
 
 export const allProjects = createSelector(
   orm,
@@ -25,7 +16,7 @@ export const allProjects = createSelector(
   session =>
     session.Project.all()
       .toModelArray()
-      .map(assocParticipants)
+      .map(resolveParticipants)
 )
 
 export const projectsInCommunity = createSelector(
@@ -37,6 +28,16 @@ export const projectsInCommunity = createSelector(
       project => project.community === hubId
     ).toModelArray()
 )
+
+export const projectWithId = id =>
+  createSelector(
+    orm,
+    state => state.db,
+    session =>
+      session.Project.exists(id)
+        ? resolveParticipants(session.Project.withId(id))
+        : undefined
+  )
 
 // Will result in something like this when run:
 // [

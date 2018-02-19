@@ -6,12 +6,12 @@ import Request from '../../../data/request/model'
 
 const RequestList = props => (
   <div>
-    {Object.entries(props.requests).map(([id, request]) => (
+    {props.requests.map(request => (
       <ButtonOffering
-        key={id}
-        id={id}
+        key={request.id}
+        id={request.id}
         name={request.name}
-        to={props.viewUrl + '/' + id}
+        to={props.viewUrl + '/' + request.id}
       />
     ))}
   </div>

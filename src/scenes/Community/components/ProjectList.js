@@ -6,12 +6,12 @@ import Project from '../../../data/project/model'
 
 const ProjectList = props => (
   <div>
-    {Object.entries(props.projects).map(([id, project]) => (
+    {props.projects.map(project => (
       <ButtonOffering
-        key={id}
-        id={id}
+        key={project.id}
+        id={project.id}
         name={project.name}
-        to={props.viewUrl + '/' + id}
+        to={props.viewUrl + '/' + project.id}
       />
     ))}
   </div>

@@ -1,5 +1,19 @@
 import * as R from 'ramda'
 
+export const toRefArray = R.invoker(0, 'toRefArray')
+export const toModelArray = R.invoker(0, 'toModelArray')
+
+export const inflateUser = ({ id, displayName, imgUrl }) => ({
+  id,
+  displayName,
+  imgUrl
+})
+
+export const refArrayLens = prop =>
+  R.lens(R.compose(toRefArray, R.prop(prop)), R.assoc(prop))
+
+export const resolveOwner = R.over(R.lensProp('owner'), inflateUser)
+
 // Resolves maps of refs to their values. For example, users have references
 // to all the PORs they created in the form { k -> true }. This function
 // returns a new object with the `true` values replaced with their values
