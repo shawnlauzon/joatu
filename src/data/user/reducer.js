@@ -1,4 +1,4 @@
-import { compose, dissoc } from 'ramda'
+import { evolve, keys, values } from 'ramda'
 import entityReducer from '../entityReducer'
 
 import {
@@ -8,39 +8,24 @@ import {
   DELETE_USER_SUCCEEDED
 } from './actions'
 
-// import {
-//   ADD_NEW_PROJECT_TO_USER_SUCCEEDED,
-//   ADD_PARTICIPANT_SUCCEEDED,
-//   REMOVE_PROJECT_FROM_USER_SUCCEEDED
-// } from '../projects/actions'
-// import {
-//   ADD_NEW_OFFER_TO_USER_SUCCEEDED,
-//   REMOVE_OFFER_FROM_USER_SUCCEEDED
-// } from '../offers/actions'
-// import {
-//   ADD_NEW_USER_TO_USER_SUCCEEDED,
-//   REMOVE_USER_FROM_USER_SUCCEEDED
-// } from '../requests/actions'
-
-// import { addRefToCollection, removeRefFromCollection } from '../utils'
-
 const reducer = entityReducer({
   fetchActionType: FETCH_USERS_SUCCEEDED,
   createActionType: CREATE_USER_SUCCEEDED,
   updateActionType: UPDATE_USER_SUCCEEDED,
   removeActionType: DELETE_USER_SUCCEEDED,
   createEntity: User => (data, id) => {
-    // FIXME
-    const stripped = compose(
-      dissoc('offers'),
-      dissoc('projects'),
-      dissoc('requests'),
-      dissoc('memberProjects'),
-      dissoc('ownedProjects'),
-      dissoc('chats')
-    )(data)
-    console.log('Creating User ' + id, stripped)
-    User.create({ id, ...stripped })
+    // TODO Move to API
+    const transformations = {
+      offers: keys,
+      projects: keys,
+      requests: keys,
+      memberProjects: keys,
+      ownedProjects: keys,
+      chats: values
+    }
+    const user = evolve(transformations, data)
+
+    User.create({ id, ...user })
   }
 })
 
