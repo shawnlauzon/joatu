@@ -9,7 +9,7 @@ import ButtonStartChat from './components/ButtonStartChat'
 
 import { authenticatedUser, userWithId } from '../../data/user/selectors'
 
-import { create } from '../../data/comments/actions'
+import { create } from '../../data/comment/actions'
 
 class Profile extends React.Component {
   profileUserId = () => this.props.match.params.profileId
@@ -53,14 +53,14 @@ class Profile extends React.Component {
                 requests={this.props.user.requests}
               />
               {/* FIXME: A refresh is required to see a new comment */}
-              {/* {this.props.user.comments && (
+              {this.props.user.comments && (
                 <div>
                   <ViewComments comments={this.props.user.comments} />
                   {!this.isProfileOfCurrentUser() && (
                     <AddComment onSave={this.handleNewComment} />
                   )}
                 </div>
-              )} */}
+              )}
             </div>
           </div>
         )}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import List, { ListItem } from 'material-ui/List'
+import Typography from 'material-ui/Typography'
 import Avatar from 'material-ui/Avatar'
 
 const componentName = ({ comments }) => (
@@ -11,12 +12,12 @@ const componentName = ({ comments }) => (
       {comments.map(comment => (
         <ListItem key={comment.id}>
           <Avatar
-            alt={comment.from.data.displayName}
-            src={comment.from.data.imgUrl}
+            alt={comment.from.displayName}
+            src={comment.from.imgUrl}
             component={Link}
             to={`/profiles/${comment.from.id}`}
           />
-          {comment.text}
+          <Typography variant="body2">{comment.text}</Typography>
         </ListItem>
       ))}
     </List>
@@ -29,10 +30,8 @@ componentName.propTypes = {
       text: PropTypes.string.isRequired,
       from: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        data: PropTypes.shape({
-          displayName: PropTypes.string.isRequired,
-          imgUrl: PropTypes.string.isRequired
-        })
+        displayName: PropTypes.string.isRequired,
+        imgUrl: PropTypes.string.isRequired
       })
     })
   ).isRequired

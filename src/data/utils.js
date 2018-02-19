@@ -3,6 +3,9 @@ import * as R from 'ramda'
 export const toRefArray = R.invoker(0, 'toRefArray')
 export const toModelArray = R.invoker(0, 'toModelArray')
 
+export const inflateRef = inflater => R.compose(R.map(inflater), toRefArray)
+export const inflateModel = inflater => R.compose(R.map(inflater), toModelArray)
+
 export const inflateUser = ({ id, displayName, imgUrl }) => ({
   id,
   displayName,
@@ -23,6 +26,13 @@ export const inflateProject = ({ id, name }) => ({
   id,
   name
 })
+
+export const inflateComment = comment => {
+  return Object.assign({}, comment.ref, {
+    from: inflateUser(comment.from)
+    // to: inflateUser(comment.to) Don't need this field; it's always the same
+  })
+}
 
 export const refArrayLens = prop =>
   R.lens(R.compose(toRefArray, R.prop(prop)), R.assoc(prop))

@@ -2,9 +2,14 @@ import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
-import { toRefArray } from '../utils'
+import { inflateRef, inflateModel } from '../utils'
 
-import { inflateProject, inflateOffer, inflateRequest } from '../utils'
+import {
+  inflateProject,
+  inflateOffer,
+  inflateRequest,
+  inflateComment
+} from '../utils'
 
 export const authenticatedUser = createSelector(
   orm,
@@ -14,16 +19,14 @@ export const authenticatedUser = createSelector(
     session.User.exists(userId) ? session.User.withId(userId).ref : undefined
 )
 
-export const inflateMap = inflater => R.compose(R.map(inflater), toRefArray)
-
 // export const resolveRequests = R.over(
 //   refArrayLens('requests'),
-//   inflateMap(inflateRequest)
+//   inflateRef(inflateRequest)
 // )
 
 // export const resolveOffers = R.over(
 //   refArrayLens('offers'),
-//   inflateMap(inflateOffer)
+//   inflateRef(inflateOffer)
 // )
 
 // export const resolveOwnedProjects = R.over(
@@ -37,14 +40,14 @@ export const inflateMap = inflater => R.compose(R.map(inflater), toRefArray)
 // )
 
 export const resolveRelations = R.evolve({
-  // requests: inflateMap(inflateRequest),
-  // memberProjects: inflateMap(inflateProject),
-  // ownedProjects: inflateMap(inflateProject),
-  // offers: inflateMap(inflateOffer)
-  requests: inflateMap(inflateRequest),
-  memberProjects: inflateMap(inflateProject),
-  ownedProjects: inflateMap(inflateProject),
-  offers: inflateMap(inflateOffer)
+  // requests: inflateRef(inflateRequest),
+  // memberProjects: inflateRef(inflateProject),
+  // ownedProjects: inflateRef(inflateProject),
+  // offers: inflateRef(inflateOffer)
+  requests: inflateRef(inflateRequest),
+  memberProjects: inflateRef(inflateProject),
+  ownedProjects: inflateRef(inflateProject),
+  offers: inflateRef(inflateOffer)
 })
 
 export const userWithId = id =>
@@ -58,10 +61,11 @@ export const userWithId = id =>
         const obj = user.ref
 
         const retVal = Object.assign({}, obj, {
-          requests: inflateMap(inflateRequest)(user.requests),
-          memberProjects: inflateMap(inflateProject)(user.memberProjects),
-          ownedProjects: inflateMap(inflateProject)(user.ownedProjects),
-          offers: inflateMap(inflateOffer)(user.offers)
+          requests: inflateRef(inflateRequest)(user.requests),
+          memberProjects: inflateRef(inflateProject)(user.memberProjects),
+          ownedProjects: inflateRef(inflateProject)(user.ownedProjects),
+          offers: inflateRef(inflateOffer)(user.offers),
+          comments: inflateModel(inflateComment)(user.comments)
         })
 
         return retVal

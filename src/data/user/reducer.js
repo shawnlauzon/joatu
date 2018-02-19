@@ -21,6 +21,7 @@ const reducer = entityReducer({
       requests: keys,
       memberProjects: keys,
       ownedProjects: keys,
+      comments: keys,
       chats: values
     }
     const user = evolve(transformations, data)

@@ -5,6 +5,7 @@ import ProjectModel from './project/model'
 import RequestModel from './request/model'
 import OfferModel from './offer/model'
 import UserModel from './user/model'
+import CommentModel from './comment/model'
 
 import { Chat, Message } from './models'
 
@@ -15,6 +16,7 @@ orm.register(
   ProjectModel,
   OfferModel,
   RequestModel,
+  CommentModel,
   Chat,
   Message
 )
