@@ -12,28 +12,6 @@ export const inflateUser = ({ id, displayName, imgUrl }) => ({
   imgUrl
 })
 
-export const inflateRequest = ({ id, name }) => ({
-  id,
-  name
-})
-
-export const inflateOffer = ({ id, name }) => ({
-  id,
-  name
-})
-
-export const inflateProject = ({ id, name }) => ({
-  id,
-  name
-})
-
-export const inflateComment = comment => {
-  return Object.assign({}, comment.ref, {
-    from: inflateUser(comment.from)
-    // to: inflateUser(comment.to) Don't need this field; it's always the same
-  })
-}
-
 export const refArrayLens = prop =>
   R.lens(R.compose(toRefArray, R.prop(prop)), R.assoc(prop))
 

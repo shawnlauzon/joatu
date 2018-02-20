@@ -5,7 +5,7 @@ import * as authActions from './authUser/actions'
 import * as offerActions from './offer/actions'
 import * as requestActions from './request/actions'
 import * as commentActions from './comment/actions'
-import * as chatActions from './chats/actions'
+import * as chatActions from './chat/actions'
 
 export const CALL_API = 'CALL_API'
 

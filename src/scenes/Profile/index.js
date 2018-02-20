@@ -26,6 +26,7 @@ class Profile extends React.Component {
   }
 
   render() {
+    console.log('profile', this.props)
     return (
       <div>
         {this.props.user && (

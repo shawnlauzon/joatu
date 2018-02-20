@@ -2,14 +2,7 @@ import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
-import { inflateRef, inflateModel } from '../utils'
-
-import {
-  inflateProject,
-  inflateOffer,
-  inflateRequest,
-  inflateComment
-} from '../utils'
+import { inflateRef, inflateModel, inflateUser } from '../utils'
 
 export const authenticatedUser = createSelector(
   orm,
@@ -18,6 +11,33 @@ export const authenticatedUser = createSelector(
   (session, userId) =>
     session.User.exists(userId) ? session.User.withId(userId).ref : undefined
 )
+
+const inflateComment = comment => {
+  return Object.assign({}, comment.ref, {
+    from: inflateUser(comment.from)
+    // to: inflateUser(comment.to) Don't need this field; it's always the same
+  })
+}
+
+const inflateRequest = ({ id, name }) => ({
+  id,
+  name
+})
+
+const inflateOffer = ({ id, name }) => ({
+  id,
+  name
+})
+
+const inflateProject = ({ id, name }) => ({
+  id,
+  name
+})
+
+const inflateChat = ({ id, participants }) => ({
+  id,
+  participants
+})
 
 // export const resolveRequests = R.over(
 //   refArrayLens('requests'),
@@ -65,7 +85,8 @@ export const userWithId = id =>
           memberProjects: inflateRef(inflateProject)(user.memberProjects),
           ownedProjects: inflateRef(inflateProject)(user.ownedProjects),
           offers: inflateRef(inflateOffer)(user.offers),
-          comments: inflateModel(inflateComment)(user.comments)
+          comments: inflateModel(inflateComment)(user.comments),
+          chats: inflateRef(inflateChat)(user.chats)
         })
 
         return retVal

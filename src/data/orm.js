@@ -6,8 +6,8 @@ import RequestModel from './request/model'
 import OfferModel from './offer/model'
 import UserModel from './user/model'
 import CommentModel from './comment/model'
-
-import { Chat, Message } from './models'
+import ChatModel from './chat/model'
+import MessageModel from './message/model'
 
 const orm = new ORM()
 orm.register(
@@ -17,8 +17,8 @@ orm.register(
   OfferModel,
   RequestModel,
   CommentModel,
-  Chat,
-  Message
+  ChatModel,
+  MessageModel
 )
 
 export default orm
