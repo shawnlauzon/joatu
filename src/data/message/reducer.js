@@ -1,5 +1,5 @@
 import { prop } from 'ramda'
-import entityReducer from '../entityReducer'
+import crudReducer from '../crudReducer'
 
 import {
   FETCH_MESSAGES_SUCCEEDED,
@@ -8,7 +8,7 @@ import {
   DELETE_MESSAGE_SUCCEEDED
 } from './actions'
 
-const reducer = entityReducer({
+const reducer = crudReducer({
   fetchActionType: FETCH_MESSAGES_SUCCEEDED,
   createActionType: CREATE_MESSAGE_SUCCEEDED,
   updateActionType: UPDATE_MESSAGE_SUCCEEDED,

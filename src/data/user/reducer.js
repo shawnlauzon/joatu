@@ -1,5 +1,5 @@
 import { evolve, keys, values } from 'ramda'
-import entityReducer from '../entityReducer'
+import crudReducer from '../crudReducer'
 
 import {
   FETCH_USERS_SUCCEEDED,
@@ -8,7 +8,7 @@ import {
   DELETE_USER_SUCCEEDED
 } from './actions'
 
-const reducer = entityReducer({
+const reducer = crudReducer({
   fetchActionType: FETCH_USERS_SUCCEEDED,
   createActionType: CREATE_USER_SUCCEEDED,
   updateActionType: UPDATE_USER_SUCCEEDED,

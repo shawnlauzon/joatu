@@ -1,4 +1,4 @@
-import entityReducer from '../entityReducer'
+import crudReducer from '../crudReducer'
 
 import {
   FETCH_COMMENTS_SUCCEEDED,
@@ -7,7 +7,7 @@ import {
   DELETE_COMMENT_SUCCEEDED
 } from './actions'
 
-const reducer = entityReducer({
+const reducer = crudReducer({
   fetchActionType: FETCH_COMMENTS_SUCCEEDED,
   createActionType: CREATE_COMMENT_SUCCEEDED,
   updateActionType: UPDATE_COMMENT_SUCCEEDED,

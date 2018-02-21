@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { mapObjIndexed } from 'ramda'
 
-const entityReducer = ({
+const crudReducer = ({
   createActionType,
   fetchActionType,
   updateActionType,
@@ -32,4 +32,4 @@ const entityReducer = ({
   }
 }
 
-export default entityReducer
+export default crudReducer

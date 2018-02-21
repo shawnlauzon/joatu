@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import entityReducer from '../entityReducer'
+import crudReducer from '../crudReducer'
 
 import {
   FETCH_CHATS_SUCCEEDED,
@@ -8,7 +8,7 @@ import {
   DELETE_CHAT_SUCCEEDED
 } from './actions'
 
-const reducer = entityReducer({
+const reducer = crudReducer({
   fetchActionType: FETCH_CHATS_SUCCEEDED,
   createActionType: CREATE_CHAT_SUCCEEDED,
   updateActionType: UPDATE_CHAT_SUCCEEDED,

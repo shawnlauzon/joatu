@@ -1,5 +1,5 @@
 import { evolve, keys } from 'ramda'
-import entityReducer from '../entityReducer'
+import crudReducer from '../crudReducer'
 
 import {
   FETCH_PROJECTS_SUCCEEDED,
@@ -8,7 +8,7 @@ import {
   DELETE_PROJECT_SUCCEEDED
 } from './actions'
 
-const reducer = entityReducer({
+const reducer = crudReducer({
   fetchActionType: FETCH_PROJECTS_SUCCEEDED,
   createActionType: CREATE_PROJECT_SUCCEEDED,
   updateActionType: UPDATE_PROJECT_SUCCEEDED,

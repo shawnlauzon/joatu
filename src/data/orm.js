@@ -7,7 +7,6 @@ import OfferModel from './offer/model'
 import UserModel from './user/model'
 import CommentModel from './comment/model'
 import ChatModel from './chat/model'
-import ChatByUserModel from './chatByUser/model'
 import MessageModel from './message/model'
 
 const orm = new ORM()
@@ -19,7 +18,6 @@ orm.register(
   RequestModel,
   CommentModel,
   ChatModel,
-  ChatByUserModel,
   MessageModel
 )
 

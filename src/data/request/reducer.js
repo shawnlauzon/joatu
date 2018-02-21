@@ -1,4 +1,4 @@
-import entityReducer from '../entityReducer'
+import crudReducer from '../crudReducer'
 
 import {
   FETCH_REQUESTS_SUCCEEDED,
@@ -7,7 +7,7 @@ import {
   DELETE_REQUEST_SUCCEEDED
 } from './actions'
 
-const reducer = entityReducer({
+const reducer = crudReducer({
   fetchActionType: FETCH_REQUESTS_SUCCEEDED,
   createActionType: CREATE_REQUEST_SUCCEEDED,
   updateActionType: UPDATE_REQUEST_SUCCEEDED,
