@@ -26,8 +26,8 @@ import {
   authActions,
   offerActions,
   requestActions,
-  commentActions
-  // chatActions
+  commentActions,
+  chatActions
 } from '../../data/actions'
 
 class Root extends React.Component {
@@ -46,9 +46,7 @@ class Root extends React.Component {
     this.props.dispatch(offerActions.fetch())
     this.props.dispatch(requestActions.fetch())
     this.props.dispatch(commentActions.fetch())
-
-    // FIXME Somehow being dispatched twice?!?
-    // this.props.dispatch(chatActions.fetch())
+    this.props.dispatch(chatActions.fetch())
 
     firebase.auth().onAuthStateChanged(user => {
       this.props.dispatch(authActions.onAuthChanged(user))
