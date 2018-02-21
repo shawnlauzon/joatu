@@ -29,7 +29,7 @@ const doFetchMessages = chatId => ({
       subcollection: 'messages',
       ofDocument: chatId
     },
-    orderBy: 'sentAt',
+    orderBy: 'createdAt',
     merge: {
       chatId
     }
@@ -54,7 +54,6 @@ const doCreateMessage = ({ chatId, text, from }) => ({
     },
     action: 'add',
     body: {
-      sentAt: Date.now(),
       text,
       from
     },

@@ -15,7 +15,10 @@ const toFirestore = body => {
     location: makeGeoPoint
   }
 
-  return R.evolve(transformations, body)
+  return R.compose(
+    R.assoc('createdAt', firebase.firestore.FieldValue.serverTimestamp()),
+    R.evolve(transformations)
+  )(body)
 }
 
 const getCollection = collection => {
