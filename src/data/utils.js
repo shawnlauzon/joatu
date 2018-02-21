@@ -6,6 +6,12 @@ export const toModelArray = R.invoker(0, 'toModelArray')
 export const inflateRef = inflater => R.compose(R.map(inflater), toRefArray)
 export const inflateModel = inflater => R.compose(R.map(inflater), toModelArray)
 
+export const inflateHub = ({ id, name, location }) => ({
+  id,
+  name,
+  location
+})
+
 export const inflateUser = ({ id, displayName, imgUrl }) => ({
   id,
   displayName,
