@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
@@ -11,30 +12,32 @@ export const offersInHub = createSelector(
     session.Offer.filter(offer => offer.hub === hubId).toModelArray()
 )
 
-// FIXME This only works if the correct chat is the first item
+const hasUser = id => R.find(R.propEq('id', id))
+
 export const chatWithUser = userId =>
   createSelector(
     orm,
     state => state.db,
     state => state.authenticatedUserId,
     (session, authenticatedUserId) => {
-      return session.Chat.all()
+      const matchingChats = session.Chat.all()
         .toModelArray()
+        .filter(chat => {
+          return R.both(hasUser(userId), hasUser(authenticatedUserId))(
+            chat.participants.toRefArray()
+          )
+        })
         .map(chat => {
           const participants = chat.participants.toRefArray()
-          if (
-            (participants[0].id === authenticatedUserId &&
-              participants[1].id === userId) ||
-            (participants[1].id === authenticatedUserId &&
-              participants[0].id === userId)
-          ) {
-            const retVal = Object.assign({}, chat.ref, {
-              participants: participants.map(inflateUser)
-            })
-            return retVal
-          } else {
-            return undefined
-          }
-        })[0]
+          return Object.assign({}, chat.ref, {
+            participants: participants.map(inflateUser)
+          })
+        })
+
+      if (matchingChats.length > 1) {
+        console.err('Warning: expected 0 or 1 chats', matchingChats)
+      }
+
+      return matchingChats ? matchingChats[0] : undefined
     }
   )

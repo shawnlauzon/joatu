@@ -11,6 +11,8 @@ Chat.modelName = 'Chat'
 
 Chat.fields = {
   id: attr(),
+  //participant1: fk('User'),
+  //participant2: fk('User')
   participants: many('User', 'chats')
 }
 

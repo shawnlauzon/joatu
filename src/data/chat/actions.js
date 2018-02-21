@@ -10,9 +10,9 @@ export const CREATE_CHAT_STARTED = 'CREATE_CHAT_STARTED'
 export const CREATE_CHAT_SUCCEEDED = 'CREATE_CHAT_SUCCEEDED'
 export const CREATE_CHAT_FAILED = 'CREATE_CHAT_FAILED'
 
-export const ADD_NEW_CHAT_TO_USER_STARTED = 'ADD_NEW_CHAT_TO_USER_STARTED'
-export const ADD_NEW_CHAT_TO_USER_SUCCEEDED = 'ADD_NEW_CHAT_TO_USER_SUCCEEDED'
-export const ADD_NEW_CHAT_TO_USER_FAILED = 'ADD_NEW_CHAT_TO_USER_FAILED'
+// export const ADD_NEW_CHAT_TO_USER_STARTED = 'ADD_NEW_CHAT_TO_USER_STARTED'
+// export const ADD_NEW_CHAT_TO_USER_SUCCEEDED = 'ADD_NEW_CHAT_TO_USER_SUCCEEDED'
+// export const ADD_NEW_CHAT_TO_USER_FAILED = 'ADD_NEW_CHAT_TO_USER_FAILED'
 
 export const UPDATE_CHAT_STARTED = 'UPDATE_CHAT_STARTED'
 export const UPDATE_CHAT_SUCCEEDED = 'UPDATE_CHAT_SUCCEEDED'
@@ -22,9 +22,9 @@ export const DELETE_CHAT_STARTED = 'DELETE_CHAT_STARTED'
 export const DELETE_CHAT_SUCCEEDED = 'DELETE_CHAT_SUCCEEDED'
 export const DELETE_CHAT_FAILED = 'DELETE_CHAT_FAILED'
 
-export const REMOVE_CHAT_FROM_USER_STARTED = 'REMOVE_CHAT_FROM_USER_STARTED'
-export const REMOVE_CHAT_FROM_USER_SUCCEEDED = 'REMOVE_CHAT_FROM_USER_SUCCEEDED'
-export const REMOVE_CHAT_FROM_USER_FAILED = 'REMOVE_CHAT_FROM_USER_FAILED'
+// export const REMOVE_CHAT_FROM_USER_STARTED = 'REMOVE_CHAT_FROM_USER_STARTED'
+// export const REMOVE_CHAT_FROM_USER_SUCCEEDED = 'REMOVE_CHAT_FROM_USER_SUCCEEDED'
+// export const REMOVE_CHAT_FROM_USER_FAILED = 'REMOVE_CHAT_FROM_USER_FAILED'
 
 export const FETCH_MESSAGES_STARTED = 'FETCH_MESSAGES_STARTED'
 export const FETCH_MESSAGES_SUCCEEDED = 'FETCH_MESSAGES_SUCCEEDED'
@@ -91,26 +91,26 @@ const doDeleteChat = id => ({
   }
 })
 
-const doRemoveChatFromUser = (chatId, ownerId) => ({
-  [CALL_API]: {
-    types: [
-      REMOVE_CHAT_FROM_USER_STARTED,
-      REMOVE_CHAT_FROM_USER_SUCCEEDED,
-      REMOVE_CHAT_FROM_USER_FAILED
-    ],
-    collection: 'users',
-    action: 'removeRef',
-    category: 'chats',
-    fromId: ownerId,
-    toId: chatId
-  }
-})
+// const doRemoveChatFromUser = (chatId, ownerId) => ({
+//   [CALL_API]: {
+//     types: [
+//       REMOVE_CHAT_FROM_USER_STARTED,
+//       REMOVE_CHAT_FROM_USER_SUCCEEDED,
+//       REMOVE_CHAT_FROM_USER_FAILED
+//     ],
+//     collection: 'users',
+//     action: 'removeRef',
+//     category: 'chats',
+//     fromId: ownerId,
+//     toId: chatId
+//   }
+// })
 
 export const remove = id => (dispatch, getState) => {
-  const chat = getState().chats[id]
+  // const chat = getState().chats[id]
   dispatch(doDeleteChat(id))
 
-  chat.participants.forEach(participant => {
-    dispatch(doRemoveChatFromUser(id, participant))
-  })
+  // chat.participants.forEach(participant => {
+  //   dispatch(doRemoveChatFromUser(id, participant))
+  // })
 }
