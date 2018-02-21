@@ -17,7 +17,7 @@ const entityReducer = ({
       mapObjIndexed(createEntityFunc, action.payload)
       break
     case createActionType:
-      createEntity(action.payload, action.payload.id)
+      createEntityFunc(action.payload, action.payload.id)
       break
     case updateActionType:
       Model.withId(action.payload.id).updateActionType(action.payload)

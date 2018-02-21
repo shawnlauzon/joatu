@@ -4,29 +4,28 @@ import { connect } from 'react-redux'
 import ChatView from './components/ChatView'
 import AddText from '../../components/AddText'
 
-import { fetchMessages, createMessage } from '../../data/chats/actions'
+import { createMessage } from '../../data/chat/actions'
+import { authenticatedUser } from '../../data/user/selectors'
+
+import { messagesInChat } from '../../data/message/selectors'
 
 class ChatContainer extends React.Component {
   getChatId = () => this.props.match.params.chatId
 
-  componentDidMount() {
-    this.props.fetchMessages(this.getChatId())
-  }
-
   handleSendMessage = text => {
     this.props.createMessage({
       chatId: this.getChatId(),
-      from: this.props.authUser.id,
+      from: this.props.authenticatedUser.id,
       text
     })
   }
 
   render() {
-    const { authUser, messages } = this.props
+    const { authenticatedUser, messages } = this.props
 
     return (
       <div>
-        <ChatView authUser={authUser} messages={messages} />
+        <ChatView authenticatedUser={authenticatedUser} messages={messages} />
         <AddText buttonText="Send" onSave={this.handleSendMessage} />
       </div>
     )
@@ -34,16 +33,15 @@ class ChatContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  const chatId = ownProps.match.params.chatId
+
   return {
-    authUser: state.authUser,
-    messages:
-      state.chats[ownProps.match.params.chatId] &&
-      state.chats[ownProps.match.params.chatId].messages
+    authenticatedUser: authenticatedUser(state),
+    messages: messagesInChat(chatId)(state)
   }
 }
 
 const mapDispatchToProps = {
-  fetchMessages,
   createMessage
 }
 

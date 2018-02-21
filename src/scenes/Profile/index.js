@@ -10,6 +10,8 @@ import ButtonStartChat from './components/ButtonStartChat'
 import { authenticatedUser, userWithId } from '../../data/user/selectors'
 
 import { create } from '../../data/comment/actions'
+import { chatWithUser } from '../../data/chat/selectors'
+// import { chatWithUser } from '../../data/chatByUser/selectors'
 
 class Profile extends React.Component {
   profileUserId = () => this.props.match.params.profileId
@@ -26,17 +28,16 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log('profile', this.props)
     return (
       <div>
         {this.props.user && (
           <div>
             <div>
               <Avatar src={this.props.user.imgUrl} />
-              {this.props.chatId ? (
+              {this.props.chat ? (
                 <ButtonStartChat
                   name={this.props.user.displayName}
-                  url={`/chats/${this.props.chatId}`}
+                  url={`/chats/${this.props.chat.id}`}
                 />
               ) : (
                 <ButtonStartChat
@@ -71,12 +72,14 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const userId = ownProps.match.params.profileId
+  const profileUserId = ownProps.match.params.profileId
 
   return {
     authenticatedUser: authenticatedUser(state),
-    user: userWithId(userId)(state)
-    // chatId: path(['users', userId, 'chats', userId], state)
+    user: userWithId(profileUserId)(state),
+
+    // I need to know if the authenticated user has an existing chat with the userId
+    chat: chatWithUser(profileUserId)(state)
   }
 }
 

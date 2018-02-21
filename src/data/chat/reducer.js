@@ -1,4 +1,4 @@
-import { keys, evolve } from 'ramda'
+import * as R from 'ramda'
 import entityReducer from '../entityReducer'
 
 import {
@@ -14,13 +14,12 @@ const reducer = entityReducer({
   updateActionType: UPDATE_CHAT_SUCCEEDED,
   removeActionType: DELETE_CHAT_SUCCEEDED,
   createEntity: Chat => (data, id) => {
+    console.log('createEntity ' + id, data)
     // TODO Move to API
     const transformations = {
-      participants: keys
+      participants: R.keys
     }
-    const chat = evolve(transformations, data)
-
-    console.log('creating chat', chat)
+    const chat = R.evolve(transformations, data)
 
     Chat.create({ id, ...chat })
   }

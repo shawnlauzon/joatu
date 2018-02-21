@@ -15,6 +15,7 @@ import ProjectContainer from '../ProjectContainer'
 import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 import ChatContainer from '../ChatContainer'
+import CreateChat from '../CreateChat'
 
 import { authenticatedUser } from '../../data/user/selectors'
 
@@ -96,7 +97,7 @@ class Root extends React.Component {
           <Route path="/projects/:projectId" component={ProjectContainer} />
           <Route path="/offers/:offerId" component={OfferContainer} />
           <Route path="/requests/:requestId" component={RequestContainer} />
-          <Route path="/chat-with/:userId" component={ChatContainer} />
+          <Route path="/chat-with/:userId" component={CreateChat} />
           <Route path="/chats/:chatId" component={ChatContainer} />
           <Route path="/" component={CommunityMap} />
         </Switch>

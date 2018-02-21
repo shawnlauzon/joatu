@@ -85,7 +85,7 @@ export function doAdd(collection, data, metadata) {
     .add(toFirestore(data))
     .then(docRef => ({
       id: docRef.id,
-      data,
+      ...data,
       metadata
     }))
 }
@@ -96,7 +96,7 @@ export function doSet(collectionName, id, data) {
     .set(toFirestore(data))
     .then(docRef => ({
       id,
-      data
+      ...data
     }))
 }
 

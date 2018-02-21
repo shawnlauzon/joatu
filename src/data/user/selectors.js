@@ -59,16 +59,16 @@ const inflateChat = ({ id, participants }) => ({
 //   R.map(inflateProject)
 // )
 
-export const resolveRelations = R.evolve({
-  // requests: inflateRef(inflateRequest),
-  // memberProjects: inflateRef(inflateProject),
-  // ownedProjects: inflateRef(inflateProject),
-  // offers: inflateRef(inflateOffer)
-  requests: inflateRef(inflateRequest),
-  memberProjects: inflateRef(inflateProject),
-  ownedProjects: inflateRef(inflateProject),
-  offers: inflateRef(inflateOffer)
-})
+// export const resolveRelations = R.evolve({
+//   // requests: inflateRef(inflateRequest),
+//   // memberProjects: inflateRef(inflateProject),
+//   // ownedProjects: inflateRef(inflateProject),
+//   // offers: inflateRef(inflateOffer)
+//   requests: inflateRef(inflateRequest),
+//   memberProjects: inflateRef(inflateProject),
+//   ownedProjects: inflateRef(inflateProject),
+//   offers: inflateRef(inflateOffer)
+// })
 
 export const userWithId = id =>
   createSelector(

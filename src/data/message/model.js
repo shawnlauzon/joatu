@@ -12,8 +12,7 @@ Message.modelName = 'Message'
 Message.fields = {
   id: attr(),
   chat: fk('Chat', 'messages'),
-  from: fk('User', 'messagesSent'),
-  to: fk('User', 'messagesReceived')
+  from: fk('User', 'messagesSent')
 }
 
 Message.propTypes = {
