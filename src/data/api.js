@@ -125,7 +125,7 @@ export function doLogin(provider) {
 
 export async function addParticipant(projectId, userId) {
   const pathToUser = ['participants', userId].join('.')
-  const pathToProject = ['memberProjects', projectId].join('.')
+  // const pathToProject = ['memberProjects', projectId].join('.')
 
   // TODO Dispatch 2 actions rather than separate here; can then
   // be done in parallel
@@ -133,10 +133,10 @@ export async function addParticipant(projectId, userId) {
   await project.update({
     [pathToUser]: true
   })
-  const user = await getCollection('users').doc(userId)
-  await user.update({
-    [pathToProject]: Date.now()
-  })
+  // const user = await getCollection('users').doc(userId)
+  // await user.update({
+  //   [pathToProject]: Date.now()
+  // })
 
   return {
     projectId,

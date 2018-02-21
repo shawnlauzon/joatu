@@ -26,6 +26,10 @@ export const resolveOwner = R.over(R.lensProp('owner'), inflateUser)
 // [a] -> [{a: true}]
 export const boolMap = R.compose(R.mergeAll, R.map(p => ({ [p]: true })))
 
+export const compositeReducer = reducers => (action, Model, session) => {
+  reducers.forEach(reducer => reducer(action, Model, session))
+}
+
 // Resolves maps of refs to their values. For example, users have references
 // to all the PORs they created in the form { k -> true }. This function
 // returns a new object with the `true` values replaced with their values

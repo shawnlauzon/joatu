@@ -8,17 +8,17 @@ export const CREATE_REQUEST_STARTED = 'CREATE_REQUEST_STARTED'
 export const CREATE_REQUEST_SUCCEEDED = 'CREATE_REQUEST_SUCCEEDED'
 export const CREATE_REQUEST_FAILED = 'CREATE_REQUEST_FAILED'
 
-export const ADD_NEW_REQUEST_TO_USER_STARTED = 'ADD_NEW_REQUEST_TO_USER_STARTED'
-export const ADD_NEW_REQUEST_TO_USER_SUCCEEDED =
-  'ADD_NEW_REQUEST_TO_USER_SUCCEEDED'
-export const ADD_NEW_REQUEST_TO_USER_FAILED = 'ADD_NEW_REQUEST_TO_USER_FAILED'
+// export const ADD_NEW_REQUEST_TO_USER_STARTED = 'ADD_NEW_REQUEST_TO_USER_STARTED'
+// export const ADD_NEW_REQUEST_TO_USER_SUCCEEDED =
+//   'ADD_NEW_REQUEST_TO_USER_SUCCEEDED'
+// export const ADD_NEW_REQUEST_TO_USER_FAILED = 'ADD_NEW_REQUEST_TO_USER_FAILED'
 
-export const ADD_NEW_REQUEST_TO_COMMUNITY_STARTED =
-  'ADD_NEW_REQUEST_TO_COMMUNITY_STARTED'
-export const ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED =
-  'ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED'
-export const ADD_NEW_REQUEST_TO_COMMUNITY_FAILED =
-  'ADD_NEW_REQUEST_TO_COMMUNITY_FAILED'
+// export const ADD_NEW_REQUEST_TO_COMMUNITY_STARTED =
+//   'ADD_NEW_REQUEST_TO_COMMUNITY_STARTED'
+// export const ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED =
+//   'ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED'
+// export const ADD_NEW_REQUEST_TO_COMMUNITY_FAILED =
+//   'ADD_NEW_REQUEST_TO_COMMUNITY_FAILED'
 
 export const UPDATE_REQUEST_STARTED = 'UPDATE_REQUEST_STARTED'
 export const UPDATE_REQUEST_SUCCEEDED = 'UPDATE_REQUEST_SUCCEEDED'
@@ -28,18 +28,18 @@ export const DELETE_REQUEST_STARTED = 'DELETE_REQUEST_STARTED'
 export const DELETE_REQUEST_SUCCEEDED = 'DELETE_REQUEST_SUCCEEDED'
 export const DELETE_REQUEST_FAILED = 'DELETE_REQUEST_FAILED'
 
-export const REMOVE_REQUEST_FROM_USER_STARTED =
-  'REMOVE_REQUEST_FROM_USER_STARTED'
-export const REMOVE_REQUEST_FROM_USER_SUCCEEDED =
-  'REMOVE_REQUEST_FROM_USER_SUCCEEDED'
-export const REMOVE_REQUEST_FROM_USER_FAILED = 'REMOVE_REQUEST_FROM_USER_FAILED'
+// export const REMOVE_REQUEST_FROM_USER_STARTED =
+//   'REMOVE_REQUEST_FROM_USER_STARTED'
+// export const REMOVE_REQUEST_FROM_USER_SUCCEEDED =
+//   'REMOVE_REQUEST_FROM_USER_SUCCEEDED'
+// export const REMOVE_REQUEST_FROM_USER_FAILED = 'REMOVE_REQUEST_FROM_USER_FAILED'
 
-export const REMOVE_REQUEST_FROM_COMMUNITY_STARTED =
-  'REMOVE_REQUEST_FROM_COMMUNITY_STARTED'
-export const REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED =
-  'REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED'
-export const REMOVE_REQUEST_FROM_COMMUNITY_FAILED =
-  'REMOVE_REQUEST_FROM_COMMUNITY_FAILED'
+// export const REMOVE_REQUEST_FROM_COMMUNITY_STARTED =
+//   'REMOVE_REQUEST_FROM_COMMUNITY_STARTED'
+// export const REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED =
+//   'REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED'
+// export const REMOVE_REQUEST_FROM_COMMUNITY_FAILED =
+//   'REMOVE_REQUEST_FROM_COMMUNITY_FAILED'
 
 const doFetchRequests = () => ({
   [CALL_API]: {
@@ -69,45 +69,46 @@ const doCreateRequest = body => ({
   }
 })
 
-const doAddNewRequestToUser = (requestId, ownerId) => ({
-  [CALL_API]: {
-    types: [
-      ADD_NEW_REQUEST_TO_USER_STARTED,
-      ADD_NEW_REQUEST_TO_USER_SUCCEEDED,
-      ADD_NEW_REQUEST_TO_USER_FAILED
-    ],
-    collection: 'users',
-    action: 'addRef',
-    category: 'requests',
-    fromId: ownerId,
-    toId: requestId
-  }
-})
+// const doAddNewRequestToUser = (requestId, ownerId) => ({
+//   [CALL_API]: {
+//     types: [
+//       ADD_NEW_REQUEST_TO_USER_STARTED,
+//       ADD_NEW_REQUEST_TO_USER_SUCCEEDED,
+//       ADD_NEW_REQUEST_TO_USER_FAILED
+//     ],
+//     collection: 'users',
+//     action: 'addRef',
+//     category: 'requests',
+//     fromId: ownerId,
+//     toId: requestId
+//   }
+// })
 
-const doAddNewRequestToHub = (projectId, hubId) => ({
-  [CALL_API]: {
-    types: [
-      ADD_NEW_REQUEST_TO_COMMUNITY_STARTED,
-      ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED,
-      ADD_NEW_REQUEST_TO_COMMUNITY_FAILED
-    ],
-    collection: 'hubs',
-    action: 'addRef',
-    category: 'requests',
-    fromId: hubId,
-    toId: projectId
-  }
-})
+// const doAddNewRequestToHub = (projectId, hubId) => ({
+//   [CALL_API]: {
+//     types: [
+//       ADD_NEW_REQUEST_TO_COMMUNITY_STARTED,
+//       ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED,
+//       ADD_NEW_REQUEST_TO_COMMUNITY_FAILED
+//     ],
+//     collection: 'hubs',
+//     action: 'addRef',
+//     category: 'requests',
+//     fromId: hubId,
+//     toId: projectId
+//   }
+// })
 
 export const create = body => (dispatch, getState) => {
-  return dispatch(doCreateRequest(body)).then(result =>
-    Promise.all([
-      dispatch(
-        doAddNewRequestToUser(result.payload.id, result.payload.data.owner)
-      ),
-      dispatch(doAddNewRequestToHub(result.payload.id, result.payload.data.hub))
-    ])
-  )
+  return dispatch(doCreateRequest(body))
+  // .then(result =>
+  //   Promise.all([
+  //     dispatch(
+  //       doAddNewRequestToUser(result.payload.id, result.payload.data.owner)
+  //     ),
+  //     dispatch(doAddNewRequestToHub(result.payload.id, result.payload.data.hub))
+  //   ])
+  // )
 }
 
 const doUpdateRequest = (id, body) => ({
@@ -141,41 +142,41 @@ const doDeleteRequest = id => ({
   }
 })
 
-const doRemoveRequestFromUser = (requestId, ownerId) => ({
-  [CALL_API]: {
-    types: [
-      REMOVE_REQUEST_FROM_USER_STARTED,
-      REMOVE_REQUEST_FROM_USER_SUCCEEDED,
-      REMOVE_REQUEST_FROM_USER_FAILED
-    ],
-    collection: 'users',
-    action: 'removeRef',
-    category: 'requests',
-    fromId: ownerId,
-    toId: requestId
-  }
-})
+// const doRemoveRequestFromUser = (requestId, ownerId) => ({
+//   [CALL_API]: {
+//     types: [
+//       REMOVE_REQUEST_FROM_USER_STARTED,
+//       REMOVE_REQUEST_FROM_USER_SUCCEEDED,
+//       REMOVE_REQUEST_FROM_USER_FAILED
+//     ],
+//     collection: 'users',
+//     action: 'removeRef',
+//     category: 'requests',
+//     fromId: ownerId,
+//     toId: requestId
+//   }
+// })
 
-const doRemoveRequestFromHub = (requestId, ownerId) => ({
-  [CALL_API]: {
-    types: [
-      REMOVE_REQUEST_FROM_COMMUNITY_STARTED,
-      REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED,
-      REMOVE_REQUEST_FROM_COMMUNITY_FAILED
-    ],
-    collection: 'hubs',
-    action: 'removeRef',
-    category: 'requests',
-    fromId: ownerId,
-    toId: requestId
-  }
-})
+// const doRemoveRequestFromHub = (requestId, ownerId) => ({
+//   [CALL_API]: {
+//     types: [
+//       REMOVE_REQUEST_FROM_COMMUNITY_STARTED,
+//       REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED,
+//       REMOVE_REQUEST_FROM_COMMUNITY_FAILED
+//     ],
+//     collection: 'hubs',
+//     action: 'removeRef',
+//     category: 'requests',
+//     fromId: ownerId,
+//     toId: requestId
+//   }
+// })
 
 export const remove = id => (dispatch, getState) => {
-  const request = getState().requests[id]
+  // const request = getState().requests[id]
   return Promise.all([
-    dispatch(doDeleteRequest(id)),
-    dispatch(doRemoveRequestFromUser(id, request.owner)),
-    dispatch(doRemoveRequestFromHub(id, request.hub))
+    dispatch(doDeleteRequest(id))
+    // dispatch(doRemoveRequestFromUser(id, request.owner)),
+    // dispatch(doRemoveRequestFromHub(id, request.hub))
   ])
 }

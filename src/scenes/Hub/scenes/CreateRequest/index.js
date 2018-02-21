@@ -39,7 +39,7 @@ class CreateRequest extends React.Component {
   onSave = e => {
     this.props.onCreate({
       hub: this.props.match.params.hubId,
-      owner: this.props.authUser.id,
+      owner: this.props.authenticatedUser.id,
       name: this.state.name
     })
   }
@@ -76,6 +76,7 @@ class CreateRequest extends React.Component {
           </Button>
           <Button
             className={classes.button}
+            disabled={!this.props.authenticatedUser}
             variant="raised"
             color="primary"
             onClick={this.onSave}
@@ -92,9 +93,9 @@ class CreateRequest extends React.Component {
 }
 
 CreateRequest.propTypes = {
-  authUser: PropTypes.shape({
+  authenticatedUser: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired,
+  }),
   onCreate: PropTypes.func.isRequired
 }
 

@@ -56,7 +56,7 @@ export class Hub extends React.Component {
       <CreateOffer
         {...routeInfo}
         authenticatedUser={this.props.authenticatedUser}
-        onCreate={body => this.props.createRequest(body)}
+        onCreate={body => this.props.createOffer(body)}
         cancelUrl={this.props.match.url + '/offers'}
       />
     )
@@ -153,7 +153,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   addParticipant: projectActions.addParticipant,
-  removeProject: projectActions.remove,
+  createProject: projectActions.create,
   createOffer: offerActions.create,
   createRequest: requestActions.create,
   changeHub
