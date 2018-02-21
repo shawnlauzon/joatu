@@ -84,8 +84,10 @@ class JoatUAppBar extends React.Component {
               color="inherit"
               className={classes.flex}
             >
-              <Hidden xsDown>The Jack of all Trades Universe</Hidden>
-              <Hidden smUp>JoatU</Hidden>
+              <Hidden xsDown>
+                The Jack of all Trades Universe DEVELOPMENT
+              </Hidden>
+              <Hidden smUp>JoatU DEVELOPMENT</Hidden>
             </Typography>
             {this.props.authenticatedUser ? (
               <div>
