@@ -21,7 +21,7 @@ class Profile extends React.Component {
 
   handleNewComment = text => {
     this.props.createComment({
-      from: this.props.authUser.id,
+      from: this.props.authenticatedUser.id,
       to: this.profileUserId(),
       text
     })
@@ -49,8 +49,8 @@ class Profile extends React.Component {
             <div>
               <ProfileView
                 user={this.props.user}
-                ownedProjects={this.props.user.ownedProjects}
-                memberProjects={this.props.user.memberProjects}
+                ownedProjects={this.props.user.projectsOwned}
+                memberProjects={this.props.user.projectsParticipating}
                 offers={this.props.user.offers}
                 requests={this.props.user.requests}
               />

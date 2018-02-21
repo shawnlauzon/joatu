@@ -81,8 +81,10 @@ export const userWithId = id =>
 
         const retVal = Object.assign({}, obj, {
           requests: inflateRef(inflateRequest)(user.requests),
-          memberProjects: inflateRef(inflateProject)(user.memberProjects),
-          ownedProjects: inflateRef(inflateProject)(user.ownedProjects),
+          projectsParticipating: inflateRef(inflateProject)(
+            user.projectsParticipating
+          ),
+          projectsOwned: inflateRef(inflateProject)(user.projectsOwned),
           offers: inflateRef(inflateOffer)(user.offers),
           comments: inflateModel(inflateComment)(user.comments),
           chats: inflateRef(inflateChat)(user.chats)
