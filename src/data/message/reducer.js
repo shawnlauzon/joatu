@@ -1,3 +1,4 @@
+import { prop } from 'ramda'
 import entityReducer from '../entityReducer'
 
 import {
@@ -11,7 +12,8 @@ const reducer = entityReducer({
   fetchActionType: FETCH_MESSAGES_SUCCEEDED,
   createActionType: CREATE_MESSAGE_SUCCEEDED,
   updateActionType: UPDATE_MESSAGE_SUCCEEDED,
-  removeActionType: DELETE_MESSAGE_SUCCEEDED
+  removeActionType: DELETE_MESSAGE_SUCCEEDED,
+  payloadProp: prop('list')
 })
 
 export default reducer

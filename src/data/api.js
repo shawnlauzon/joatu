@@ -41,11 +41,8 @@ const getStatement = ({ collection, orderBy }) => {
 //   id: { ...data },
 //   ...
 // }
-export function doGet({ collection, metadata }) {
+export function doGet({ collection }) {
   const coll = {}
-  if (metadata) {
-    coll.metadata = metadata
-  }
 
   return getCollection(collection)
     .get()
@@ -57,37 +54,38 @@ export function doGet({ collection, metadata }) {
     })
 }
 
-// { data: [
+// { list: [
 //     { id, ...data },
 //     ...
 //   ],
-//   metadata
 // }
 
-export function doGetSorted({ collection, metadata, orderBy }) {
-  const coll = { data: [] }
-  if (metadata) {
-    coll.metadata = metadata
-  }
+export function doGetSorted({ collection, orderBy, merge }) {
+  const payload = { list: [] }
 
   return getStatement({ collection, orderBy })
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        coll.data.push({ id: doc.id, ...doc.data() })
+        let entry = { id: doc.id, ...doc.data() }
+        if (merge) {
+          entry = R.merge(merge, entry)
+        }
+        payload.list.push(entry)
       })
-      return coll
+      return payload
     })
 }
 
-export function doAdd(collection, data, metadata) {
+export function doAdd(collection, data, merge = {}) {
   return getCollection(collection)
     .add(toFirestore(data))
-    .then(docRef => ({
-      id: docRef.id,
-      ...data,
-      metadata
-    }))
+    .then(docRef =>
+      R.merge(merge, {
+        id: docRef.id,
+        ...data
+      })
+    )
 }
 
 export function doSet(collectionName, id, data) {

@@ -6,6 +6,7 @@ import * as offerActions from './offer/actions'
 import * as requestActions from './request/actions'
 import * as commentActions from './comment/actions'
 import * as chatActions from './chat/actions'
+import * as messageActions from './message/actions'
 
 export const CALL_API = 'CALL_API'
 
@@ -28,5 +29,6 @@ export {
   offerActions,
   requestActions,
   commentActions,
-  chatActions
+  chatActions,
+  messageActions
 }

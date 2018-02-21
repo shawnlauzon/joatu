@@ -19,7 +19,10 @@ const ChatView = ({ messages }) => (
 ChatView.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape({
-      from: PropTypes.string.isRequired,
+      from: PropTypes.shape({
+        displayName: PropTypes.string.isRequired,
+        imgUrl: PropTypes.string.isRequired
+      }).isRequired,
       text: PropTypes.string.isRequired
     })
   )

@@ -4,12 +4,18 @@ import { connect } from 'react-redux'
 import ChatView from './components/ChatView'
 import AddText from '../../components/AddText'
 
-import { createMessage } from '../../data/chat/actions'
+import { create, fetch } from '../../data/message/actions'
 import { authenticatedUser } from '../../data/user/selectors'
 
 import { messagesInChat } from '../../data/message/selectors'
 
 class ChatContainer extends React.Component {
+  constructor(props) {
+    super(props)
+
+    props.fetchMessages(this.getChatId())
+  }
+
   getChatId = () => this.props.match.params.chatId
 
   handleSendMessage = text => {
@@ -42,7 +48,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  createMessage
+  createMessage: create,
+  fetchMessages: fetch
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer)

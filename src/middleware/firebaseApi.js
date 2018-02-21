@@ -42,7 +42,7 @@ const apiMiddleware = store => next => action => {
   // TODO Just pass the entire callApi to each of them, and replace with
   // something like R.call
   if (callApi.action === 'add') {
-    return doAdd(callApi.collection, callApi.body, callApi.metadata)
+    return doAdd(callApi.collection, callApi.body, callApi.merge)
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'set') {

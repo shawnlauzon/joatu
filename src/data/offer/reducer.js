@@ -11,7 +11,10 @@ const reducer = entityReducer({
   fetchActionType: FETCH_OFFERS_SUCCEEDED,
   createActionType: CREATE_OFFER_SUCCEEDED,
   updateActionType: UPDATE_OFFER_SUCCEEDED,
-  removeActionType: DELETE_OFFER_SUCCEEDED
+  removeActionType: DELETE_OFFER_SUCCEEDED,
+  createEntity: Message => ({ list }, id) => {
+    Message.create({ id, ...list })
+  }
 })
 
 export default reducer

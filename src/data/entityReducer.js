@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import { mapObjIndexed } from 'ramda'
 
 const entityReducer = ({
@@ -5,7 +6,8 @@ const entityReducer = ({
   fetchActionType,
   updateActionType,
   removeActionType,
-  createEntity
+  createEntity,
+  payloadProp = R.identity
 }) => (action, Model, session) => {
   const createEntityFunc = createEntity
     ? createEntity(Model)
@@ -14,7 +16,7 @@ const entityReducer = ({
   switch (action.type) {
     case fetchActionType:
       // it's a createActionType from the perspective of ORM
-      mapObjIndexed(createEntityFunc, action.payload)
+      mapObjIndexed(createEntityFunc, payloadProp(action.payload))
       break
     case createActionType:
       createEntityFunc(action.payload, action.payload.id)

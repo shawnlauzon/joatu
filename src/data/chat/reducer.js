@@ -14,7 +14,6 @@ const reducer = entityReducer({
   updateActionType: UPDATE_CHAT_SUCCEEDED,
   removeActionType: DELETE_CHAT_SUCCEEDED,
   createEntity: Chat => (data, id) => {
-    console.log('createEntity ' + id, data)
     // TODO Move to API
     const transformations = {
       participants: R.keys

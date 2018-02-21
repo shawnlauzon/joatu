@@ -30,13 +30,13 @@ const doFetchMessages = chatId => ({
       ofDocument: chatId
     },
     orderBy: 'sentAt',
-    metadata: {
+    merge: {
       chatId
     }
   }
 })
 
-export const fetchMessages = chatId => (dispatch, getState) => {
+export const fetch = chatId => (dispatch, getState) => {
   return dispatch(doFetchMessages(chatId))
 }
 
@@ -58,7 +58,7 @@ const doCreateMessage = ({ chatId, text, from }) => ({
       text,
       from
     },
-    metadata: {
+    merge: {
       chatId
     }
   }
@@ -69,6 +69,6 @@ const doCreateMessage = ({ chatId, text, from }) => ({
 //   text,
 //   from: userId,
 // }
-export const createMessage = body => (dispatch, getState) => {
+export const create = body => (dispatch, getState) => {
   return dispatch(doCreateMessage(body))
 }
