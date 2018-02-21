@@ -42,6 +42,7 @@ export const projectWithId = id =>
         const project = session.Project.withId(id)
         return Object.assign({}, project.ref, {
           hub: inflateHub(project.hub),
+          owner: inflateUser(project.owner),
           participants: project.participants.toRefArray().map(inflateUser)
         })
       }

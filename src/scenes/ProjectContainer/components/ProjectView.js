@@ -38,6 +38,11 @@ const ProjectView = ({
           authenticatedUser={authenticatedUser}
         />
       </div>
+      <div>
+        <Typography variant="body2">Organized by</Typography>
+        <UserChip user={project.owner} />
+      </div>
+
       <ParticipantList>
         {project.participants.map(participant => (
           <UserChip key={participant.id} user={participant} />
