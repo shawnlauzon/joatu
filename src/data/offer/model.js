@@ -13,7 +13,7 @@ Offer.fields = {
   id: attr(),
   name: attr(),
   owner: fk('User', 'offers'),
-  community: fk('Community', 'offers')
+  hub: fk('Hub', 'offers')
 }
 
 Offer.propTypes = {

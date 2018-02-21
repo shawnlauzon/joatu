@@ -3,14 +3,12 @@ import orm from '../orm'
 
 import { resolveOwner } from '../utils'
 
-export const requestsInCommunity = createSelector(
+export const requestsInHub = createSelector(
   orm,
   state => state.db,
-  state => state.selectedCommunityId,
+  state => state.selectedHubId,
   (session, hubId) =>
-    session.Request.filter(
-      request => request.community === hubId
-    ).toModelArray() // TODO We only need this because checking instanceOf in propsType; is that for the best?
+    session.Request.filter(request => request.hub === hubId).toModelArray() // TODO We only need this because checking instanceOf in propsType; is that for the best?
 )
 
 export const requestWithId = id =>
@@ -18,7 +16,7 @@ export const requestWithId = id =>
     orm,
     state => state.db,
     session =>
-      session.Request.exists(id)
+      session.Request.hasId(id)
         ? resolveOwner(session.Request.withId(id))
         : undefined
   )

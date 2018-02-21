@@ -1,6 +1,6 @@
 import { ORM } from 'redux-orm'
 
-import CommunityModel from './community/model'
+import HubModel from './hub/model'
 import ProjectModel from './project/model'
 import RequestModel from './request/model'
 import OfferModel from './offer/model'
@@ -13,7 +13,7 @@ import MessageModel from './message/model'
 const orm = new ORM()
 orm.register(
   UserModel,
-  CommunityModel,
+  HubModel,
   ProjectModel,
   OfferModel,
   RequestModel,

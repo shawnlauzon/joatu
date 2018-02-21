@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
@@ -9,7 +8,7 @@ export const authenticatedUser = createSelector(
   state => state.db,
   state => state.authenticatedUserId,
   (session, userId) =>
-    session.User.exists(userId) ? session.User.withId(userId).ref : undefined
+    session.User.hasId(userId) ? session.User.withId(userId).ref : undefined
 )
 
 const inflateComment = comment => {
@@ -75,7 +74,7 @@ export const userWithId = id =>
     orm,
     state => state.db,
     session => {
-      if (session.User.exists(id)) {
+      if (session.User.hasId(id)) {
         const user = session.User.withId(id)
 
         const obj = user.ref

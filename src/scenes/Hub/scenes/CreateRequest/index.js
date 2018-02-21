@@ -18,7 +18,7 @@ const styles = theme => ({
   }
 })
 
-class CreateOffer extends React.Component {
+class CreateRequest extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -38,7 +38,7 @@ class CreateOffer extends React.Component {
 
   onSave = e => {
     this.props.onCreate({
-      community: this.props.match.params.communityId,
+      hub: this.props.match.params.hubId,
       owner: this.props.authUser.id,
       name: this.state.name
     })
@@ -51,7 +51,7 @@ class CreateOffer extends React.Component {
       <Grid container direction="column">
         <Grid item>
           <Typography variant="display2" gutterBottom>
-            Create Offer
+            Create Request
           </Typography>
         </Grid>
         <Grid item>
@@ -81,7 +81,6 @@ class CreateOffer extends React.Component {
             onClick={this.onSave}
             // TODO Validate before navigating away
             component={Link}
-            // TODO Go to the newly created component after we know the id
             to={this.props.cancelUrl}
           >
             Create
@@ -92,11 +91,11 @@ class CreateOffer extends React.Component {
   }
 }
 
-CreateOffer.propTypes = {
+CreateRequest.propTypes = {
   authUser: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
   onCreate: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(CreateOffer)
+export default withStyles(styles)(CreateRequest)

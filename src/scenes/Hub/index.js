@@ -19,27 +19,24 @@ import OfferList from './components/OfferList'
 import RequestList from './components/RequestList'
 
 import { authenticatedUser } from '../../data/user/selectors'
-import { selectedCommunity } from '../../data/community/selectors'
-import { projectsInCommunity } from '../../data/project/selectors'
-import { requestsInCommunity } from '../../data/request/selectors'
-import { offersInCommunity } from '../../data/offer/selectors'
+import { selectedHub } from '../../data/hub/selectors'
+import { projectsInHub } from '../../data/project/selectors'
+import { requestsInHub } from '../../data/request/selectors'
+import { offersInHub } from '../../data/offer/selectors'
+import { changeHub } from '../../data/hub/actions'
 
 import {
   projectActions,
   offerActions,
-  requestActions,
-  changeHub
+  requestActions
 } from '../../data/actions'
 
-export class Community extends React.Component {
+export class Hub extends React.Component {
   constructor(props) {
     super(props)
 
-    if (
-      !props.community ||
-      props.match.params.communityId !== props.community.id
-    ) {
-      props.changeHub(props.match.params.communityId)
+    if (!props.hub || props.match.params.hubId !== props.hub.id) {
+      props.changeHub(props.match.params.hubId)
     }
   }
 
@@ -79,10 +76,10 @@ export class Community extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/">Back to community map</Link>
-        {this.props.community && (
+        <Link to="/">Back to hub map</Link>
+        {this.props.hub && (
           <Typography variant="display3" gutterBottom>
-            {this.props.community.name}
+            {this.props.hub.name}
           </Typography>
         )}
         <ResponsivePage
@@ -147,10 +144,10 @@ export class Community extends React.Component {
 function mapStateToProps(state) {
   return {
     authenticatedUser: authenticatedUser(state),
-    community: selectedCommunity(state),
-    projects: projectsInCommunity(state),
-    offers: offersInCommunity(state),
-    requests: requestsInCommunity(state)
+    hub: selectedHub(state),
+    projects: projectsInHub(state),
+    offers: offersInHub(state),
+    requests: requestsInHub(state)
   }
 }
 
@@ -163,6 +160,4 @@ const mapDispatchToProps = {
 }
 
 // TODO Using withRouter is not the most efficient solution
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Community)
-)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Hub))

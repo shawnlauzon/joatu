@@ -3,7 +3,7 @@ import orm from './orm'
 import { combineReducers } from 'redux'
 import { createReducer } from 'redux-orm'
 
-import { CHANGE_HUB } from './actions'
+import { CHANGE_HUB } from './hub/actions'
 
 // TODO move out of 'authUser'
 import {
@@ -12,11 +12,11 @@ import {
   AUTH_CHANGED
 } from './authUser/actions'
 
-export function selectedCommunityIdReducer(state = '', action) {
+export function selectedHubIdReducer(state = '', action) {
   const { type, payload } = action
   switch (type) {
     case CHANGE_HUB:
-      return payload.communityId
+      return payload.hubId
     default:
       return state
   }
@@ -40,5 +40,5 @@ export const authenticatedUserIdReducer = (state = '', action) => {
 export default combineReducers({
   db: createReducer(orm),
   authenticatedUserId: authenticatedUserIdReducer,
-  selectedCommunityId: selectedCommunityIdReducer
+  selectedHubId: selectedHubIdReducer
 })

@@ -7,7 +7,7 @@ import { Typography } from 'material-ui'
 
 import UserChip from '../../../components/UserChip'
 
-const CommunityInfo = props => (
+const HubInfo = props => (
   <div>
     <Link to={props.url}>
       <Typography variant="display2">{props.name}</Typography>
@@ -26,7 +26,7 @@ const CommunityInfo = props => (
   </div>
 )
 
-CommunityInfo.propTypes = {
+HubInfo.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   members: PropTypes.objectOf(
@@ -37,4 +37,4 @@ CommunityInfo.propTypes = {
   )
 }
 
-export default CommunityInfo
+export default HubInfo

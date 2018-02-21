@@ -54,25 +54,6 @@ const doCreateChat = body => ({
   }
 })
 
-// users.chats: {
-//   otherUserId: chatId
-// }
-const doAddNewChatToUser = (chatId, userId, otherUserId) => ({
-  [CALL_API]: {
-    types: [
-      ADD_NEW_CHAT_TO_USER_STARTED,
-      ADD_NEW_CHAT_TO_USER_SUCCEEDED,
-      ADD_NEW_CHAT_TO_USER_FAILED
-    ],
-    collection: 'users',
-    action: 'addRef',
-    category: 'chats',
-    fromId: userId,
-    toId: otherUserId,
-    withData: chatId
-  }
-})
-
 // {
 //   participants: [ userId1, userId2 ] (exactly 2)
 // }

@@ -6,16 +6,16 @@ import User from '../user/model'
 
 import reducer from './reducer'
 
-// Project is associated with a community
+// Project is associated with a hub
 export default class Project extends JoatuModel {}
 Project.reducer = reducer
 Project.modelName = 'Project'
 
 Project.fields = {
   id: attr(),
-  owner: fk('User', 'ownedProjects'),
-  community: fk('Community', 'projects'),
-  participants: many('User', 'memberProjects')
+  owner: fk('User', 'projectsOwned'),
+  hub: fk('Hub', 'projects'),
+  participants: many('User', 'projectsParticipating')
 }
 
 Project.propTypes = {

@@ -12,7 +12,7 @@ const toFirestore = body => {
     new firebase.firestore.GeoPoint(coords.latitude, coords.longitude)
 
   const transformations = {
-    coordinates: makeGeoPoint
+    location: makeGeoPoint
   }
 
   return R.evolve(transformations, body)

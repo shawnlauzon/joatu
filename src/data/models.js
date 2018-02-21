@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 class JoatuModel extends Model {}
 // class JoatuModel extends ValidatingModel {}
 
-//  Requests and Offers are associated with an owner (who is a member of a community)
+//  Requests and Offers are associated with an owner (who is a member of a hub)
 export class Chat extends JoatuModel {}
 Chat.modelName = 'Chat'
 Chat.fields = {

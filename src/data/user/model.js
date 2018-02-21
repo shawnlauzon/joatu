@@ -14,7 +14,7 @@ User.fields = {
   displayName: attr(),
   email: attr(),
   imgUrl: attr(),
-  community: fk('Community', 'members')
+  hub: fk('Hub', 'members')
 }
 
 User.propTypes = {

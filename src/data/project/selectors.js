@@ -19,14 +19,12 @@ export const allProjects = createSelector(
       .map(resolveParticipants)
 )
 
-export const projectsInCommunity = createSelector(
+export const projectsInHub = createSelector(
   orm,
   state => state.db,
-  state => state.selectedCommunityId,
+  state => state.selectedHubId,
   (session, hubId) =>
-    session.Project.filter(
-      project => project.community === hubId
-    ).toModelArray()
+    session.Project.filter(project => project.hub === hubId).toModelArray()
 )
 
 export const projectWithId = id =>
@@ -34,7 +32,7 @@ export const projectWithId = id =>
     orm,
     state => state.db,
     session =>
-      session.Project.exists(id)
+      session.Project.hasId(id)
         ? resolveParticipants(session.Project.withId(id))
         : undefined
   )

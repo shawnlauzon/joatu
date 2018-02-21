@@ -13,7 +13,7 @@ Request.fields = {
   id: attr(),
   name: attr(),
   owner: fk('User', 'requests'),
-  community: fk('Community', 'requests')
+  hub: fk('Hub', 'requests')
 }
 
 Request.propTypes = {

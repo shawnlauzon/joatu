@@ -11,14 +11,14 @@ class DisplayMap extends React.Component {
     this.mapboxglSupported = mapboxgl.supported()
 
     this.state = {
-      coordinates: props.coordinates,
+      location: props.location,
       zoom: 15
     }
   }
 
   componentDidMount() {
     if (this.mapboxglSupported) {
-      const { longitude, latitude } = this.state.coordinates
+      const { longitude, latitude } = this.state.location
       const zoom = this.state.zoom
       this.map = new mapboxgl.Map({
         container: this.mapContainer,
@@ -34,24 +34,24 @@ class DisplayMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const coordinatesAreEqual = Object.keys(nextProps.coordinates).every(
-      k => nextProps.coordinates[k] === this.props.coordinates[k]
+    const locationAreEqual = Object.keys(nextProps.location).every(
+      k => nextProps.location[k] === this.props.location[k]
     )
 
-    if (!coordinatesAreEqual) {
-      this.updateCoordinates(nextProps.coordinates)
+    if (!locationAreEqual) {
+      this.updateCoordinates(nextProps.location)
     }
   }
 
-  updateCoordinates(coordinates) {
-    const { longitude, latitude } = coordinates
+  updateCoordinates(location) {
+    const { longitude, latitude } = location
 
     if (this.mapboxglSupported) {
       this.map.panTo([longitude, latitude])
       this.marker.setLngLat([longitude, latitude])
     }
 
-    this.setState({ coordinates })
+    this.setState({ location })
   }
 
   componentWillUnmount() {
@@ -79,7 +79,7 @@ class DisplayMap extends React.Component {
 }
 
 DisplayMap.propTypes = {
-  coordinates: PropTypes.shape({
+  location: PropTypes.shape({
     longitude: PropTypes.number.isRequired,
     latitude: PropTypes.number.isRequired
   }).isRequired

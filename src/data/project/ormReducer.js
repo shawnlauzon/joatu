@@ -24,8 +24,7 @@ function ormReducer(dbState, action) {
       Project.withId(action.payload.id).delete()
       break
     case ASSIGN_COMMUNITY_SUCCEEDED:
-      Project.withId(action.payload.projectId).community =
-        action.payload.communityId
+      Project.withId(action.payload.projectId).hub = action.payload.hubId
       break
     case ADD_PARTICIPANT_TO_PROJECT:
       Project.withId(action.payload.projectId).participants.add(

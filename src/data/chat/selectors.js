@@ -1,15 +1,14 @@
-import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
 import { inflateUser } from '../utils'
 
-export const offersInCommunity = createSelector(
+export const offersInHub = createSelector(
   orm,
   state => state.db,
-  state => state.selectedCommunityId,
+  state => state.selectedHubId,
   (session, hubId) =>
-    session.Offer.filter(offer => offer.community === hubId).toModelArray()
+    session.Offer.filter(offer => offer.hub === hubId).toModelArray()
 )
 
 // FIXME This only works if the correct chat is the first item

@@ -85,17 +85,17 @@ const doAssignProjectOwner = (projectId, ownerId) => ({
   }
 })
 
-const doAddNewProjectToCommunity = (projectId, communityId) => ({
+const doAddNewProjectToHub = (projectId, hubId) => ({
   [CALL_API]: {
     types: [
       ADD_PROJECT_TO_COMMUNITY_STARTED,
       ADD_PROJECT_TO_COMMUNITY_SUCCEEDED,
       ADD_PROJECT_TO_COMMUNITY_FAILED
     ],
-    collection: 'communities',
+    collection: 'hubs',
     action: 'addRef',
     category: 'projects',
-    fromId: communityId,
+    fromId: hubId,
     toId: projectId
   }
 })
@@ -106,12 +106,7 @@ export const create = body => (dispatch, getState) => {
       dispatch(
         doAssignProjectOwner(result.payload.id, result.payload.data.owner)
       ),
-      dispatch(
-        doAddNewProjectToCommunity(
-          result.payload.id,
-          result.payload.data.community
-        )
-      )
+      dispatch(doAddNewProjectToHub(result.payload.id, result.payload.data.hub))
     ])
   )
 }
@@ -162,14 +157,14 @@ const doRemoveProjectFromUser = (projectId, ownerId) => ({
   }
 })
 
-const doRemoveProjectFromCommunity = (projectId, ownerId) => ({
+const doRemoveProjectFromHub = (projectId, ownerId) => ({
   [CALL_API]: {
     types: [
       REMOVE_PROJECT_FROM_COMMUNITY_STARTED,
       REMOVE_PROJECT_FROM_COMMUNITY_SUCCEEDED,
       REMOVE_PROJECT_FROM_COMMUNITY_FAILED
     ],
-    collection: 'communities',
+    collection: 'hubs',
     action: 'removeRef',
     category: 'projects',
     fromId: ownerId,
@@ -182,7 +177,7 @@ export const remove = id => (dispatch, getState) => {
   return Promise.all([
     dispatch(doDeleteProject(id)),
     dispatch(doRemoveProjectFromUser(id, project.owner)),
-    dispatch(doRemoveProjectFromCommunity(id, project.community))
+    dispatch(doRemoveProjectFromHub(id, project.hub))
   ])
 }
 

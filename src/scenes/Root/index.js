@@ -8,8 +8,8 @@ import firebase from 'firebase'
 import Reboot from 'material-ui/Reboot'
 
 import JoatUAppBar from './components/JoatUAppBar'
-import Community from '../Community'
-import CommunityMap from '../CommunityMap'
+import Hub from '../Hub'
+import HubMap from '../HubMap'
 import Profile from '../Profile'
 import ProjectContainer from '../ProjectContainer'
 import OfferContainer from '../OfferContainer'
@@ -20,14 +20,14 @@ import CreateChat from '../CreateChat'
 import { authenticatedUser } from '../../data/user/selectors'
 
 import {
-  communityActions,
+  hubActions,
   projectActions,
   userActions,
   authActions,
   offerActions,
   requestActions,
-  commentActions,
-  chatActions
+  commentActions
+  // chatActions
 } from '../../data/actions'
 
 class Root extends React.Component {
@@ -41,12 +41,14 @@ class Root extends React.Component {
   componentDidMount() {
     // TODO We will need to somehow only load what is necessary
     this.props.dispatch(userActions.fetch())
-    this.props.dispatch(communityActions.fetch())
+    this.props.dispatch(hubActions.fetch())
     this.props.dispatch(projectActions.fetch())
     this.props.dispatch(offerActions.fetch())
     this.props.dispatch(requestActions.fetch())
     this.props.dispatch(commentActions.fetch())
-    this.props.dispatch(chatActions.fetch())
+
+    // FIXME Somehow being dispatched twice?!?
+    // this.props.dispatch(chatActions.fetch())
 
     firebase.auth().onAuthStateChanged(user => {
       this.props.dispatch(authActions.onAuthChanged(user))
@@ -92,14 +94,14 @@ class Root extends React.Component {
           onLogout={this.onLogout}
         />
         <Switch>
-          <Route path="/communities/:communityId" component={Community} />
+          <Route path="/hubs/:hubId" component={Hub} />
           <Route path="/profiles/:profileId" component={Profile} />
           <Route path="/projects/:projectId" component={ProjectContainer} />
           <Route path="/offers/:offerId" component={OfferContainer} />
           <Route path="/requests/:requestId" component={RequestContainer} />
           <Route path="/chat-with/:userId" component={CreateChat} />
           <Route path="/chats/:chatId" component={ChatContainer} />
-          <Route path="/" component={CommunityMap} />
+          <Route path="/" component={HubMap} />
         </Switch>
       </div>
     )
@@ -110,7 +112,7 @@ class Root extends React.Component {
 function mapStateToProps(state) {
   return {
     authenticatedUser: authenticatedUser(state),
-    communities: state.communities,
+    hubs: state.hubs,
     projects: state.projects,
     offers: state.offers,
     requests: state.requests,

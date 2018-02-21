@@ -3,7 +3,7 @@ import orm from '../orm'
 
 const dbStateSelector = state => state.db
 
-export const allCommunities = createSelector(
+export const allHubs = createSelector(
   orm,
   // The first input selector should always select the db-state.
   // Behind the scenes, `createSelector` begins a Redux-ORM session
@@ -11,16 +11,16 @@ export const allCommunities = createSelector(
   // that Session instance as an argument instead.
   dbStateSelector,
   session => {
-    return session.Community.all()
+    return session.Hub.all()
       .toModelArray()
-      .map(community => {
+      .map(hub => {
         // Returns a reference to the raw object in the store,
         // so it doesn't include any reverse or m2m fields.
-        const obj = community.ref
+        const obj = hub.ref
         // Object.keys(obj) === ['id', 'name']
 
         return Object.assign({}, obj, {
-          members: community.members
+          members: hub.members
             .toRefArray()
             .map(({ id, displayName, imgUrl }) => ({
               id,
@@ -32,10 +32,13 @@ export const allCommunities = createSelector(
   }
 )
 
-export const selectedCommunity = createSelector(
+export const selectedHub = createSelector(
   orm,
+  state => state.db,
   state => state.selectedHubId,
-  (session, hubId) => hubId && session.Community.withId(hubId).ref
+  (session, hubId) => {
+    return session.Hub.hasId(hubId) ? session.Hub.withId(hubId).ref : undefined
+  }
 )
 
 // Will result in something like this when run:

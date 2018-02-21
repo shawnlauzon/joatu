@@ -84,17 +84,17 @@ const doAddNewRequestToUser = (requestId, ownerId) => ({
   }
 })
 
-const doAddNewRequestToCommunity = (projectId, communityId) => ({
+const doAddNewRequestToHub = (projectId, hubId) => ({
   [CALL_API]: {
     types: [
       ADD_NEW_REQUEST_TO_COMMUNITY_STARTED,
       ADD_NEW_REQUEST_TO_COMMUNITY_SUCCEEDED,
       ADD_NEW_REQUEST_TO_COMMUNITY_FAILED
     ],
-    collection: 'communities',
+    collection: 'hubs',
     action: 'addRef',
     category: 'requests',
-    fromId: communityId,
+    fromId: hubId,
     toId: projectId
   }
 })
@@ -105,12 +105,7 @@ export const create = body => (dispatch, getState) => {
       dispatch(
         doAddNewRequestToUser(result.payload.id, result.payload.data.owner)
       ),
-      dispatch(
-        doAddNewRequestToCommunity(
-          result.payload.id,
-          result.payload.data.community
-        )
-      )
+      dispatch(doAddNewRequestToHub(result.payload.id, result.payload.data.hub))
     ])
   )
 }
@@ -161,14 +156,14 @@ const doRemoveRequestFromUser = (requestId, ownerId) => ({
   }
 })
 
-const doRemoveRequestFromCommunity = (requestId, ownerId) => ({
+const doRemoveRequestFromHub = (requestId, ownerId) => ({
   [CALL_API]: {
     types: [
       REMOVE_REQUEST_FROM_COMMUNITY_STARTED,
       REMOVE_REQUEST_FROM_COMMUNITY_SUCCEEDED,
       REMOVE_REQUEST_FROM_COMMUNITY_FAILED
     ],
-    collection: 'communities',
+    collection: 'hubs',
     action: 'removeRef',
     category: 'requests',
     fromId: ownerId,
@@ -181,6 +176,6 @@ export const remove = id => (dispatch, getState) => {
   return Promise.all([
     dispatch(doDeleteRequest(id)),
     dispatch(doRemoveRequestFromUser(id, request.owner)),
-    dispatch(doRemoveRequestFromCommunity(id, request.community))
+    dispatch(doRemoveRequestFromHub(id, request.hub))
   ])
 }

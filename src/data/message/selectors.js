@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 

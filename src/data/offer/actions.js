@@ -74,17 +74,17 @@ const doAddNewOfferToUser = (offerId, ownerId) => ({
   }
 })
 
-const doAddNewOfferToCommunity = (offerId, communityId) => ({
+const doAddNewOfferToHub = (offerId, hubId) => ({
   [CALL_API]: {
     types: [
       ADD_NEW_OFFER_TO_COMMUNITY_STARTED,
       ADD_NEW_OFFER_TO_COMMUNITY_SUCCEEDED,
       ADD_NEW_OFFER_TO_COMMUNITY_FAILED
     ],
-    collection: 'communities',
+    collection: 'hubs',
     action: 'addRef',
     category: 'offers',
-    fromId: communityId,
+    fromId: hubId,
     toId: offerId
   }
 })
@@ -95,12 +95,7 @@ export const create = body => (dispatch, getState) => {
       dispatch(
         doAddNewOfferToUser(result.payload.id, result.payload.data.owner)
       ),
-      dispatch(
-        doAddNewOfferToCommunity(
-          result.payload.id,
-          result.payload.data.community
-        )
-      )
+      dispatch(doAddNewOfferToHub(result.payload.id, result.payload.data.hub))
     ])
   )
 }
@@ -143,14 +138,14 @@ const doRemoveOfferFromUser = (offerId, ownerId) => ({
   }
 })
 
-const doRemoveOfferFromCommunity = (offerId, ownerId) => ({
+const doRemoveOfferFromHub = (offerId, ownerId) => ({
   [CALL_API]: {
     types: [
       REMOVE_OFFER_FROM_COMMUNITY_STARTED,
       REMOVE_OFFER_FROM_COMMUNITY_SUCCEEDED,
       REMOVE_OFFER_FROM_COMMUNITY_FAILED
     ],
-    collection: 'communities',
+    collection: 'hubs',
     action: 'removeRef',
     category: 'offers',
     fromId: ownerId,
@@ -163,6 +158,6 @@ export const remove = id => (dispatch, getState) => {
   return Promise.all([
     dispatch(doDeleteOffer(id)),
     dispatch(doRemoveOfferFromUser(id, offer.owner)),
-    dispatch(doRemoveOfferFromCommunity(id, offer.community))
+    dispatch(doRemoveOfferFromHub(id, offer.hub))
   ])
 }

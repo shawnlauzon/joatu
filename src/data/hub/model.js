@@ -5,20 +5,20 @@ import JoatuModel from '../baseModel'
 
 import reducer from './reducer'
 
-export default class Community extends JoatuModel {}
-Community.reducer = reducer
-Community.modelName = 'Community'
+export default class Hub extends JoatuModel {}
+Hub.reducer = reducer
+Hub.modelName = 'Hub'
 
-Community.fields = {
+Hub.fields = {
   id: attr(),
   name: attr(),
-  coordinates: attr()
+  location: attr()
 }
 
-Community.propTypes = {
+Hub.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
-  coordinates: PropTypes.shape({
+  location: PropTypes.shape({
     latitutde: PropTypes.number.isRequired,
     longitude: PropTypes.string.isRequired
   }).isRequired

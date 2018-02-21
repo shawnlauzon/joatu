@@ -8,7 +8,7 @@ const bootstrap = () => {
   return {
     db: state,
     authenticatedUserId: '',
-    selectedCommunityId: ''
+    selectedHubId: ''
   }
 }
 
