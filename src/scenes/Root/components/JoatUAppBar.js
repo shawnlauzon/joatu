@@ -14,18 +14,21 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 
 import LoginModal from './LoginModal'
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%'
   },
   flex: {
     flex: 1
   },
+  caps: {
+    margin: theme.spacing.unit
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20
   }
-}
+})
 
 class JoatUAppBar extends React.Component {
   constructor(props) {
@@ -64,7 +67,7 @@ class JoatUAppBar extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, authenticatedUser } = this.props
     const { anchorEl } = this.state
     const openLogoutModal = Boolean(anchorEl)
 
@@ -89,11 +92,16 @@ class JoatUAppBar extends React.Component {
               </Hidden>
               <Hidden smUp>JoatU DEVELOPMENT</Hidden>
             </Typography>
-            {this.props.authenticatedUser ? (
+            {authenticatedUser && (
+              <Typography className={classes.caps} variant="headline">
+                {authenticatedUser.caps ? authenticatedUser.caps : 0} &#8353;
+              </Typography>
+            )}
+            {authenticatedUser ? (
               <div>
                 <Avatar
-                  alt={this.props.authenticatedUser.displayName}
-                  src={this.props.authenticatedUser.imgUrl}
+                  alt={authenticatedUser.displayName}
+                  src={authenticatedUser.imgUrl}
                   aria-owns={openLogoutModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.showLogoutModal}

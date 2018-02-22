@@ -14,6 +14,7 @@ User.fields = {
   displayName: attr(),
   email: attr(),
   imgUrl: attr(),
+  caps: attr(),
   hub: fk('Hub', 'members')
 }
 
