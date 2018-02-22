@@ -10,7 +10,6 @@ const Profile = props => (
   <div>
     {props.user && (
       <div>
-        <Link to="/">Return to Home</Link>
         <Typography variant="display3">{props.user.displayName}</Typography>
         <Typography variant="display2">My Projects</Typography>
         {!props.ownedProjects || isEmpty(props.ownedProjects) ? (
