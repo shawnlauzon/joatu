@@ -1,10 +1,15 @@
 import * as R from 'ramda'
 import { CALL_API } from '../actions'
 import { boolMap } from '../utils'
+// import { authenticatedUser } from '../user/selectors'
 
 export const FETCH_CHATS_STARTED = 'FETCH_CHATS_STARTED'
 export const FETCH_CHATS_SUCCEEDED = 'FETCH_CHATS_SUCCEEDED'
 export const FETCH_CHATS_FAILED = 'FETCH_CHATS_FAILED'
+
+export const LISTEN_CHAT_STARTED = 'LISTEN_CHAT_STARTED'
+export const LISTEN_CHAT_SUCCEEDED = 'LISTEN_CHAT_SUCCEEDED'
+export const LISTEN_CHAT_FAILED = 'LISTEN_CHAT_FAILED'
 
 export const CREATE_CHAT_STARTED = 'CREATE_CHAT_STARTED'
 export const CREATE_CHAT_SUCCEEDED = 'CREATE_CHAT_SUCCEEDED'
@@ -34,6 +39,8 @@ export const CREATE_MESSAGE_STARTED = 'CREATE_MESSAGE_STARTED'
 export const CREATE_MESSAGE_SUCCEEDED = 'CREATE_MESSAGE_SUCCEEDED'
 export const CREATE_MESSAGE_FAILED = 'CREATE_MESSAGE_FAILED'
 
+export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'
+
 const doFetchChats = () => ({
   [CALL_API]: {
     types: [FETCH_CHATS_STARTED, FETCH_CHATS_SUCCEEDED, FETCH_CHATS_FAILED],
@@ -41,8 +48,37 @@ const doFetchChats = () => ({
   }
 })
 
-export const fetch = () => (dispatch, getState) => {
-  return dispatch(doFetchChats())
+const doListenToChat = (chatId, listener) => ({
+  [CALL_API]: {
+    types: [LISTEN_CHAT_STARTED, LISTEN_CHAT_SUCCEEDED, LISTEN_CHAT_FAILED],
+    action: 'listen',
+    collection: {
+      root: 'chats',
+      ofDocument: chatId,
+      subcollection: 'messages'
+    },
+    listener
+  }
+})
+
+export const fetch = () => async (dispatch, getState) => {
+  const listener = chatId => snapshot => {
+    snapshot.docChanges.forEach(change => {
+      // TODO Discard changes to documents originated from this computer
+      dispatch({
+        type: MESSAGE_RECEIVED,
+        payload: {
+          id: change.doc.id,
+          chatId,
+          ...change.doc.data()
+        }
+      })
+    })
+  }
+  const chats = await dispatch(doFetchChats())
+  Object.keys(chats.payload).forEach(chatId => {
+    dispatch(doListenToChat(chatId, listener(chatId)))
+  })
 }
 
 const doCreateChat = body => ({

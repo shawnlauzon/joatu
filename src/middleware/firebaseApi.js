@@ -11,7 +11,8 @@ import {
   doLogout,
   addParticipant,
   addRef,
-  removeRef
+  removeRef,
+  listenForNewDocuments
 } from '../data/api'
 
 const apiMiddleware = store => next => action => {
@@ -77,6 +78,8 @@ const apiMiddleware = store => next => action => {
     return doGetSorted(callApi)
       .then(handleResponse)
       .catch(handleError)
+  } else if (callApi.action === 'listen') {
+    return listenForNewDocuments(callApi)
   } else {
     return doGet(callApi)
       .then(handleResponse)

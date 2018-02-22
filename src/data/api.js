@@ -174,3 +174,11 @@ export async function removeRef(data) {
 export function doLogout(provider) {
   return authFunctions.logUserOut()
 }
+
+export function listenForNewDocuments({ collection, where, listener }) {
+  const query = getCollection(collection)
+    .orderBy('createdAt')
+    .startAfter(new Date()) // FIXME Doesn't work if client time is wrong
+
+  query.onSnapshot(listener)
+}
