@@ -22,8 +22,8 @@ const AddTextForm = props => {
         <div>
           <TextField
             name="text"
-            multiline
-            rows="4"
+            // multiline
+            // rows="4"
             margin="normal"
             onChange={handleChange}
             onBlur={handleBlur}
