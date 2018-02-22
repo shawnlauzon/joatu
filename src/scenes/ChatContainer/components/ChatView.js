@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Avatar from 'material-ui/Avatar'
 
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
@@ -9,6 +10,7 @@ const ChatView = ({ messages }) => (
       {messages &&
         Object.entries(messages).map(([id, message]) => (
           <ListItem key={id}>
+            <Avatar alt={message.from.displayName} src={message.from.imgUrl} />
             <ListItemText primary={message.text} />
           </ListItem>
         ))}
