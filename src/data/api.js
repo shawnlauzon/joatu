@@ -182,3 +182,33 @@ export function listenForNewDocuments({ collection, where, listener }) {
 
   query.onSnapshot(listener)
 }
+
+export function sendCaps({ from, to, amount }) {
+  const fromUserRef = db.collection('users').doc(from)
+  const toUserRef = db.collection('users').doc(to)
+
+  return db.runTransaction(async transaction => {
+    const fromUser = await transaction.get(fromUserRef)
+    if (fromUser.caps < amount) {
+      return Promise.reject('Insufficient funds')
+    }
+    const toUser = await transaction.get(toUserRef)
+
+    const fromUserBalance = fromUser.data().caps - amount
+    const toUserBalance = toUser.data().caps + amount
+
+    transaction.update(fromUserRef, { caps: fromUserBalance })
+    transaction.update(toUserRef, { caps: toUserBalance })
+
+    return {
+      from: {
+        id: from,
+        balance: fromUserBalance
+      },
+      to: {
+        id: to,
+        balance: toUserBalance
+      }
+    }
+  })
+}

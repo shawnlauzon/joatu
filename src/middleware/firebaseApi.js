@@ -12,7 +12,8 @@ import {
   addParticipant,
   addRef,
   removeRef,
-  listenForNewDocuments
+  listenForNewDocuments,
+  sendCaps
 } from '../data/api'
 
 const apiMiddleware = store => next => action => {
@@ -80,6 +81,10 @@ const apiMiddleware = store => next => action => {
       .catch(handleError)
   } else if (callApi.action === 'listen') {
     return listenForNewDocuments(callApi)
+  } else if (callApi.action === 'sendCaps') {
+    return sendCaps(callApi)
+      .then(handleResponse)
+      .catch(handleError)
   } else {
     return doGet(callApi)
       .then(handleResponse)

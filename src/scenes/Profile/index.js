@@ -6,10 +6,12 @@ import ProfileView from './components/ProfileView'
 import ViewComments from './components/ViewComments'
 import AddComment from './components/AddComment'
 import ButtonStartChat from './components/ButtonStartChat'
+import DonateCaps from '../../components/DonateCaps'
 
 import { authenticatedUser, userWithId } from '../../data/user/selectors'
 
 import { create } from '../../data/comment/actions'
+import { sendCaps } from '../../data/user/actions'
 import { chatWithUser } from '../../data/chat/selectors'
 // import { chatWithUser } from '../../data/chatByUser/selectors'
 
@@ -27,37 +29,50 @@ class Profile extends React.Component {
     })
   }
 
+  handleDonateCaps = amount => {
+    this.props.sendCaps({
+      from: this.props.authenticatedUser.id,
+      to: this.profileUserId(),
+      amount
+    })
+  }
+
   render() {
+    const { user, authenticatedUser } = this.props
     return (
       <div>
-        {this.props.user && (
+        {user && (
           <div>
             <div>
-              <Avatar src={this.props.user.imgUrl} />
+              <Avatar src={user.imgUrl} />
+              <DonateCaps
+                capsAvailable={authenticatedUser.caps}
+                onSave={this.handleDonateCaps}
+              />
               {this.props.chat ? (
                 <ButtonStartChat
-                  name={this.props.user.displayName}
+                  name={user.displayName}
                   url={`/chats/${this.props.chat.id}`}
                 />
               ) : (
                 <ButtonStartChat
-                  name={this.props.user.displayName}
+                  name={user.displayName}
                   url={`/chat-with/${this.profileUserId()}`}
                 />
               )}
             </div>
             <div>
               <ProfileView
-                user={this.props.user}
-                ownedProjects={this.props.user.projectsOwned}
-                memberProjects={this.props.user.projectsParticipating}
-                offers={this.props.user.offers}
-                requests={this.props.user.requests}
+                user={user}
+                ownedProjects={user.projectsOwned}
+                memberProjects={user.projectsParticipating}
+                offers={user.offers}
+                requests={user.requests}
               />
               {/* FIXME: A refresh is required to see a new comment */}
-              {this.props.user.comments && (
+              {user.comments && (
                 <div>
-                  <ViewComments comments={this.props.user.comments} />
+                  <ViewComments comments={user.comments} />
                   {!this.isProfileOfCurrentUser() && (
                     <AddComment onSave={this.handleNewComment} />
                   )}
@@ -84,7 +99,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  createComment: create
+  createComment: create,
+  sendCaps
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

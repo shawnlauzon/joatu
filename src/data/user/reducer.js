@@ -1,34 +1,50 @@
 import { evolve, keys, values } from 'ramda'
 import crudReducer from '../crudReducer'
+import { compositeReducer } from '../utils'
 
 import {
   FETCH_USERS_SUCCEEDED,
   CREATE_USER_SUCCEEDED,
   UPDATE_USER_SUCCEEDED,
-  DELETE_USER_SUCCEEDED
+  DELETE_USER_SUCCEEDED,
+  SEND_CAPS_SUCCEEDED
 } from './actions'
 
-const reducer = crudReducer({
-  fetchActionType: FETCH_USERS_SUCCEEDED,
-  createActionType: CREATE_USER_SUCCEEDED,
-  updateActionType: UPDATE_USER_SUCCEEDED,
-  removeActionType: DELETE_USER_SUCCEEDED,
-  createEntity: User => (data, id) => {
-    // TODO Move to API
-    const transformations = {
-      offers: keys,
-      projects: keys,
-      requests: keys,
-      memberProjects: keys,
-      ownedProjects: keys,
-      comments: keys,
-      chats: values
-    }
-    const user = evolve(transformations, data)
-
-    User.create({ id, ...user })
+const userReducer = (action, User, session) => {
+  switch (action.type) {
+    case SEND_CAPS_SUCCEEDED:
+      User.withId(action.payload.from.id).caps = action.payload.from.balance
+      User.withId(action.payload.to.id).caps = action.payload.to.balance
+      break
+    default:
+      break
   }
-})
+}
+
+const reducer = compositeReducer([
+  crudReducer({
+    fetchActionType: FETCH_USERS_SUCCEEDED,
+    createActionType: CREATE_USER_SUCCEEDED,
+    updateActionType: UPDATE_USER_SUCCEEDED,
+    removeActionType: DELETE_USER_SUCCEEDED,
+    createEntity: User => (data, id) => {
+      // TODO Move to API
+      const transformations = {
+        offers: keys,
+        projects: keys,
+        requests: keys,
+        memberProjects: keys,
+        ownedProjects: keys,
+        comments: keys,
+        chats: values
+      }
+      const user = evolve(transformations, data)
+
+      User.create({ id, ...user })
+    }
+  }),
+  userReducer
+])
 
 export default reducer
 

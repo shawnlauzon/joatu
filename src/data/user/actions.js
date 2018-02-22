@@ -16,6 +16,10 @@ export const DELETE_USER_STARTED = 'DELETE_USER_STARTED'
 export const DELETE_USER_SUCCEEDED = 'DELETE_USER_SUCCEEDED'
 export const DELETE_USER_FAILED = 'DELETE_USER_FAILED'
 
+export const SEND_CAPS_STARTED = 'SEND_CAPS_STARTED'
+export const SEND_CAPS_SUCCEEDED = 'SEND_CAPS_SUCCEEDED'
+export const SEND_CAPS_FAILED = 'SEND_CAPS_FAILED'
+
 const doFetchUsers = () => ({
   [CALL_API]: {
     types: [FETCH_USERS_STARTED, FETCH_USERS_SUCCEEDED, FETCH_USERS_FAILED],
@@ -70,4 +74,22 @@ const doDeleteUser = id => ({
 
 export const remove = id => (dispatch, getState) => {
   return dispatch(doDeleteUser(id))
+}
+
+const doSendCaps = body => ({
+  [CALL_API]: {
+    types: [SEND_CAPS_STARTED, SEND_CAPS_SUCCEEDED, SEND_CAPS_FAILED],
+    collection: 'users',
+    action: 'sendCaps',
+    ...body
+  }
+})
+
+// {
+//   from: userId,
+//   to: userId,
+//   amount: number
+// }
+export const sendCaps = ({ from, to, amount }) => (dispatch, getState) => {
+  return dispatch(doSendCaps({ from, to, amount }))
 }
