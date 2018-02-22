@@ -32,7 +32,7 @@ const Profile = props => (
           <Typography variant="body1">None</Typography>
         ) : (
           <List>
-            {props.ownedProjects.map(value => (
+            {props.memberProjects.map(value => (
               <ListItem key={value.id}>
                 <ListItemText
                   primary={
