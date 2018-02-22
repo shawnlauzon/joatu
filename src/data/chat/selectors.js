@@ -4,8 +4,6 @@ import orm from '../orm'
 
 import { inflateUser } from '../utils'
 
-import { listenForNewMessages } from './actions'
-
 export const offersInHub = createSelector(
   orm,
   state => state.db,

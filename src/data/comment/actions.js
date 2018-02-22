@@ -70,8 +70,8 @@ const doCreateComment = body => ({
 //   }
 // })
 
-export const create = body => async (dispatch, getState) => {
-  const result = await dispatch(doCreateComment(body))
+export const create = body => (dispatch, getState) => {
+  dispatch(doCreateComment(body))
   // dispatch(doAddNewCommentToUser(result.payload.id, result.payload.data.to))
 }
 
