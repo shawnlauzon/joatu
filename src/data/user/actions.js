@@ -40,7 +40,8 @@ const doCreateUser = body => ({
     body: {
       displayName: body.displayName,
       email: body.email,
-      imgUrl: body.photoURL || body.imgUrl
+      imgUrl: body.photoURL || body.imgUrl,
+      caps: 0
     }
   }
 })
