@@ -22,7 +22,8 @@ const crudReducer = ({
       createEntityFunc(action.payload, action.payload.id)
       break
     case updateActionType:
-      Model.withId(action.payload.id).updateActionType(action.payload)
+      console.log('payload', action.payload)
+      Model.withId(action.payload.id).update(action.payload)
       break
     case removeActionType:
       Model.withId(action.payload.id).delete()

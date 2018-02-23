@@ -101,6 +101,16 @@ export function doSet(collectionName, id, data) {
     }))
 }
 
+export function doUpdate(collectionName, id, data) {
+  return getCollection(collectionName)
+    .doc(id)
+    .update(toFirestore(data))
+    .then(docRef => ({
+      id,
+      ...data
+    }))
+}
+
 export function doDelete(collectionName, id) {
   return getCollection(collectionName)
     .doc(id)

@@ -16,6 +16,8 @@ import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 import ChatContainer from '../ChatContainer'
 import CreateChat from '../CreateChat'
+import ShowModal from '../RequestPostalCode/ShowModal'
+import RequestPostalCode from '../RequestPostalCode'
 
 import { authenticatedUser } from '../../data/user/selectors'
 
@@ -91,6 +93,12 @@ class Root extends React.Component {
           onLogin={this.onLogin}
           onLogout={this.onLogout}
         />
+        {this.props.authenticatedUser &&
+          !this.props.authenticatedUser.postalCode && (
+            <ShowModal>
+              <RequestPostalCode />
+            </ShowModal>
+          )}
         <Switch>
           <Route path="/hubs/:hubId" component={Hub} />
           <Route path="/profiles/:profileId" component={Profile} />

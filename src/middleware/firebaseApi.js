@@ -4,6 +4,7 @@ import {
   doGet,
   doGetSorted,
   doSet,
+  doUpdate,
   doAdd,
   doDelete,
   // These should be embedded
@@ -45,6 +46,10 @@ const apiMiddleware = store => next => action => {
   // something like R.call
   if (callApi.action === 'add') {
     return doAdd(callApi.collection, callApi.body, callApi.merge)
+      .then(handleResponse)
+      .catch(handleError)
+  } else if (callApi.action === 'update') {
+    return doUpdate(callApi.collection, callApi.id, callApi.body)
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'set') {
