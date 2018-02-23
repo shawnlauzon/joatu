@@ -54,7 +54,7 @@ const doUpdateUser = (id, body) => ({
   [CALL_API]: {
     types: [UPDATE_USER_STARTED, UPDATE_USER_SUCCEEDED, UPDATE_USER_FAILED],
     collection: 'users',
-    action: 'set',
+    action: 'update',
     id,
     body
   }
