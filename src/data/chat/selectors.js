@@ -35,7 +35,7 @@ export const chatWithUser = userId =>
         })
 
       if (matchingChats.length > 1) {
-        console.err('Warning: expected 0 or 1 chats', matchingChats)
+        console.error('Warning: expected 0 or 1 chats', matchingChats)
       }
 
       return matchingChats ? matchingChats[0] : undefined
@@ -62,7 +62,7 @@ export const chatWithUser = userId =>
 //         })
 
 //       if (matchingChats.length > 1) {
-//         console.err('Warning: expected 0 or 1 chats', matchingChats)
+//         console.error('Warning: expected 0 or 1 chats', matchingChats)
 //       }
 
 //       return matchingChats ? matchingChats[0] : undefined
