@@ -5,6 +5,7 @@
   "dependencies": {
     "@firebase/app-types": "^0.1.1",
     "firebase": "^4.9.1",
+    "firebase-admin": "^5.9.0",
     "formik": "^0.11.10",
     "mapbox-gl": "^0.44.0",
     "material-ui": "^1.0.0-beta.32",
