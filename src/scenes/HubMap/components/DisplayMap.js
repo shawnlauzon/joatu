@@ -34,7 +34,9 @@ class DisplayMap extends React.Component {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v10',
-      center: this.props.center ? this.props.center : [-73.599931, 45.508698],
+      center: this.props.center
+        ? [this.props.center.longitude, this.props.center.latitude]
+        : [-73.599931, 45.508698],
       zoom
     })
 
