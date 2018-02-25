@@ -5,16 +5,16 @@ import DisplayMap from './components/DisplayMap'
 import GeoPoint from './components/GeoPoint'
 import HubInfo from './components/HubInfo'
 
-import { allHubs, selectedHub } from '../../data/hub/selectors'
+import { allHubs, selectedHub, homeHub } from '../../data/hub/selectors'
 
 import { changeHub } from '../../data/hub/actions'
 
 class HubMap extends React.Component {
   render() {
-    const { hubs, selectedHub } = this.props
+    const { hubs, selectedHub, homeHub } = this.props
     return (
       <div>
-        <DisplayMap>
+        <DisplayMap center={homeHub && homeHub.location}>
           {hubs.map(hub => (
             <GeoPoint
               key={hub.id}
@@ -36,6 +36,7 @@ class HubMap extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
+    homeHub: homeHub(state),
     hubs: allHubs(state),
     selectedHub: selectedHub(state)
   }

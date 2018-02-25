@@ -41,6 +41,21 @@ export const selectedHub = createSelector(
   }
 )
 
+export const homeHub = createSelector(
+  orm,
+  state => state.db,
+  state => state.authenticatedUserId,
+  (session, authenticatedUserId) => {
+    const user =
+      authenticatedUserId && session.User.hasId(authenticatedUserId)
+        ? session.User.withId(authenticatedUserId).ref
+        : undefined
+    return user && user.homeHub && session.Hub.hasId(user.homeHub)
+      ? session.Hub.withId(user.homeHub).ref
+      : undefined
+  }
+)
+
 // Will result in something like this when run:
 // [
 //   {

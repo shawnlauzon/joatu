@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import mapboxgl from 'mapbox-gl'
 
@@ -19,7 +20,7 @@ class DisplayMap extends React.Component {
     this.mapboxglSupported = mapboxgl.supported()
 
     this.state = {
-      zoom: 11,
+      zoom: this.props.center ? 13 : 11,
       markers: []
     }
   }
@@ -33,7 +34,7 @@ class DisplayMap extends React.Component {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v10',
-      center: [-73.599931, 45.508698],
+      center: this.props.center ? this.props.center : [-73.599931, 45.508698],
       zoom
     })
 
@@ -94,6 +95,14 @@ class DisplayMap extends React.Component {
       this.removeMarkers()
       this.addMarkers(newProps)
     }
+
+    if (!this.props.center && newProps.center) {
+      this.map.easeTo({
+        zoom: 14,
+        center: [newProps.center.longitude, newProps.center.latitude],
+        duration: 500
+      })
+    }
   }
 
   render() {
@@ -110,6 +119,13 @@ class DisplayMap extends React.Component {
       <div>Your browser does not support Mapbox GL</div>
     )
   }
+}
+
+DisplayMap.propTypes = {
+  center: PropTypes.shape({
+    longitude: PropTypes.number.isRequired,
+    latitude: PropTypes.number.isRequired
+  })
 }
 
 export default withStyles(styles)(DisplayMap)
