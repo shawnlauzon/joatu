@@ -39,7 +39,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { user, authenticatedUser } = this.props
+    const { user, authenticatedUser, chat } = this.props
     return (
       <div>
         {user && (
@@ -47,20 +47,24 @@ class Profile extends React.Component {
             <div>
               <Link to="/">Return to Home</Link>
               <Avatar src={user.imgUrl} />
-              <DonateCaps
-                capsAvailable={authenticatedUser.caps}
-                onSave={this.handleDonateCaps}
-              />
-              {this.props.chat ? (
-                <ButtonStartChat
-                  name={user.displayName}
-                  url={`/chats/${this.props.chat.id}`}
-                />
-              ) : (
-                <ButtonStartChat
-                  name={user.displayName}
-                  url={`/chat-with/${this.profileUserId()}`}
-                />
+              {user.id !== authenticatedUser.id && (
+                <div>
+                  <DonateCaps
+                    capsAvailable={authenticatedUser.caps}
+                    onSave={this.handleDonateCaps}
+                  />
+                  {chat ? (
+                    <ButtonStartChat
+                      name={user.displayName}
+                      url={`/chats/${chat.id}`}
+                    />
+                  ) : (
+                    <ButtonStartChat
+                      name={user.displayName}
+                      url={`/chat-with/${this.profileUserId()}`}
+                    />
+                  )}
+                </div>
               )}
             </div>
             <div>
@@ -91,12 +95,17 @@ class Profile extends React.Component {
 function mapStateToProps(state, ownProps) {
   const profileUserId = ownProps.match.params.profileId
 
+  const thisUser = authenticatedUser(state)
+
   return {
-    authenticatedUser: authenticatedUser(state),
+    authenticatedUser: thisUser,
     user: userWithId(profileUserId)(state),
 
     // I need to know if the authenticated user has an existing chat with the userId
-    chat: chatWithUser(profileUserId)(state)
+    chat:
+      thisUser && thisUser.id !== profileUserId
+        ? chatWithUser(profileUserId)(state)
+        : undefined
   }
 }
 
