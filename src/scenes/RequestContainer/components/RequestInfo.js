@@ -12,10 +12,9 @@ const RequestInfo = props => (
       <UserChip user={props.request.owner} />
     </div>
 
-    <ButtonDelete
-      handleClick={props.onDelete}
-      authenticatedUser={props.authenticatedUser}
-    />
+    {props.authenticatedUser.id === props.request.owner.id && (
+      <ButtonDelete handleClick={props.onDelete} />
+    )}
   </div>
 )
 

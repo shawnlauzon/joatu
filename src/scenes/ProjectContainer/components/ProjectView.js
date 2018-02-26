@@ -33,10 +33,9 @@ const ProjectView = ({
           handleClick={() => addParticipant(authenticatedUser.id, project.id)}
           authenticatedUser={authenticatedUser}
         />
-        <ButtonDelete
-          handleClick={() => removeProject(project.id)}
-          authenticatedUser={authenticatedUser}
-        />
+        {authenticatedUser.id === project.owner.id && (
+          <ButtonDelete handleClick={() => removeProject(project.id)} />
+        )}
       </div>
       <div>
         <Typography variant="body2">Organized by</Typography>

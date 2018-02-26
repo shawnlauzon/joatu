@@ -13,16 +13,16 @@ const OfferInfo = props => (
       <UserChip user={props.offer.owner} />
     </div>
 
-    <ButtonDelete
-      handleClick={props.onDelete}
-      authenticatedUser={props.authenticatedUser}
-    />
+    {props.authenticatedUser.id === props.offer.owner.id && (
+      <ButtonDelete handleClick={props.onDelete} />
+    )}
   </div>
 )
 
 OfferInfo.propTypes = {
   authenticatedUser: PropTypes.object,
   offer: PropTypes.shape({
+    owner: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
   onDelete: PropTypes.func.isRequired
