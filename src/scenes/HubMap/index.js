@@ -30,7 +30,7 @@ class HubMap extends React.Component {
           <HubInfo
             name={selectedHub.name}
             url={`/hubs/${selectedHub.id}`}
-            isHomeHub={homeHub.id === selectedHub.id}
+            isHomeHub={homeHub !== undefined && homeHub.id === selectedHub.id}
           />
         )}
       </div>

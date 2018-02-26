@@ -80,7 +80,6 @@ class Root extends React.Component {
       nextProps.authenticatedUser.homeHub &&
       !nextProps.selectedHub
     ) {
-      console.log('selecting hub ' + nextProps.authenticatedUser.homeHub)
       this.props.changeHub(nextProps.authenticatedUser.homeHub)
     }
   }
