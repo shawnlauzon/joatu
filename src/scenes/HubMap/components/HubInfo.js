@@ -1,18 +1,18 @@
-import * as R from 'ramda'
+// import * as R from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { Typography } from 'material-ui'
 
-import UserChip from '../../../components/UserChip'
+// import UserChip from '../../../components/UserChip'
 
 const HubInfo = props => (
   <div>
     <Link to={props.url}>
       <Typography variant="display2">{props.name}</Typography>
     </Link>
-    {!props.members || R.isEmpty(props.members) ? (
+    {/* {!props.members || R.isEmpty(props.members) ? (
       <div>No members :(</div>
     ) : (
       <div>
@@ -22,7 +22,7 @@ const HubInfo = props => (
           <UserChip key={id} user={member} />
         ))}
       </div>
-    )}
+    )} */}
   </div>
 )
 
