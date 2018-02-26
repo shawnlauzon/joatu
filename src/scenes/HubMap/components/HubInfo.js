@@ -2,7 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+
 import { withStyles } from 'material-ui/styles'
+import InfoIcon from 'material-ui-icons/Info'
 
 import { Typography } from 'material-ui'
 
@@ -20,13 +22,22 @@ const styles = theme => ({
   },
   link: {
     textDecoration: 'none'
+  },
+  text: {
+    display: 'inline'
+  },
+  icon: {
+    margin: theme.spacing.unit
   }
 })
 
 const HubInfo = ({ classes, name, url }) => (
   <div className={classes.hubInfo}>
     <Link className={classes.link} to={url}>
-      <Typography variant="display2">{name}</Typography>
+      <Typography className={classes.text} variant="display2">
+        {name}
+      </Typography>
+      <InfoIcon className={classes.icon} />
     </Link>
     {/* {!props.members || R.isEmpty(props.members) ? (
       <div>No members :(</div>
