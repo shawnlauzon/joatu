@@ -8,7 +8,8 @@ import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   map: {
-    height: '400px'
+    // 1vh = 1% of browser screen height
+    height: '100vh'
   }
 })
 
