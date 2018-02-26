@@ -2,15 +2,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { withStyles } from 'material-ui/styles'
 
 import { Typography } from 'material-ui'
 
 // import UserChip from '../../../components/UserChip'
 
-const HubInfo = props => (
-  <div>
-    <Link to={props.url}>
-      <Typography variant="display2">{props.name}</Typography>
+const styles = theme => ({
+  hubInfo: {
+    position: 'fixed',
+    top: '80px',
+    left: '10px',
+    padding: theme.spacing.unit,
+    background: theme.palette.background.default,
+    border: '5px solid',
+    borderRadius: '15px'
+  },
+  link: {
+    textDecoration: 'none'
+  }
+})
+
+const HubInfo = ({ classes, name, url }) => (
+  <div className={classes.hubInfo}>
+    <Link className={classes.link} to={url}>
+      <Typography variant="display2">{name}</Typography>
     </Link>
     {/* {!props.members || R.isEmpty(props.members) ? (
       <div>No members :(</div>
@@ -37,4 +53,4 @@ HubInfo.propTypes = {
   )
 }
 
-export default HubInfo
+export default withStyles(styles)(HubInfo)
