@@ -20,6 +20,7 @@ import ShowModal from '../RequestPostalCode/ShowModal'
 import RequestPostalCode from '../RequestPostalCode'
 
 import { authenticatedUser } from '../../data/user/selectors'
+import { selectedHub } from '../../data/hub/selectors'
 
 import {
   hubActions,
@@ -40,19 +41,19 @@ class Root extends React.Component {
     this.creatingUser = false
   }
 
+  // TODO Load these when they are needed, not at the beginning
+  // TODO Only load the entities that this user needs
   componentDidMount() {
     // TODO We will need to somehow only load what is necessary
-    this.props.dispatch(userActions.fetch())
-    this.props.dispatch(hubActions.fetch())
-    this.props.dispatch(projectActions.fetch())
-    this.props.dispatch(offerActions.fetch())
-    this.props.dispatch(requestActions.fetch())
-    this.props.dispatch(commentActions.fetch())
-    this.props.dispatch(chatActions.fetch())
+    this.props.fetchUsers()
+    this.props.fetchHubs()
+    this.props.fetchProjects()
+    this.props.fetchOffers()
+    this.props.fetchRequests()
+    this.props.fetchComments()
+    this.props.fetchChats()
 
-    firebase.auth().onAuthStateChanged(user => {
-      this.props.dispatch(authActions.onAuthChanged(user))
-    })
+    firebase.auth().onAuthStateChanged(this.props.onAuthChanged)
   }
 
   // FIXME This works unless the user is deleted from the backend without
@@ -68,19 +69,28 @@ class Root extends React.Component {
       !R.isEmpty(nextProps.users) &&
       !nextProps.users[nextProps.user.id]
     ) {
-      this.props.dispatch(userActions.create(nextProps.user))
+      this.props.createUser(nextProps.user)
       // Note that this is never set to false unless app is reloaded. But if we
       // don't have this flag, an infinite loop occurs
       this.creatingUser = true
     }
+
+    if (
+      nextProps.authenticatedUser &&
+      nextProps.authenticatedUser.homeHub &&
+      !nextProps.selectedHub
+    ) {
+      console.log('selecting hub ' + nextProps.authenticatedUser.homeHub)
+      this.props.changeHub(nextProps.authenticatedUser.homeHub)
+    }
   }
 
   onLogin = provider => {
-    this.props.dispatch(authActions.loginUser(provider))
+    this.props.loginUser(provider)
   }
 
   onLogout = () => {
-    this.props.dispatch(authActions.logoutUser())
+    this.props.logoutUser()
   }
 
   render() {
@@ -119,6 +129,7 @@ function mapStateToProps(state) {
   return {
     authenticatedUser: authenticatedUser(state),
     hubs: state.hubs,
+    selectedHub: selectedHub(state),
     projects: state.projects,
     offers: state.offers,
     requests: state.requests,
@@ -126,4 +137,21 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Root))
+const mapDispatchToProps = {
+  fetchUsers: userActions.fetch,
+  fetchHubs: hubActions.fetch,
+  fetchProjects: projectActions.fetch,
+  fetchOffers: offerActions.fetch,
+  fetchRequests: requestActions.fetch,
+  fetchComments: commentActions.fetch,
+  fetchChats: chatActions.fetch,
+
+  onAuthChanged: authActions.onAuthChanged,
+  createUser: userActions.create,
+
+  changeHub: hubActions.changeHub,
+  loginUser: authActions.loginUser,
+  logoutUser: authActions.logoutUser
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Root))

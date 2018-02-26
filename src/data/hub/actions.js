@@ -69,11 +69,13 @@ export const remove = id => (dispatch, getState) => {
   return dispatch(doDeleteHub(id))
 }
 
-export function changeHub(hubId) {
-  return {
-    type: CHANGE_HUB,
-    payload: {
-      hubId
-    }
+const changeHubAction = hubId => ({
+  type: CHANGE_HUB,
+  payload: {
+    hubId
   }
+})
+
+export const changeHub = hubId => (dispatch, getState) => {
+  return dispatch(changeHubAction(hubId))
 }

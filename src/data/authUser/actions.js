@@ -29,13 +29,15 @@ export function onLoginSuccess(user) {
   }
 }
 
-export function onAuthChanged(user) {
-  return {
-    type: AUTH_CHANGED,
-    payload: {
-      userId: user.uid
-    }
+const authChangedAction = user => ({
+  type: AUTH_CHANGED,
+  payload: {
+    userId: user.uid
   }
+})
+
+export const onAuthChanged = authUser => (dispatch, getState) => {
+  return dispatch(authChangedAction(authUser))
 }
 
 export function logoutUser() {
