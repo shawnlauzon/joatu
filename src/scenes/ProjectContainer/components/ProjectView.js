@@ -29,12 +29,13 @@ const ProjectView = ({
         <ProjectDetails hourlyAward={15} project={project} />
       </div>
       <div>
-        <ButtonJoin
-          handleClick={() => addParticipant(authenticatedUser.id, project.id)}
-          authenticatedUser={authenticatedUser}
-        />
-        {authenticatedUser.id === project.owner.id && (
+        {authenticatedUser.id === project.owner.id ? (
           <ButtonDelete handleClick={() => removeProject(project.id)} />
+        ) : (
+          <ButtonJoin
+            handleClick={() => addParticipant(authenticatedUser.id, project.id)}
+            authenticatedUser={authenticatedUser}
+          />
         )}
       </div>
       <div>
