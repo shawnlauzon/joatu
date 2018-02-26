@@ -138,18 +138,23 @@ export function doLogin(provider) {
 
 export async function addParticipant(projectId, userId) {
   const pathToUser = ['participants', userId].join('.')
-  // const pathToProject = ['memberProjects', projectId].join('.')
-
-  // TODO Dispatch 2 actions rather than separate here; can then
-  // be done in parallel
   const project = await getCollection('projects').doc(projectId)
   await project.update({
     [pathToUser]: true
   })
-  // const user = await getCollection('users').doc(userId)
-  // await user.update({
-  //   [pathToProject]: Date.now()
-  // })
+
+  return {
+    projectId,
+    userId
+  }
+}
+
+export async function removeParticipant(projectId, userId) {
+  const pathToUser = ['participants', userId].join('.')
+  const project = await getCollection('projects').doc(projectId)
+  await project.update({
+    [pathToUser]: firebase.firestore.FieldValue.delete()
+  })
 
   return {
     projectId,

@@ -1,19 +1,37 @@
+import * as R from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { Typography } from 'material-ui'
 
 import DisplayMap from './DisplayMap'
 import ProjectDetails from './ProjectDetails'
 import ButtonJoin from './ButtonJoin'
+import ButtonUnjoin from './ButtonUnjoin'
 import ButtonDelete from '../../../components/ButtonDelete'
 import ParticipantList from './ParticipantList'
 import UserChip from '../../../components/UserChip'
+
+import { authenticatedUser } from '../../../data/user/selectors'
+
+import {
+  addParticipant,
+  removeParticipant,
+  remove
+} from '../../../data/project/actions'
+
+const isOwner = (authenticatedUser, project) =>
+  authenticatedUser !== undefined && authenticatedUser.id === project.owner.id
+
+const isParticipant = (authenticatedUser, participants) =>
+  R.any(R.propEq('id', authenticatedUser.id), participants)
 
 const ProjectView = ({
   authenticatedUser,
   project,
   addParticipant,
+  removeParticipant,
   removeProject
 }) => {
   return (
@@ -29,13 +47,26 @@ const ProjectView = ({
         <ProjectDetails hourlyAward={15} project={project} />
       </div>
       <div>
-        {authenticatedUser.id === project.owner.id ? (
-          <ButtonDelete handleClick={() => removeProject(project.id)} />
-        ) : (
-          <ButtonJoin
-            handleClick={() => addParticipant(authenticatedUser.id, project.id)}
-            authenticatedUser={authenticatedUser}
-          />
+        {authenticatedUser && (
+          <div>
+            {isOwner(authenticatedUser, project) ? (
+              <ButtonDelete handleClick={() => removeProject(project.id)} />
+            ) : isParticipant(authenticatedUser, project.participants) ? (
+              <ButtonUnjoin
+                handleClick={() =>
+                  removeParticipant(authenticatedUser.id, project.id)
+                }
+                authenticatedUser={authenticatedUser}
+              />
+            ) : (
+              <ButtonJoin
+                handleClick={() =>
+                  addParticipant(authenticatedUser.id, project.id)
+                }
+                authenticatedUser={authenticatedUser}
+              />
+            )}
+          </div>
         )}
       </div>
       <div>
@@ -43,7 +74,7 @@ const ProjectView = ({
         <UserChip user={project.owner} />
       </div>
 
-      <ParticipantList>
+      <ParticipantList isOwner={isOwner(authenticatedUser, project)}>
         {project.participants.map(participant => (
           <UserChip key={participant.id} user={participant} />
         ))}
@@ -52,9 +83,20 @@ const ProjectView = ({
   )
 }
 
+function mapStateToProps(state, ownProps) {
+  return {
+    authenticatedUser: authenticatedUser(state)
+  }
+}
+
+const mapDispatchToProps = {
+  addParticipant,
+  removeParticipant,
+  removeProject: remove
+}
+
 ProjectView.propTypes = {
-  authenticatedUser: PropTypes.object,
   project: PropTypes.object
 }
 
-export default ProjectView
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectView)
