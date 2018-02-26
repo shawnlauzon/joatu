@@ -3,8 +3,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import Grid from 'material-ui/Grid'
 import { withStyles } from 'material-ui/styles'
 import InfoIcon from 'material-ui-icons/Info'
+import HomeIcon from 'material-ui-icons/Home'
 
 import { Typography } from 'material-ui'
 
@@ -15,7 +17,7 @@ const styles = theme => ({
     position: 'fixed',
     top: '80px',
     left: '10px',
-    padding: theme.spacing.unit,
+    padding: theme.spacing.unit * 2,
     background: theme.palette.background.default,
     border: '5px solid',
     borderRadius: '15px'
@@ -31,13 +33,17 @@ const styles = theme => ({
   }
 })
 
-const HubInfo = ({ classes, name, url }) => (
+const HubInfo = ({ classes, name, url, isHomeHub }) => (
   <div className={classes.hubInfo}>
     <Link className={classes.link} to={url}>
-      <Typography className={classes.text} variant="display2">
-        {name}
-      </Typography>
-      <InfoIcon className={classes.icon} />
+      {/* Use a Grid so the children are properly aligned */}
+      <Grid container alignItems="center">
+        {isHomeHub && <HomeIcon className={classes.icon} color="primary" />}
+        <Typography className={classes.text} variant="display2">
+          {name}
+        </Typography>
+        <InfoIcon className={classes.icon} color="action" />
+      </Grid>
     </Link>
     {/* {!props.members || R.isEmpty(props.members) ? (
       <div>No members :(</div>
@@ -56,6 +62,7 @@ const HubInfo = ({ classes, name, url }) => (
 HubInfo.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  isHomeHub: PropTypes.bool.isRequired,
   members: PropTypes.objectOf(
     PropTypes.shape({
       displayName: PropTypes.string.isRequired,

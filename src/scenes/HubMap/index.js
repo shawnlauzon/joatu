@@ -27,7 +27,11 @@ class HubMap extends React.Component {
           ))}
         </DisplayMap>
         {selectedHub && (
-          <HubInfo name={selectedHub.name} url={`/hubs/${selectedHub.id}`} />
+          <HubInfo
+            name={selectedHub.name}
+            url={`/hubs/${selectedHub.id}`}
+            isHomeHub={homeHub.id === selectedHub.id}
+          />
         )}
       </div>
     )
