@@ -20,7 +20,6 @@ import ShowModal from '../RequestPostalCode/ShowModal'
 import RequestPostalCode from '../RequestPostalCode'
 
 import { authenticatedUser } from '../../data/user/selectors'
-import { selectedHub } from '../../data/hub/selectors'
 
 import {
   hubActions,
@@ -78,9 +77,12 @@ class Root extends React.Component {
     if (
       nextProps.authenticatedUser &&
       nextProps.authenticatedUser.homeHub &&
-      !nextProps.selectedHub
+      !nextProps.selectedHubId
     ) {
-      this.props.changeHub(nextProps.authenticatedUser.homeHub)
+      // I need to use the hubId and not the hub itself because the hubs
+      // are loaded after this is invoked, and the selector returns
+      // undefined because it can't load the hub
+      nextProps.changeHub(nextProps.authenticatedUser.homeHub)
     }
   }
 
@@ -128,7 +130,7 @@ function mapStateToProps(state) {
   return {
     authenticatedUser: authenticatedUser(state),
     hubs: state.hubs,
-    selectedHub: selectedHub(state),
+    selectedHubId: state.selectedHubId,
     projects: state.projects,
     offers: state.offers,
     requests: state.requests,
