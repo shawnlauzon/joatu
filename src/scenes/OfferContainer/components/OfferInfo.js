@@ -22,7 +22,7 @@ const OfferInfo = props => (
 OfferInfo.propTypes = {
   authenticatedUser: PropTypes.object,
   offer: PropTypes.shape({
-    owner: PropTypes.string.isRequired,
+    owner: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
   onDelete: PropTypes.func.isRequired
