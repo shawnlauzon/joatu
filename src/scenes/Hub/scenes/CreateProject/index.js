@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { withFormik } from 'formik'
 
 import moment from 'moment'
 
@@ -20,51 +21,21 @@ const styles = theme => ({
   }
 })
 
-class CreateProject extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      name: '',
-      place: 'the hub center',
-      start: moment()
-        .add(2, 'weeks')
-        .minute(0)
-        .format('YYYY-MM-DDTHH:mm'),
-      duration: 120,
-      latitude: 45.5288239,
-      longitude: -73.591279
-    }
-  }
-
-  onInputChange = event => {
-    const target = event.target
-    const value = target.value
-    const id = target.id
-
-    this.setState({
-      [id]: value
-    })
-  }
-
-  onSave = e => {
-    this.props.onCreate({
-      hub: this.props.match.params.hubId,
-      owner: this.props.authenticatedUser.id,
-      name: this.state.name,
-      place: this.state.place,
-      start: new Date(this.state.start),
-      duration: Number(this.state.duration),
-      location: {
-        latitude: Number(this.state.latitude),
-        longitude: Number(this.state.longitude)
-      }
-    })
-  }
-
-  render() {
-    const { classes } = this.props
-
-    return (
+const CreateProjectForm = ({
+  values,
+  dirty,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  handleReset,
+  isSubmitting,
+  classes,
+  cancelUrl,
+  onSave,
+  authenticatedUser
+}) => (
+  <div>
+    <form onSubmit={handleSubmit}>
       <Grid container direction="column">
         <Grid item>
           <Typography variant="display2" gutterBottom>
@@ -73,10 +44,11 @@ class CreateProject extends React.Component {
         </Grid>
         <Grid item>
           <TextField
-            id="name"
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
             label="Name"
-            value={this.state.name}
-            onChange={this.onInputChange}
             required
             fullWidth
             autoFocus
@@ -85,82 +57,112 @@ class CreateProject extends React.Component {
         <Grid item className={classes.text}>
           We will meet at{' '}
           <TextField
-            id="place"
+            name="place"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.place}
             helperText="Where?"
-            value={this.state.place}
-            onChange={this.onInputChange}
             required
           />{' '}
           at{' '}
           <TextField
-            id="start"
+            name="start"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.start}
             type="datetime-local"
             helperText="When?"
-            value={this.state.start}
-            onChange={this.onInputChange}
             required
           />{' '}
           for{' '}
           <TextField
-            id="duration"
+            name="duration"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.duration / 60}
             type="number"
             helperText="How long?"
-            value={this.state.duration}
-            onChange={this.onInputChange}
             required
           />{' '}
-          minutes.
+          hours.
         </Grid>
         <Grid item>
           <TextField
-            id="latitude"
+            name="latitude"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.latitude}
             type="number"
             label="Latitude"
-            value={this.state.latitude}
-            onChange={this.onInputChange}
             required
           />
           <TextField
-            id="longitude"
+            name="longitude"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.longitude}
             type="number"
             label="Longitude"
-            value={this.state.longitude}
-            onChange={this.onInputChange}
             required
           />
         </Grid>
 
         <Grid item>
-          <Button
-            className={classes.button}
-            component={Link}
-            to={this.props.cancelUrl}
-          >
+          <Button className={classes.button} component={Link} to={cancelUrl}>
             Cancel
           </Button>
           <Button
             className={classes.button}
-            disabled={!this.props.authenticatedUser}
+            disabled={!authenticatedUser}
             variant="raised"
             color="primary"
-            onClick={this.onSave}
+            onClick={onSave}
             // TODO Validate before navigating away
             component={Link}
-            to={this.props.cancelUrl}
+            to={cancelUrl}
           >
             Create
           </Button>
         </Grid>
       </Grid>
-    )
+    </form>
+  </div>
+)
+
+const CreateProject = withFormik({
+  // Transform outer props into form values
+  mapPropsToValues: props => ({
+    name: '',
+    place: props.hub.name,
+    start: moment()
+      .add(2, 'weeks')
+      .minute(0)
+      .format('YYYY-MM-DDTHH:mm'),
+    duration: 120,
+    latitude: 45.5288239,
+    longitude: -73.591279,
+    cancelUrl: props.cancelUrl,
+    authenticatedUser: props.authenticatedUser,
+    onSave: props.onSave
+  }),
+  handleSubmit: async (values, { props, setSubmitting, resetForm }) => {
+    await props.onCreate(values.text)
+
+    setSubmitting(false)
+    resetForm({
+      text: ''
+    })
   }
-}
+})(CreateProjectForm)
 
 CreateProject.propTypes = {
   authenticatedUser: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
-  onCreate: PropTypes.func.isRequired
+  onCreate: PropTypes.func.isRequired,
+  hub: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default withStyles(styles)(CreateProject)

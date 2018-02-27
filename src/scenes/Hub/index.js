@@ -45,6 +45,7 @@ export class Hub extends React.Component {
       <CreateProject
         {...routeInfo}
         authenticatedUser={this.props.authenticatedUser}
+        hub={this.props.hub}
         onCreate={body => this.props.createProject(body)}
         cancelUrl={this.props.match.url + '/projects'}
       />
