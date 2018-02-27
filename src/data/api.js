@@ -8,8 +8,8 @@ const db = firebase.firestore()
 const authFunctions = auth(firebase)
 
 const toFirestore = body => {
-  const makeGeoPoint = coords =>
-    new firebase.firestore.GeoPoint(coords.latitude, coords.longitude)
+  const makeGeoPoint = location =>
+    new firebase.firestore.GeoPoint(location.latitude, location.longitude)
 
   const transformations = {
     location: makeGeoPoint

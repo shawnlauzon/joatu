@@ -27,8 +27,7 @@ const CreateProjectForm = ({
   isSubmitting,
   classes,
   cancelUrl,
-  onSave,
-  authenticatedUser
+  onSave
 }) => (
   <div>
     <form onSubmit={handleSubmit}>
@@ -90,14 +89,11 @@ const CreateProjectForm = ({
             Cancel
           </Button>
           <Button
+            type="submit"
             className={classes.button}
-            disabled={!authenticatedUser}
             variant="raised"
             color="primary"
-            onClick={onSave}
-            // TODO Validate before navigating away
-            component={Link}
-            to={cancelUrl}
+            disabled={isSubmitting}
           >
             Create
           </Button>
@@ -117,16 +113,23 @@ const CreateProject = withFormik({
       .minute(0)
       .format('YYYY-MM-DDTHH:mm'),
     duration: 120,
-    latitude: props.hub ? props.hub.location.latitude : '',
-    longitude: props.hub ? props.hub.location.longitude : '',
-    cancelUrl: props.cancelUrl,
-    authenticatedUser: props.authenticatedUser,
-    onSave: props.onSave
+    latitude: props.hub ? props.hub.location.latitude : -74,
+    longitude: props.hub ? props.hub.location.longitude : 45,
+    cancelUrl: props.cancelUrl
   }),
   handleSubmit: async (values, { props, setSubmitting, resetForm }) => {
-    await props.onCreate(values.text)
+    await props.onCreate({
+      hub: props.hub.id,
+      name: values.name,
+      place: values.place,
+      start: values.start,
+      duration: values.duration,
+      location: { longitude: values.longitude, latitude: values.latitude },
+      owner: props.authenticatedUser.id
+    })
 
     setSubmitting(false)
+    resetForm()
   }
 })(CreateProjectForm)
 
