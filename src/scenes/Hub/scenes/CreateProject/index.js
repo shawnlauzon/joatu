@@ -14,10 +14,6 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit
-  },
-  text: {
-    // It's weird that this is necessary, but without it I get serif
-    fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
   }
 })
 
@@ -55,56 +51,39 @@ const CreateProjectForm = ({
           />
         </Grid>
         <Grid item className={classes.text}>
-          We will meet at{' '}
-          <TextField
-            name="place"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.place}
-            helperText="Where?"
-            required
-          />{' '}
-          at{' '}
-          <TextField
-            name="start"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.start}
-            type="datetime-local"
-            helperText="When?"
-            required
-          />{' '}
-          for{' '}
-          <TextField
-            name="duration"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.duration / 60}
-            type="number"
-            helperText="How long?"
-            required
-          />{' '}
-          hours.
-        </Grid>
-        <Grid item>
-          <TextField
-            name="latitude"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.latitude}
-            type="number"
-            label="Latitude"
-            required
-          />
-          <TextField
-            name="longitude"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.longitude}
-            type="number"
-            label="Longitude"
-            required
-          />
+          <Typography component="span" variant="body2">
+            We will meet at
+            <TextField
+              component="span"
+              name="place"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.place}
+              helperText="Where?"
+              required
+            />{' '}
+            at{' '}
+            <TextField
+              name="start"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.start}
+              type="datetime-local"
+              helperText="When?"
+              required
+            />{' '}
+            for{' '}
+            <TextField
+              name="duration"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.duration / 60}
+              type="number"
+              helperText="How long?"
+              required
+            />{' '}
+            hours.
+          </Typography>
         </Grid>
 
         <Grid item>
@@ -133,7 +112,7 @@ const CreateProject = withFormik({
   // Transform outer props into form values
   mapPropsToValues: props => ({
     name: '',
-    place: props.hub.name,
+    place: props.hub ? props.hub.name : undefined,
     start: moment()
       .add(2, 'weeks')
       .minute(0)
@@ -162,7 +141,7 @@ CreateProject.propTypes = {
   onCreate: PropTypes.func.isRequired,
   hub: PropTypes.shape({
     name: PropTypes.string.isRequired
-  }).isRequired
+  })
 }
 
 export default withStyles(styles)(CreateProject)
