@@ -51,10 +51,9 @@ const CreateProjectForm = ({
           />
         </Grid>
         <Grid item className={classes.text}>
-          <Typography component="span" variant="body2">
-            We will meet at
+          <Typography variant="body2">
+            We will meet at{' '}
             <TextField
-              component="span"
               name="place"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -77,12 +76,12 @@ const CreateProjectForm = ({
               name="duration"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.duration / 60}
+              value={values.duration}
               type="number"
               helperText="How long?"
               required
             />{' '}
-            hours.
+            minutes.
           </Typography>
         </Grid>
 
@@ -112,14 +111,14 @@ const CreateProject = withFormik({
   // Transform outer props into form values
   mapPropsToValues: props => ({
     name: '',
-    place: props.hub ? props.hub.name : undefined,
+    place: props.hub ? props.hub.name : '',
     start: moment()
       .add(2, 'weeks')
       .minute(0)
       .format('YYYY-MM-DDTHH:mm'),
     duration: 120,
-    latitude: 45.5288239,
-    longitude: -73.591279,
+    latitude: props.hub ? props.hub.location.latitude : '',
+    longitude: props.hub ? props.hub.location.longitude : '',
     cancelUrl: props.cancelUrl,
     authenticatedUser: props.authenticatedUser,
     onSave: props.onSave
@@ -128,9 +127,6 @@ const CreateProject = withFormik({
     await props.onCreate(values.text)
 
     setSubmitting(false)
-    resetForm({
-      text: ''
-    })
   }
 })(CreateProjectForm)
 
