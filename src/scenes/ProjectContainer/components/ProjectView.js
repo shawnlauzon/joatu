@@ -37,7 +37,7 @@ const ProjectView = ({
   return (
     <div>
       <Typography variant="display2">{project.name}</Typography>
-      <Typography variant="subheading">{project.place}</Typography>
+      <Typography variant="headline">At {project.place}</Typography>
       <div>
         {project.location ? (
           <DisplayMap location={project.location} />

@@ -82,6 +82,16 @@ const CreateProjectForm = ({
             />{' '}
             minutes.
           </Typography>
+          <TextField
+            name="benefit"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.benefit}
+            type="text"
+            helperText="How will this improve the community?"
+            fullWidth
+            multiline
+          />
         </Grid>
 
         <Grid item>
@@ -115,6 +125,7 @@ const CreateProject = withFormik({
     duration: 120,
     latitude: props.hub ? props.hub.location.latitude : -74,
     longitude: props.hub ? props.hub.location.longitude : 45,
+    benefit: '',
     cancelUrl: props.cancelUrl
   }),
   handleSubmit: async (values, { props, setSubmitting, resetForm }) => {
@@ -124,7 +135,8 @@ const CreateProject = withFormik({
       place: values.place,
       start: values.start,
       duration: values.duration,
-      location: { longitude: values.longitude, latitude: values.latitude }
+      location: { longitude: values.longitude, latitude: values.latitude },
+      benefit: values.benefit
     })
 
     setSubmitting(false)
