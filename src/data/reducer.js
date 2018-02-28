@@ -27,11 +27,11 @@ export const authenticatedUserIdReducer = (state = '', action) => {
 
   switch (type) {
     case LOGIN_SUCCEEDED:
-      return payload.userId
+      return payload.userId || null
     case LOGOUT_SUCCEEDED:
       return ''
     case AUTH_CHANGED:
-      return payload ? payload.userId : ''
+      return payload.userId || ''
     default:
       return state
   }

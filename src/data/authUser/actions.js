@@ -32,7 +32,7 @@ export function onLoginSuccess(user) {
 const authChangedAction = user => ({
   type: AUTH_CHANGED,
   payload: {
-    userId: user.uid
+    userId: user ? user.uid : undefined
   }
 })
 
