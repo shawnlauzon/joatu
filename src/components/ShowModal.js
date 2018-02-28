@@ -15,12 +15,10 @@ const styles = theme => ({
 })
 
 const getModalStyle = () => ({
-  width: 400,
-  height: 250,
-  top: '50%',
+  top: '35%',
   left: '50%',
   marginLeft: -200,
-  marginTop: -125
+  marginTop: -100
 })
 
 class ShowModal extends Component {
