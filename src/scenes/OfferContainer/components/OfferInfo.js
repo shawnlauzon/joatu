@@ -14,9 +14,10 @@ const OfferInfo = props => (
       <UserChip user={props.offer.owner} />
     </div>
 
-    {props.authenticatedUser.id === props.offer.owner.id && (
-      <ButtonDelete handleClick={props.onDelete} />
-    )}
+    {props.authenticatedUser &&
+      props.authenticatedUser.id === props.offer.owner.id && (
+        <ButtonDelete handleClick={props.onDelete} />
+      )}
   </div>
 )
 
