@@ -7,6 +7,7 @@ import UserChip from '../../../components/UserChip'
 const OfferInfo = props => (
   <div>
     <Typography variant="display2">{props.offer.name}</Typography>
+    <Typography variant="body2">{props.offer.description}</Typography>
 
     <div>
       <Typography variant="body2">Offered by</Typography>
@@ -23,7 +24,8 @@ OfferInfo.propTypes = {
   authenticatedUser: PropTypes.object,
   offer: PropTypes.shape({
     owner: PropTypes.object.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string
   }).isRequired,
   onDelete: PropTypes.func.isRequired
 }

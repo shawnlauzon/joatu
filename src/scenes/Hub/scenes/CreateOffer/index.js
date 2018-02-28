@@ -45,6 +45,16 @@ const CreateOfferForm = ({
             fullWidth
             autoFocus
           />
+          <TextField
+            name="description"
+            label="Description"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.description}
+            fullWidth
+            multiline
+            rows="4"
+          />
         </Grid>
 
         <Grid item>
@@ -70,11 +80,13 @@ const CreateOffer = withFormik({
   // Transform outer props into form values
   mapPropsToValues: props => ({
     name: '',
+    description: '',
     cancelUrl: props.cancelUrl
   }),
   handleSubmit: async (values, { props, setSubmitting, resetForm }) => {
     await props.onCreate({
-      name: values.name
+      name: values.name,
+      description: values.description
     })
 
     setSubmitting(false)

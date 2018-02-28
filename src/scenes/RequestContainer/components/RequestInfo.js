@@ -7,6 +7,7 @@ import UserChip from '../../../components/UserChip'
 const RequestInfo = props => (
   <div>
     <Typography variant="display2">{props.request.name}</Typography>
+    <Typography variant="body2">{props.request.description}</Typography>
     <div>
       <Typography variant="body2">Requested by</Typography>
       <UserChip user={props.request.owner} />
@@ -21,7 +22,9 @@ const RequestInfo = props => (
 RequestInfo.propTypes = {
   authenticatedUser: PropTypes.object,
   request: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    owner: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string
   }).isRequired,
   onDelete: PropTypes.func.isRequired
 }
