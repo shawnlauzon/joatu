@@ -117,11 +117,12 @@ class JoatUAppBar extends React.Component {
                     vertical: 'top',
                     horizontal: 'right'
                   }}
-                  open={openLogoutModal}
+                  open={Boolean(anchorEl)}
                   onClose={this.handleLogoutModalClose}
                 >
                   <MenuItem
                     component={Link}
+                    onClick={this.handleLogoutModalClose}
                     to={`/profiles/${this.props.authenticatedUser.id}`}
                   >
                     Profile
