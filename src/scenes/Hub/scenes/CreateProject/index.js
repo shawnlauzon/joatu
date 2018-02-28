@@ -50,7 +50,7 @@ const CreateProjectForm = ({
           />
         </Grid>
         <Grid item className={classes.text}>
-          <Typography variant="body2">
+          <Typography variant="body1">
             We will meet at{' '}
             <TextField
               name="place"

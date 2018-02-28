@@ -13,11 +13,11 @@ const componentName = ({ comments }) => (
         <ListItem key={comment.id}>
           <Avatar
             alt={comment.from.displayName}
-            src={comment.from.imgUrl}
+            src={comment.from.imgSrc}
             component={Link}
             to={`/profiles/${comment.from.id}`}
           />
-          <Typography variant="body2">{comment.text}</Typography>
+          <Typography variant="body1">{comment.text}</Typography>
         </ListItem>
       ))}
     </List>
@@ -31,7 +31,7 @@ componentName.propTypes = {
       from: PropTypes.shape({
         id: PropTypes.string.isRequired,
         displayName: PropTypes.string.isRequired,
-        imgUrl: PropTypes.string.isRequired
+        imgSrc: PropTypes.string.isRequired
       })
     })
   ).isRequired

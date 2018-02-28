@@ -2744,6 +2744,10 @@ detect-port-alt@1.1.5:
     address "^1.0.1"
     debug "^2.6.0"
 
+dialog-polyfill@^0.4.7:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/dialog-polyfill/-/dialog-polyfill-0.4.9.tgz#c690b3727c3d82e0f947bd5b910b32af8a2ef57d"
+
 didyoumean@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/didyoumean/-/didyoumean-1.2.1.tgz#e92edfdada6537d484d73c0172fd1eba0c4976ff"
@@ -3741,7 +3745,7 @@ firebase@2.x.x:
   dependencies:
     faye-websocket ">=0.6.0"
 
-firebase@^4.9.1:
+firebase@^4.3.1, firebase@^4.9.1:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-4.10.1.tgz#68724a6f680ca5759bd870dcb18b5f6e09a176b1"
   dependencies:
@@ -3754,6 +3758,13 @@ firebase@^4.9.1:
     "@firebase/storage" "0.1.8"
     dom-storage "^2.0.2"
     xmlhttprequest "^1.8.0"
+
+firebaseui@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/firebaseui/-/firebaseui-2.6.2.tgz#bdff548b2690beee3404cc7e9852518e4907be5f"
+  dependencies:
+    dialog-polyfill "^0.4.7"
+    firebase "^4.3.1"
 
 first-chunk-stream@^1.0.0:
   version "1.0.0"

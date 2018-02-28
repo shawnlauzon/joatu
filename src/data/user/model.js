@@ -13,7 +13,7 @@ User.fields = {
   id: attr(),
   displayName: attr(),
   email: attr(),
-  imgUrl: attr(),
+  imgSrc: attr(),
   caps: attr(),
   hub: fk('Hub', 'members')
 }
@@ -22,5 +22,5 @@ User.propTypes = {
   id: PropTypes.string,
   displayName: PropTypes.string.isRequired,
   email: PropTypes.string,
-  imgUrl: PropTypes.string.isRequired
+  imgSrc: PropTypes.string.isRequired
 }

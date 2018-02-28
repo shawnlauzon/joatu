@@ -10,7 +10,7 @@ const ChatView = ({ messages }) => (
       {messages &&
         Object.entries(messages).map(([id, message]) => (
           <ListItem key={id}>
-            <Avatar alt={message.from.displayName} src={message.from.imgUrl} />
+            <Avatar alt={message.from.displayName} src={message.from.imgSrc} />
             <ListItemText primary={message.text} />
           </ListItem>
         ))}
@@ -23,7 +23,7 @@ ChatView.propTypes = {
     PropTypes.shape({
       from: PropTypes.shape({
         displayName: PropTypes.string.isRequired,
-        imgUrl: PropTypes.string.isRequired
+        imgSrc: PropTypes.string.isRequired
       }).isRequired,
       text: PropTypes.string.isRequired
     })

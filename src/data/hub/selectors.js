@@ -22,10 +22,10 @@ export const allHubs = createSelector(
         return Object.assign({}, obj, {
           members: hub.members
             .toRefArray()
-            .map(({ id, displayName, imgUrl }) => ({
+            .map(({ id, displayName, imgSrc }) => ({
               id,
               name: displayName,
-              imgUrl
+              imgSrc
             }))
         })
       })

@@ -49,7 +49,7 @@ const HubInfo = ({ classes, name, url, isHomeHub }) => (
       <div>No members :(</div>
     ) : (
       <div>
-        <Typography variant="body2">Members:</Typography>
+        <Typography variant="body1">Members:</Typography>
 
         {Object.entries(props.members).map(([id, member]) => (
           <UserChip key={id} user={member} />
@@ -65,8 +65,7 @@ HubInfo.propTypes = {
   isHomeHub: PropTypes.bool.isRequired,
   members: PropTypes.objectOf(
     PropTypes.shape({
-      displayName: PropTypes.string.isRequired,
-      imgUrl: PropTypes.string.isRequired
+      displayName: PropTypes.string.isRequired
     })
   )
 }

@@ -1,4 +1,9 @@
 import { CALL_API } from '../actions'
+import {
+  fetchOne as fetchUser,
+  create as createUser,
+  FETCH_USER_FAILED
+} from '../user/actions'
 
 export const LOGIN_STARTED = 'LOGIN_STARTED'
 export const LOGIN_SUCCEEDED = 'LOGIN_SUCCEEDED'
@@ -36,7 +41,33 @@ const authChangedAction = user => ({
   }
 })
 
-export const onAuthChanged = authUser => (dispatch, getState) => {
+const createUserIfDoesNotExist = async (authUser, dispatch, getState) => {
+  // For some reason it crashes if I import a selector in this class crashes
+  // So hit the store directly
+  if (!getState().db.User.itemsById[authUser.uid]) {
+    // If it's not in the store, we might not have fetched it yet
+    const result = await dispatch(fetchUser(authUser.uid))
+    if (result.type === FETCH_USER_FAILED) {
+      const newUser = {
+        id: authUser.uid,
+        email: authUser.email
+      }
+      if (authUser.displayName) {
+        newUser.displayName = authUser.displayName
+      }
+      if (authUser.photoURL) {
+        newUser.imgSrc = authUser.photoURL
+      }
+      return await dispatch(createUser(newUser))
+    }
+  }
+}
+
+export const onAuthChanged = authUser => async (dispatch, getState) => {
+  if (authUser && authUser.uid) {
+    await createUserIfDoesNotExist(authUser, dispatch, getState)
+  }
+
   return dispatch(authChangedAction(authUser))
 }
 

@@ -25,11 +25,11 @@ const RequestPostalCodeForm = ({
 }) => {
   return (
     <div>
-      <Typography variant="body2">
+      <Typography variant="body1">
         We need to know your approximate location to assign you to the nearest
         community hub
       </Typography>
-      <Typography variant="body2">Please enter your postal code</Typography>
+      <Typography variant="body1">Please enter your postal code</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           name="postalCode"

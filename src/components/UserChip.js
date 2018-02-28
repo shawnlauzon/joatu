@@ -17,7 +17,7 @@ const UserChip = ({ id, classes, user }) => (
   <span>
     <Chip
       className={classes.chip}
-      avatar={<Avatar src={user.imgUrl} />}
+      avatar={<Avatar src={user.imgSrc} />}
       label={`${user.displayName}`}
       component={Link}
       to={`/profiles/${user.id}`}
@@ -29,7 +29,7 @@ UserChip.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string.isRequired
+    imgSrc: PropTypes.string.isRequired
   }).isRequired
 }
 

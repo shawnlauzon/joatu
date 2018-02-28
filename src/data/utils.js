@@ -12,10 +12,10 @@ export const inflateHub = ({ id, name, location }) => ({
   location
 })
 
-export const inflateUser = ({ id, displayName, imgUrl }) => ({
+export const inflateUser = ({ id, displayName, imgSrc }) => ({
   id,
   displayName,
-  imgUrl
+  imgSrc
 })
 
 export const refArrayLens = prop =>

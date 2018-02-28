@@ -81,7 +81,7 @@ const Profile = props => (
 Profile.propTypes = {
   authenticatedUser: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string.isRequired
+    imgSrc: PropTypes.string.isRequired
   }),
   ownedProjects: PropTypes.arrayOf(
     PropTypes.shape({

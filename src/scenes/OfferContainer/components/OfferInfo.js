@@ -7,10 +7,10 @@ import UserChip from '../../../components/UserChip'
 const OfferInfo = props => (
   <div>
     <Typography variant="display2">{props.offer.name}</Typography>
-    <Typography variant="body2">{props.offer.description}</Typography>
+    <Typography variant="body1">{props.offer.description}</Typography>
 
     <div>
-      <Typography variant="body2">Offered by</Typography>
+      <Typography variant="body1">Offered by</Typography>
       <UserChip user={props.offer.owner} />
     </div>
 

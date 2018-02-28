@@ -7,9 +7,9 @@ import UserChip from '../../../components/UserChip'
 const RequestInfo = props => (
   <div>
     <Typography variant="display2">{props.request.name}</Typography>
-    <Typography variant="body2">{props.request.description}</Typography>
+    <Typography variant="body1">{props.request.description}</Typography>
     <div>
-      <Typography variant="body2">Requested by</Typography>
+      <Typography variant="body1">Requested by</Typography>
       <UserChip user={props.request.owner} />
     </div>
 

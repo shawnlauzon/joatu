@@ -1,8 +1,13 @@
 import { CALL_API } from '../actions'
+import defaultUserImage from './default_user.png'
 
 export const FETCH_USERS_STARTED = 'FETCH_USERS_STARTED'
 export const FETCH_USERS_SUCCEEDED = 'FETCH_USERS_SUCCEEDED'
 export const FETCH_USERS_FAILED = 'FETCH_USERS_FAILED'
+
+export const FETCH_USER_STARTED = 'FETCH_USER_STARTED'
+export const FETCH_USER_SUCCEEDED = 'FETCH_USER_SUCCEEDED'
+export const FETCH_USER_FAILED = 'FETCH_USER_FAILED'
 
 export const CREATE_USER_STARTED = 'CREATE_USER_STARTED'
 export const CREATE_USER_SUCCEEDED = 'CREATE_USER_SUCCEEDED'
@@ -31,18 +36,31 @@ export const fetch = () => (dispatch, getState) => {
   return dispatch(doFetchUsers())
 }
 
+const doFetchOneUser = userId => ({
+  [CALL_API]: {
+    types: [FETCH_USER_STARTED, FETCH_USER_SUCCEEDED, FETCH_USER_FAILED],
+    collection: 'users',
+    id: userId
+  }
+})
+
+export const fetchOne = userId => (dispatch, getState) => {
+  return dispatch(doFetchOneUser(userId))
+}
+
 const doCreateUser = body => ({
   [CALL_API]: {
     types: [CREATE_USER_STARTED, CREATE_USER_SUCCEEDED, CREATE_USER_FAILED],
     collection: 'users',
     action: 'set',
     id: body.uid || body.id,
-    body: {
-      displayName: body.displayName,
-      email: body.email,
-      imgUrl: body.photoURL || body.imgUrl,
-      caps: 0
-    }
+    body: Object.assign(
+      {
+        imgSrc: defaultUserImage
+      },
+      body,
+      { caps: 0 }
+    )
   }
 })
 

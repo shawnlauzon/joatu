@@ -40,7 +40,7 @@ export const getOffersForUser = id =>
 //       id: PropTypes.string.isRequired,
 //       data: PropTypes.shape({
 //         displayName: PropTypes.string.isRequired,
-//         imgUrl: PropTypes.string.isRequired
+//         imgSrc: PropTypes.string.isRequired
 //       })
 //     })
 //   })

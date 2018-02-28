@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -16,7 +15,7 @@ import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 import ChatContainer from '../ChatContainer'
 import CreateChat from '../CreateChat'
-import ShowModal from '../RequestPostalCode/ShowModal'
+import ShowModal from '../../components/ShowModal'
 import RequestPostalCode from '../RequestPostalCode'
 
 import { authenticatedUser } from '../../data/user/selectors'
@@ -33,17 +32,9 @@ import {
 } from '../../data/actions'
 
 class Root extends React.Component {
-  constructor(props) {
-    super(props)
-
-    // FIXME Hack (see below)
-    this.creatingUser = false
-  }
-
   // TODO Load these when they are needed, not at the beginning
   // TODO Only load the entities that this user needs
   componentDidMount() {
-    // TODO We will need to somehow only load what is necessary
     this.props.fetchUsers()
     this.props.fetchHubs()
     this.props.fetchProjects()
@@ -55,25 +46,7 @@ class Root extends React.Component {
     firebase.auth().onAuthStateChanged(this.props.onAuthChanged)
   }
 
-  // FIXME This works unless the user is deleted from the backend without
-  // reloading the app, then the user doesn't get created because of the flag
-  // Still, this should be improved. Ideally after LOGIN_SUCCEEDED, the user
-  // should be created if it doesn't yet exist.
   componentWillReceiveProps(nextProps) {
-    // If the user doesn't yet exist, create it
-    if (
-      !this.creatingUser &&
-      nextProps.user &&
-      nextProps.user.authenticated &&
-      !R.isEmpty(nextProps.users) &&
-      !nextProps.users[nextProps.user.id]
-    ) {
-      this.props.createUser(nextProps.user)
-      // Note that this is never set to false unless app is reloaded. But if we
-      // don't have this flag, an infinite loop occurs
-      this.creatingUser = true
-    }
-
     if (
       nextProps.authenticatedUser &&
       nextProps.authenticatedUser.homeHub &&
@@ -86,14 +59,6 @@ class Root extends React.Component {
     }
   }
 
-  onLogin = provider => {
-    this.props.loginUser(provider)
-  }
-
-  onLogout = () => {
-    this.props.logoutUser()
-  }
-
   render() {
     return (
       <div>
@@ -101,8 +66,8 @@ class Root extends React.Component {
         <JoatUAppBar
           {...this.props} // TODO Remove
           authenticatedUser={this.props.authenticatedUser}
-          onLogin={this.onLogin}
-          onLogout={this.onLogout}
+          onLogin={provider => this.props.loginUser(provider)}
+          onLogout={() => this.props.logoutUser()}
         />
         {this.props.authenticatedUser &&
           !this.props.authenticatedUser.postalCode && (
@@ -125,16 +90,9 @@ class Root extends React.Component {
   }
 }
 
-// TODO I think I can remove most of these
 function mapStateToProps(state) {
   return {
-    authenticatedUser: authenticatedUser(state),
-    hubs: state.hubs,
-    selectedHubId: state.selectedHubId,
-    projects: state.projects,
-    offers: state.offers,
-    requests: state.requests,
-    users: state.users
+    authenticatedUser: authenticatedUser(state)
   }
 }
 

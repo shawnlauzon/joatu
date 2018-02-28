@@ -46,7 +46,7 @@ class Profile extends React.Component {
           <div>
             <div>
               <Link to="/">Return to Home</Link>
-              <Avatar src={user.imgUrl} />
+              <Avatar src={user.imgSrc} />
               {user.id !== authenticatedUser.id && (
                 <div>
                   <DonateCaps

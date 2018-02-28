@@ -12,7 +12,8 @@ import MenuIcon from 'material-ui-icons/Menu'
 import Avatar from 'material-ui/Avatar'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
-import LoginModal from './LoginModal'
+import ShowModal from '../../../components/ShowModal'
+import FirebaseLogin from './FirebaseLogin'
 
 const styles = theme => ({
   root: {
@@ -101,7 +102,7 @@ class JoatUAppBar extends React.Component {
               <div>
                 <Avatar
                   alt={authenticatedUser.displayName}
-                  src={authenticatedUser.imgUrl}
+                  src={authenticatedUser.imgSrc}
                   aria-owns={openLogoutModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.showLogoutModal}
@@ -137,11 +138,20 @@ class JoatUAppBar extends React.Component {
             )}
           </Toolbar>
         </AppBar>
-        <LoginModal
+        {this.state.loginModalOpen && (
+          <ShowModal
+            onLogin={this.handleLogin}
+            onClose={this.handleLoginModalClose}
+            open={this.state.loginModalOpen}
+          >
+            <FirebaseLogin />
+          </ShowModal>
+        )}
+        {/* <LoginModal
           onLogin={this.handleLogin}
           onClose={this.handleLoginModalClose}
           open={this.state.loginModalOpen}
-        />
+        /> */}
       </div>
     )
   }

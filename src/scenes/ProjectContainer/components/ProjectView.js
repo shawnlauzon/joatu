@@ -70,7 +70,7 @@ const ProjectView = ({
         )}
       </div>
       <div>
-        <Typography variant="body2">Organized by</Typography>
+        <Typography variant="body1">Organized by</Typography>
         <UserChip user={project.owner} />
       </div>
 

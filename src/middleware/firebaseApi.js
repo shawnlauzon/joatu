@@ -39,7 +39,7 @@ const apiMiddleware = store => next => action => {
     console.log('Error calling API', err)
     return next({
       type: failureType,
-      error: err.message
+      error: err
     })
   }
 

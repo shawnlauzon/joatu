@@ -53,7 +53,7 @@ export default reducer
 //   userIdActionType: {
 //     displayName,
 //     email,
-//     imgUrl,
+//     imgSrc,
 //     projectsActionType: { projectId1ActionType: true, projectId2ActionType: true ... },
 //     offersActionType: { offerId1ActionType: true, offerId2ActionType: true ... },
 //     requestsActionType: { requestId1ActionType: true, requestId2ActionType: true ... }

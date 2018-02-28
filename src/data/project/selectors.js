@@ -54,7 +54,7 @@ export const projectWithId = id =>
 //   {
 //     id: 'Evh5FhYWl6PdbrdCcNdk',
 //     name: 'Clean the park',
-//     participants: [ { id: 'abc123', name: 'Shawn Lauzon', imgUrl: 'http://fb.com/abc123' } ],
+//     participants: [ { id: 'abc123', name: 'Shawn Lauzon', imgSrc: 'http://fb.com/abc123' } ],
 //   },
 //   ...
 // ]

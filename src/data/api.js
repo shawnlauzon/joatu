@@ -40,11 +40,17 @@ const getStatement = ({ collection, orderBy }) => {
   return statement
 }
 
-// {
-//   id: { ...data },
-//   ...
-// }
-export function doGet({ collection }) {
+const getOne = ({ id, collection }) => {
+  return getCollection(collection)
+    .doc(id)
+    .get()
+    .then(doc => {
+      if (!doc.exists) return Promise.reject('Entity not found: ' + id)
+      return { [id]: doc.data() }
+    })
+}
+
+const getAll = ({ collection }) => {
   const coll = {}
 
   return getCollection(collection)
@@ -55,6 +61,14 @@ export function doGet({ collection }) {
       })
       return coll
     })
+}
+
+// {
+//   id: { ...data },
+//   ...
+// }
+export function doGet({ id, ...rest }) {
+  return id ? getOne({ id, ...rest }) : getAll({ ...rest })
 }
 
 // { list: [
@@ -128,7 +142,7 @@ export function doLogin(provider) {
           id: result.user.uid,
           displayName: result.user.displayName,
           email: result.user.email,
-          imgUrl: result.user.photoURL
+          imgSrc: result.user.photoURL
         }
       })
     default:
