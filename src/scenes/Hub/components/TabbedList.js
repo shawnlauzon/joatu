@@ -34,7 +34,7 @@ class TabbedList extends React.Component {
   currentTab = () => this.props.children[this.state.tabNum]
 
   render() {
-    const { classes } = this.props
+    const { classes, authenticatedUser, hub } = this.props
     const { tabNum } = this.state
 
     return (
@@ -44,7 +44,7 @@ class TabbedList extends React.Component {
           className={classes.fab}
           color="primary"
           aria-label="add"
-          disabled={!this.props.authenticatedUser}
+          disabled={!authenticatedUser || authenticatedUser.homeHub !== hub.id}
           component={Link}
           to={this.currentTab().props.createUrl}
         >
@@ -67,7 +67,10 @@ class TabbedList extends React.Component {
 }
 
 TabbedList.propTypes = {
-  authenticatedUser: PropTypes.object
+  authenticatedUser: PropTypes.object,
+  hub: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  })
 }
 
 export default withStyles(styles)(TabbedList)
