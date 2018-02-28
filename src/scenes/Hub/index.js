@@ -40,13 +40,21 @@ export class Hub extends React.Component {
     }
   }
 
+  addBaseParameters = body =>
+    Object.assign({}, body, {
+      hub: this.props.hub.id,
+      owner: this.props.authenticatedUser.id
+    })
+
   createProjectPane = routeInfo => {
     return (
       <CreateProject
         {...routeInfo}
-        authenticatedUser={this.props.authenticatedUser}
         hub={this.props.hub}
-        onCreate={body => this.props.createProject(body)}
+        authenticatedUser={this.props.authenticatedUser}
+        onCreate={body =>
+          this.props.createProject(this.addBaseParameters(body))
+        }
         cancelUrl={this.props.match.url + '/projects'}
       />
     )
@@ -56,8 +64,7 @@ export class Hub extends React.Component {
     return (
       <CreateOffer
         {...routeInfo}
-        authenticatedUser={this.props.authenticatedUser}
-        onCreate={body => this.props.createOffer(body)}
+        onCreate={body => this.props.createOffer(this.addBaseParameters(body))}
         cancelUrl={this.props.match.url + '/offers'}
       />
     )
@@ -67,8 +74,9 @@ export class Hub extends React.Component {
     return (
       <CreateRequest
         {...routeInfo}
-        authenticatedUser={this.props.authenticatedUser}
-        onCreate={body => this.props.createRequest(body)}
+        onCreate={body =>
+          this.props.createRequest(this.addBaseParameters(body))
+        }
         cancelUrl={this.props.match.url + '/requests'}
       />
     )

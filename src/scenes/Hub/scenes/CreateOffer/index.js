@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { withFormik } from 'formik'
 
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
@@ -11,43 +12,22 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit
-  },
-  text: {
-    // It's weird that this is necessary, but without it I get serif
-    fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
   }
 })
 
-class CreateOffer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      name: ''
-    }
-  }
-
-  onInputChange = event => {
-    const target = event.target
-    const value = target.value
-    const id = target.id
-
-    this.setState({
-      [id]: value
-    })
-  }
-
-  onSave = e => {
-    this.props.onCreate({
-      hub: this.props.match.params.hubId,
-      owner: this.props.authenticatedUser.id,
-      name: this.state.name
-    })
-  }
-
-  render() {
-    const { classes } = this.props
-
-    return (
+const CreateOfferForm = ({
+  values,
+  dirty,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  handleReset,
+  isSubmitting,
+  classes,
+  cancelUrl
+}) => (
+  <div>
+    <form onSubmit={handleSubmit}>
       <Grid container direction="column">
         <Grid item>
           <Typography variant="display2" gutterBottom>
@@ -56,10 +36,11 @@ class CreateOffer extends React.Component {
         </Grid>
         <Grid item>
           <TextField
-            id="name"
+            name="name"
             label="Name"
-            value={this.state.name}
-            onChange={this.onInputChange}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
             required
             fullWidth
             autoFocus
@@ -67,36 +48,42 @@ class CreateOffer extends React.Component {
         </Grid>
 
         <Grid item>
-          <Button
-            className={classes.button}
-            component={Link}
-            to={this.props.cancelUrl}
-          >
+          <Button className={classes.button} component={Link} to={cancelUrl}>
             Cancel
           </Button>
           <Button
+            type="submit"
             className={classes.button}
-            disabled={!this.props.authenticatedUser}
+            disabled={isSubmitting}
             variant="raised"
             color="primary"
-            onClick={this.onSave}
-            // TODO Validate before navigating away
-            component={Link}
-            // TODO Go to the newly created component after we know the id
-            to={this.props.cancelUrl}
           >
             Create
           </Button>
         </Grid>
       </Grid>
-    )
+    </form>
+  </div>
+)
+
+const CreateOffer = withFormik({
+  // Transform outer props into form values
+  mapPropsToValues: props => ({
+    name: '',
+    cancelUrl: props.cancelUrl
+  }),
+  handleSubmit: async (values, { props, setSubmitting, resetForm }) => {
+    await props.onCreate({
+      name: values.name
+    })
+
+    setSubmitting(false)
+    resetForm()
   }
-}
+})(CreateOfferForm)
 
 CreateOffer.propTypes = {
-  authenticatedUser: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }),
+  cancelUrl: PropTypes.string.isRequired,
   onCreate: PropTypes.func.isRequired
 }
 

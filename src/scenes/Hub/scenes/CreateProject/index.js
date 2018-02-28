@@ -124,8 +124,7 @@ const CreateProject = withFormik({
       place: values.place,
       start: values.start,
       duration: values.duration,
-      location: { longitude: values.longitude, latitude: values.latitude },
-      owner: props.authenticatedUser.id
+      location: { longitude: values.longitude, latitude: values.latitude }
     })
 
     setSubmitting(false)
@@ -134,9 +133,6 @@ const CreateProject = withFormik({
 })(CreateProjectForm)
 
 CreateProject.propTypes = {
-  authenticatedUser: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }),
   onCreate: PropTypes.func.isRequired,
   hub: PropTypes.shape({
     name: PropTypes.string.isRequired
