@@ -30,6 +30,10 @@ export const compositeReducer = reducers => (action, Model, session) => {
   reducers.forEach(reducer => reducer(action, Model, session))
 }
 
+// PORs can be viewed if they are approved or they are owned by the authenticated user
+export const canView = authenticatedUserId =>
+  R.either(R.propEq('isApproved', true), R.propEq('owner', authenticatedUserId))
+
 // Resolves maps of refs to their values. For example, users have references
 // to all the PORs they created in the form { k -> true }. This function
 // returns a new object with the `true` values replaced with their values

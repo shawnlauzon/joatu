@@ -1,17 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ButtonOffering from './ButtonOffering'
+
+import List from 'material-ui/List'
+import ListItemOffering from './ListItemOffering'
 
 const ProjectList = props => (
   <div>
-    {props.projects.map(project => (
-      <ButtonOffering
-        key={project.id}
-        id={project.id}
-        name={project.name}
-        to={props.viewUrl + '/' + project.id}
-      />
-    ))}
+    <List component="nav">
+      {props.projects.map(project => (
+        <ListItemOffering
+          key={project.id}
+          id={project.id}
+          name={project.name}
+          isApproved={project.isApproved || false}
+          to={props.viewUrl + '/' + project.id}
+        />
+      ))}
+    </List>
   </div>
 )
 

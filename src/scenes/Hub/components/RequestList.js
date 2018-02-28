@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ButtonOffering from './ButtonOffering'
+import ListItemOffering from './ListItemOffering'
 
 import Request from '../../../data/request/model'
 
 const RequestList = props => (
   <div>
     {props.requests.map(request => (
-      <ButtonOffering
+      <ListItemOffering
         key={request.id}
         id={request.id}
         name={request.name}

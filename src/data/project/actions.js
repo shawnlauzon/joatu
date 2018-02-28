@@ -76,7 +76,7 @@ const doCreateProject = body => ({
     ],
     collection: 'projects',
     action: 'add',
-    body
+    body: Object.assign({ isApproved: false }, body)
   }
 })
 

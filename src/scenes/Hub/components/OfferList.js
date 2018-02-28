@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ButtonOffering from './ButtonOffering'
+import ListItemOffering from './ListItemOffering'
 
 import Offer from '../../../data/offer/model'
 
 const OfferList = props => (
   <div>
     {props.offers.map(offer => (
-      <ButtonOffering
+      <ListItemOffering
         key={offer.id}
         id={offer.id}
         name={offer.name}

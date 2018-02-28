@@ -3,7 +3,7 @@ import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
-import { refArrayLens, inflateUser, inflateHub } from '../utils'
+import { refArrayLens, inflateUser, inflateHub, canView } from '../utils'
 
 const resolveParticipants = R.over(
   refArrayLens('participants'),
@@ -23,8 +23,10 @@ export const projectsInHub = createSelector(
   orm,
   state => state.db,
   state => state.selectedHubId,
-  (session, hubId) =>
+  state => state.authenticatedUserId,
+  (session, hubId, authenticatedUserId) =>
     session.Project.filter(R.propEq('hub', hubId))
+      .filter(canView(authenticatedUserId))
       .toModelArray()
       .map(project =>
         Object.assign({}, project.ref, {
