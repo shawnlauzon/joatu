@@ -5,7 +5,6 @@ import Avatar from 'material-ui/Avatar'
 
 import ProfileView from './components/ProfileView'
 import Conversation from '../../components/Conversation'
-import AddComment from './components/AddComment'
 import ButtonStartChat from './components/ButtonStartChat'
 import DonateCaps from '../../components/DonateCaps'
 
