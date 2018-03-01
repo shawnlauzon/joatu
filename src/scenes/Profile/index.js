@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Avatar from 'material-ui/Avatar'
 
 import ProfileView from './components/ProfileView'
-import ViewComments from './components/ViewComments'
+import Conversation from '../../components/Conversation'
 import AddComment from './components/AddComment'
 import ButtonStartChat from './components/ButtonStartChat'
 import DonateCaps from '../../components/DonateCaps'
@@ -81,10 +81,11 @@ class Profile extends React.Component {
               />
               {user.comments && (
                 <div>
-                  <ViewComments comments={user.comments} />
-                  {!this.isProfileOfCurrentUser() && (
-                    <AddComment onSave={this.handleNewComment} />
-                  )}
+                  <Conversation
+                    messages={user.comments}
+                    disableNewMessages={this.isProfileOfCurrentUser()}
+                    onNewMessage={this.handleNewComment}
+                  />
                 </div>
               )}
             </div>

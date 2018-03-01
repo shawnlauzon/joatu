@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Avatar from 'material-ui/Avatar'
 
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem } from 'material-ui/List'
 
-import Message from '../../../components/Message'
+import Message from './Message'
+import AddText from './AddText'
 
-const ChatView = ({ messages }) => (
+const Conversation = ({ messages, disableNewMessages, onNewMessage }) => (
   <div>
     <List>
       {messages &&
@@ -16,16 +16,21 @@ const ChatView = ({ messages }) => (
           </ListItem>
         ))}
     </List>
+    {disableNewMessages !== true && (
+      <AddText buttonText="Send" onSave={onNewMessage} />
+    )}
   </div>
 )
 
-ChatView.propTypes = {
+Conversation.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape({
       from: PropTypes.object.isRequired,
       text: PropTypes.string.isRequired
     })
-  )
+  ),
+  disableNewMessages: PropTypes.bool,
+  onNewMessage: PropTypes.func.isRequired
 }
 
-export default ChatView
+export default Conversation

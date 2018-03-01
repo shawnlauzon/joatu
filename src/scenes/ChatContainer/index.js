@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import ChatView from './components/ChatView'
-import AddText from '../../components/AddText'
+import Conversation from '../../components/Conversation'
 
 import { create, fetch } from '../../data/message/actions'
 import { authenticatedUser } from '../../data/user/selectors'
@@ -27,13 +26,10 @@ class ChatContainer extends React.Component {
   }
 
   render() {
-    const { authenticatedUser, messages } = this.props
+    const { messages } = this.props
 
     return (
-      <div>
-        <ChatView authenticatedUser={authenticatedUser} messages={messages} />
-        <AddText buttonText="Send" onSave={this.handleSendMessage} />
-      </div>
+      <Conversation messages={messages} onNewMessage={this.handleSendMessage} />
     )
   }
 }
