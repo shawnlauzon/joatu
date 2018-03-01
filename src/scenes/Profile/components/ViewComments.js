@@ -1,40 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
+import { withStyles } from 'material-ui/styles'
 import List, { ListItem } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import Avatar from 'material-ui/Avatar'
 
-const componentName = ({ comments }) => (
+import Message from '../../../components/Message'
+
+const ViewComments = ({ comments, classes }) => (
   <div>
     <List>
       {comments.map(comment => (
         <ListItem key={comment.id}>
-          <Avatar
-            alt={comment.from.displayName}
-            src={comment.from.imgSrc}
-            component={Link}
-            to={`/profiles/${comment.from.id}`}
-          />
-          <Typography variant="body1">{comment.text}</Typography>
+          <Message from={comment.from} text={comment.text} />
         </ListItem>
       ))}
     </List>
   </div>
 )
 
-componentName.propTypes = {
+ViewComments.propTypes = {
   comments: PropTypes.arrayOf(
     PropTypes.shape({
-      text: PropTypes.string.isRequired,
-      from: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        displayName: PropTypes.string.isRequired,
-        imgSrc: PropTypes.string.isRequired
-      })
+      from: PropTypes.object.isRequired,
+      text: PropTypes.string.isRequired
     })
   ).isRequired
 }
 
-export default componentName
+export default ViewComments
