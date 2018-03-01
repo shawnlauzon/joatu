@@ -34,6 +34,10 @@ export const compositeReducer = reducers => (action, Model, session) => {
 export const canView = authenticatedUserId =>
   R.either(R.propEq('isApproved', true), R.propEq('owner', authenticatedUserId))
 
+// A function that returns true iff the owner of the entity matches the authenticated in user
+export const isOwner = authenticatedUser =>
+  R.pathEq(['owner', 'id'], R.prop('id', authenticatedUser))
+
 // Resolves maps of refs to their values. For example, users have references
 // to all the PORs they created in the form { k -> true }. This function
 // returns a new object with the `true` values replaced with their values

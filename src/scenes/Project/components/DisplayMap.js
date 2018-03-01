@@ -12,7 +12,7 @@ class DisplayMap extends React.Component {
 
     this.state = {
       location: props.location,
-      zoom: 15
+      zoom: 14
     }
   }
 
@@ -62,7 +62,8 @@ class DisplayMap extends React.Component {
 
   render() {
     const style = {
-      height: '200px'
+      height: '150px',
+      width: '200px'
     }
 
     return this.mapboxglSupported ? (
