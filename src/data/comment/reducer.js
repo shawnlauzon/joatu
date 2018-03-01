@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import crudReducer from '../crudReducer'
 
 import {
@@ -11,7 +12,8 @@ const reducer = crudReducer({
   fetchActionType: FETCH_COMMENTS_SUCCEEDED,
   createActionType: CREATE_COMMENT_SUCCEEDED,
   updateActionType: UPDATE_COMMENT_SUCCEEDED,
-  removeActionType: DELETE_COMMENT_SUCCEEDED
+  removeActionType: DELETE_COMMENT_SUCCEEDED,
+  payloadProp: R.prop('list')
 })
 
 export default reducer

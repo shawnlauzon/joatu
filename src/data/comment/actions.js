@@ -34,7 +34,9 @@ const doFetchComments = () => ({
       FETCH_COMMENTS_SUCCEEDED,
       FETCH_COMMENTS_FAILED
     ],
-    collection: 'comments'
+    collection: 'comments',
+    action: 'getSorted',
+    orderBy: 'createdAt'
   }
 })
 
