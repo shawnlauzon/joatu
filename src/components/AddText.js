@@ -34,6 +34,7 @@ const AddTextForm = props => {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.text}
+            fullWidth
           />
         </div>
         <div>
