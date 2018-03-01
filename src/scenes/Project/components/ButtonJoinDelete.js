@@ -1,11 +1,10 @@
-import * as R from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 
 import ButtonJoin from './ButtonJoin'
 import ButtonUnjoin from './ButtonUnjoin'
 import ButtonDelete from '../../../components/ButtonDelete'
-import { isOwner } from '../../../data/utils'
+import { isOwner, isParticipant } from '../../../data/utils'
 
 const propTypes = {
   authenticatedUser: PropTypes.object,
@@ -15,15 +14,12 @@ const propTypes = {
   removeProject: PropTypes.func.isRequired
 }
 
-const isParticipant = (authenticatedUser, participants) =>
-  R.any(R.propEq('id', authenticatedUser.id), participants)
-
 const ButtonJoinDelete = ({ authenticatedUser, project, ...props }) => {
   return (
     <div>
-      {isOwner(authenticatedUser, project) ? (
+      {isOwner(authenticatedUser)(project) ? (
         <ButtonDelete handleClick={() => props.removeProject(project.id)} />
-      ) : isParticipant(authenticatedUser, project.participants) ? (
+      ) : isParticipant(authenticatedUser)(project) ? (
         <ButtonUnjoin
           handleClick={() =>
             props.removeParticipant(authenticatedUser.id, project.id)

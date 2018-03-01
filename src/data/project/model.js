@@ -15,7 +15,8 @@ Project.fields = {
   id: attr(),
   owner: fk('User', 'projectsOwned'),
   hub: fk('Hub', 'projects'),
-  participants: many('User', 'projectsParticipating')
+  participants: many('User', 'projectsParticipating'),
+  comments: fk('Comment', 'project')
 }
 
 Project.propTypes = {

@@ -3,7 +3,13 @@ import * as R from 'ramda'
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 
-import { refArrayLens, inflateUser, inflateHub, canView } from '../utils'
+import {
+  refArrayLens,
+  inflateUser,
+  inflateHub,
+  inflateComment,
+  canView
+} from '../utils'
 
 const resolveParticipants = R.over(
   refArrayLens('participants'),
@@ -45,7 +51,10 @@ export const projectWithId = id =>
         return Object.assign({}, project.ref, {
           hub: inflateHub(project.hub),
           owner: inflateUser(project.owner),
-          participants: project.participants.toRefArray().map(inflateUser)
+          participants: project.participants.toRefArray().map(inflateUser),
+          comments: project.comments
+            ? project.comments.toRefArray().map(inflateComment)
+            : []
         })
       }
     }

@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -13,7 +12,6 @@ import UserChip from '../../components/UserChip'
 import Conversation from '../../components/Conversation'
 
 import { authenticatedUser } from '../../data/user/selectors'
-import { commentsTo } from '../../data/comment/selectors'
 import { create as createComment } from '../../data/comment/actions'
 import { projectWithId } from '../../data/project/selectors'
 import {
@@ -40,7 +38,6 @@ class Project extends React.Component {
     const {
       authenticatedUser,
       project,
-      comments,
       addParticipant,
       removeParticipant,
       removeProject
@@ -83,16 +80,16 @@ class Project extends React.Component {
         )}
         <div>{authenticatedUser && <div />}</div>
 
-        <ParticipantList isOwner={isOwner(authenticatedUser, project)}>
+        <ParticipantList isOwner={isOwner(authenticatedUser)(project)}>
           {project.participants.map(participant => (
             <UserChip key={participant.id} user={participant} />
           ))}
         </ParticipantList>
-        {(this.canVolunteer() || comments.length > 0) && (
+        {(this.canVolunteer() || project.comments.length > 0) && (
           <div>
             <Typography variant="display1">Talk about the project</Typography>
             <Conversation
-              messages={comments}
+              messages={project.comments}
               disableNewMessages={!this.canVolunteer()}
               onNewMessage={this.handleNewMessage}
             />
@@ -105,11 +102,10 @@ class Project extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   const projectId = ownProps.match.params.projectId
+
   return {
     authenticatedUser: authenticatedUser(state),
-    project: projectWithId(projectId)(state),
-    // TODO Perhaps move comments as part of project
-    comments: commentsTo(projectId)(state)
+    project: projectWithId(projectId)(state)
   }
 }
 
