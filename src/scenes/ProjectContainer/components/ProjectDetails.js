@@ -29,10 +29,14 @@ const ProjectDetails = ({ project, hourlyAward }) => (
         CAPS
       </div>
     </Typography>
-    <Typography variant="display1">
-      How will this benefit the community?
-    </Typography>
-    <Typography>{project.benefit}</Typography>
+    {project.benefit && (
+      <div>
+        <Typography variant="display1">
+          How will this benefit the community?
+        </Typography>
+        <Typography>{project.benefit}</Typography>
+      </div>
+    )}
   </div>
 )
 
