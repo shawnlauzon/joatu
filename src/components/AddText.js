@@ -2,11 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  }
+})
+
 const AddTextForm = props => {
   const {
+    classes,
     values,
     dirty,
     handleChange,
@@ -22,8 +30,6 @@ const AddTextForm = props => {
         <div>
           <TextField
             name="text"
-            // multiline
-            // rows="4"
             margin="normal"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -32,6 +38,7 @@ const AddTextForm = props => {
         </div>
         <div>
           <Button
+            className={classes.button}
             variant="flat"
             onClick={handleReset}
             disabled={!dirty || isSubmitting}
@@ -39,6 +46,7 @@ const AddTextForm = props => {
             Reset
           </Button>
           <Button
+            className={classes.button}
             variant="raised"
             color="primary"
             type="submit"
@@ -55,7 +63,7 @@ const AddTextForm = props => {
 const AddText = withFormik({
   // Transform outer props into form values
   mapPropsToValues: props => ({
-    text: props.text
+    text: props.text || ''
   }),
   handleSubmit: async (values, { props, setSubmitting, resetForm }) => {
     await props.onSave(values.text)
@@ -73,4 +81,4 @@ AddText.propTypes = {
   onSave: PropTypes.func.isRequired
 }
 
-export default AddText
+export default withStyles(styles)(AddText)

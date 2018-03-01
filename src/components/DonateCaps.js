@@ -2,15 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  }
+})
+
 const DonateCapsForm = props => {
-  const { values, handleChange, handleBlur, handleSubmit, isSubmitting } = props
+  const {
+    classes,
+    values,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    isSubmitting
+  } = props
 
   return (
     <form onSubmit={handleSubmit}>
       <Button
+        className={classes.button}
         variant="raised"
         color="primary"
         type="submit"
@@ -56,4 +71,4 @@ DonateCaps.propTypes = {
   onSave: PropTypes.func.isRequired
 }
 
-export default DonateCaps
+export default withStyles(styles)(DonateCaps)
