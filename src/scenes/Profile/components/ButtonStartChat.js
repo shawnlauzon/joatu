@@ -18,7 +18,7 @@ const ButtonStartChat = ({ authenticatedUser, user, url, classes }) => (
     color="primary"
     component={Link}
     to={url}
-    disabled={user.hub !== authenticatedUser.hub}
+    disabled={user.homeHub !== authenticatedUser.homeHub}
   >
     Chat with {user.displayName.split(' ')[0]}
   </Button>
