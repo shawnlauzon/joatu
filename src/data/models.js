@@ -7,28 +7,3 @@ import PropTypes from 'prop-types'
 
 class JoatuModel extends Model {}
 // class JoatuModel extends ValidatingModel {}
-
-//  Requests and Offers are associated with an owner (who is a member of a hub)
-export class Chat extends JoatuModel {}
-Chat.modelName = 'Chat'
-Chat.fields = {
-  id: attr(),
-  participants: many('User', 'chats')
-}
-Chat.propTypes = {
-  id: PropTypes.string
-}
-
-export class Message extends JoatuModel {}
-Message.modelName = 'Message'
-Message.fields = {
-  id: attr(),
-  text: attr(),
-  chat: fk('Chat', 'messages')
-}
-Message.propTypes = {
-  id: PropTypes.string,
-  text: PropTypes.string.isRequired,
-  chat: PropTypes.oneOf([PropTypes.instanceOf(Chat), PropTypes.string])
-    .isRequired
-}
