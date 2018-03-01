@@ -4,14 +4,15 @@ import Avatar from 'material-ui/Avatar'
 
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
+import Message from '../../../components/Message'
+
 const ChatView = ({ messages }) => (
   <div>
     <List>
       {messages &&
         Object.entries(messages).map(([id, message]) => (
           <ListItem key={id}>
-            <Avatar alt={message.from.displayName} src={message.from.imgSrc} />
-            <ListItemText primary={message.text} />
+            <Message from={message.from} text={message.text} />
           </ListItem>
         ))}
     </List>
@@ -21,10 +22,7 @@ const ChatView = ({ messages }) => (
 ChatView.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape({
-      from: PropTypes.shape({
-        displayName: PropTypes.string.isRequired,
-        imgSrc: PropTypes.string.isRequired
-      }).isRequired,
+      from: PropTypes.object.isRequired,
       text: PropTypes.string.isRequired
     })
   )
