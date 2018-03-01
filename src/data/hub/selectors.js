@@ -32,14 +32,12 @@ export const allHubs = createSelector(
   }
 )
 
-export const selectedHub = createSelector(
-  orm,
-  state => state.db,
-  state => state.selectedHubId,
-  (session, hubId) => {
-    return session.Hub.hasId(hubId) ? session.Hub.withId(hubId).ref : undefined
-  }
-)
+export const hubWithId = id =>
+  createSelector(
+    orm,
+    state => state.db,
+    session => (session.Hub.hasId(id) ? session.Hub.withId(id).ref : undefined)
+  )
 
 export const homeHub = createSelector(
   orm,

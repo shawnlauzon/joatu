@@ -19,21 +19,21 @@ export const allProjects = createSelector(
       .map(resolveParticipants)
 )
 
-export const projectsInHub = createSelector(
-  orm,
-  state => state.db,
-  state => state.selectedHubId,
-  state => state.authenticatedUserId,
-  (session, hubId, authenticatedUserId) =>
-    session.Project.filter(R.propEq('hub', hubId))
-      .filter(canView(authenticatedUserId))
-      .toModelArray()
-      .map(project =>
-        Object.assign({}, project.ref, {
-          hub: inflateHub(project.hub)
-        })
-      )
-)
+export const projectsInHub = hubId =>
+  createSelector(
+    orm,
+    state => state.db,
+    state => state.authenticatedUserId,
+    (session, authenticatedUserId) =>
+      session.Project.filter(R.propEq('hub', hubId))
+        .filter(canView(authenticatedUserId))
+        .toModelArray()
+        .map(project =>
+          Object.assign({}, project.ref, {
+            hub: inflateHub(project.hub)
+          })
+        )
+  )
 
 export const projectWithId = id =>
   createSelector(

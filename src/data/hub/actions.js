@@ -16,8 +16,6 @@ export const DELETE_HUB_STARTED = 'DELETE_HUB_STARTED'
 export const DELETE_HUB_SUCCEEDED = 'DELETE_HUB_SUCCEEDED'
 export const DELETE_HUB_FAILED = 'DELETE_HUB_FAILED'
 
-export const CHANGE_HUB = 'CHANGE_HUB'
-
 const doFetchHubs = () => ({
   [CALL_API]: {
     types: [FETCH_HUBS_STARTED, FETCH_HUBS_SUCCEEDED, FETCH_HUBS_FAILED],
@@ -67,15 +65,4 @@ const doDeleteHub = id => ({
 
 export const remove = id => (dispatch, getState) => {
   return dispatch(doDeleteHub(id))
-}
-
-const changeHubAction = hubId => ({
-  type: CHANGE_HUB,
-  payload: {
-    hubId
-  }
-})
-
-export const changeHub = hubId => (dispatch, getState) => {
-  return dispatch(changeHubAction(hubId))
 }

@@ -3,24 +3,12 @@ import orm from './orm'
 import { combineReducers } from 'redux'
 import { createReducer } from 'redux-orm'
 
-import { CHANGE_HUB } from './hub/actions'
-
 // TODO move out of 'authUser'
 import {
   LOGIN_SUCCEEDED,
   LOGOUT_SUCCEEDED,
   AUTH_CHANGED
 } from './authUser/actions'
-
-export function selectedHubIdReducer(state = '', action) {
-  const { type, payload } = action
-  switch (type) {
-    case CHANGE_HUB:
-      return payload.hubId
-    default:
-      return state
-  }
-}
 
 export const authenticatedUserIdReducer = (state = '', action) => {
   const { type, payload } = action
@@ -39,6 +27,5 @@ export const authenticatedUserIdReducer = (state = '', action) => {
 
 export default combineReducers({
   db: createReducer(orm),
-  authenticatedUserId: authenticatedUserIdReducer,
-  selectedHubId: selectedHubIdReducer
+  authenticatedUserId: authenticatedUserIdReducer
 })

@@ -46,19 +46,6 @@ class Root extends React.Component {
     firebase.auth().onAuthStateChanged(this.props.onAuthChanged)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.authenticatedUser &&
-      nextProps.authenticatedUser.homeHub &&
-      !nextProps.selectedHubId
-    ) {
-      // I need to use the hubId and not the hub itself because the hubs
-      // are loaded after this is invoked, and the selector returns
-      // undefined because it can't load the hub
-      nextProps.changeHub(nextProps.authenticatedUser.homeHub)
-    }
-  }
-
   render() {
     return (
       <div>
@@ -108,7 +95,6 @@ const mapDispatchToProps = {
   onAuthChanged: authActions.onAuthChanged,
   createUser: userActions.create,
 
-  changeHub: hubActions.changeHub,
   loginUser: authActions.loginUser,
   logoutUser: authActions.logoutUser
 }

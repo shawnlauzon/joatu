@@ -7,8 +7,7 @@ const bootstrap = () => {
   // Return the whole Redux initial state.
   return {
     db: state,
-    authenticatedUserId: '',
-    selectedHubId: ''
+    authenticatedUserId: ''
   }
 }
 

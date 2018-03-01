@@ -19,11 +19,10 @@ import OfferList from './components/OfferList'
 import RequestList from './components/RequestList'
 
 import { authenticatedUser } from '../../data/user/selectors'
-import { selectedHub } from '../../data/hub/selectors'
+import { hubWithId } from '../../data/hub/selectors'
 import { projectsInHub } from '../../data/project/selectors'
 import { requestsInHub } from '../../data/request/selectors'
 import { offersInHub } from '../../data/offer/selectors'
-import { changeHub } from '../../data/hub/actions'
 
 import {
   projectActions,
@@ -32,14 +31,6 @@ import {
 } from '../../data/actions'
 
 export class Hub extends React.Component {
-  constructor(props) {
-    super(props)
-
-    if (!props.hub || props.match.params.hubId !== props.hub.id) {
-      props.changeHub(props.match.params.hubId)
-    }
-  }
-
   addBaseParameters = body =>
     Object.assign({}, body, {
       hub: this.props.hub.id,
@@ -149,13 +140,15 @@ export class Hub extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const hubId = ownProps.match.params.hubId
+
   return {
     authenticatedUser: authenticatedUser(state),
-    hub: selectedHub(state),
-    projects: projectsInHub(state),
-    offers: offersInHub(state),
-    requests: requestsInHub(state)
+    hub: hubWithId(hubId)(state),
+    projects: projectsInHub(hubId)(state),
+    offers: offersInHub(hubId)(state),
+    requests: requestsInHub(hubId)(state)
   }
 }
 
@@ -163,8 +156,7 @@ const mapDispatchToProps = {
   addParticipant: projectActions.addParticipant,
   createProject: projectActions.create,
   createOffer: offerActions.create,
-  createRequest: requestActions.create,
-  changeHub
+  createRequest: requestActions.create
 }
 
 // TODO Using withRouter is not the most efficient solution
