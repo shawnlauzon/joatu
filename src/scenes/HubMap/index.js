@@ -13,7 +13,15 @@ class HubMap extends React.Component {
     super(props)
 
     this.state = {
-      selectedHubId: undefined
+      selectedHubId: props.homeHub
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.homeHub) {
+      this.setState({
+        selectedHubId: newProps.homeHub.id
+      })
     }
   }
 
