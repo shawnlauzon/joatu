@@ -14,12 +14,12 @@ import { authenticatedUser, userWithId } from '../../data/user/selectors'
 import { create } from '../../data/comment/actions'
 import { sendCaps } from '../../data/user/actions'
 import { chatWithUser } from '../../data/chat/selectors'
-// import { chatWithUser } from '../../data/chatByUser/selectors'
 
 class Profile extends React.Component {
   profileUserId = () => this.props.match.params.profileId
 
   isProfileOfCurrentUser = () =>
+    this.props.authenticatedUser &&
     this.props.authenticatedUser.id === this.profileUserId()
 
   handleNewComment = text => {
@@ -47,25 +47,29 @@ class Profile extends React.Component {
             <div>
               <Link to="/">Return to Home</Link>
               <Avatar src={user.imgSrc} />
-              {user.id !== authenticatedUser.id && (
-                <div>
-                  <DonateCaps
-                    capsAvailable={authenticatedUser.caps}
-                    onSave={this.handleDonateCaps}
-                  />
-                  {chat ? (
-                    <ButtonStartChat
-                      name={user.displayName}
-                      url={`/chats/${chat.id}`}
+              {authenticatedUser &&
+                user.id !== authenticatedUser.id && (
+                  <div>
+                    <DonateCaps
+                      capsAvailable={authenticatedUser.caps}
+                      onSave={this.handleDonateCaps}
                     />
-                  ) : (
-                    <ButtonStartChat
-                      name={user.displayName}
-                      url={`/chat-with/${this.profileUserId()}`}
-                    />
-                  )}
-                </div>
-              )}
+                    {/* TODO Merge into a single ButtonStartChat */}
+                    {chat ? (
+                      <ButtonStartChat
+                        authenticatedUser={authenticatedUser}
+                        user={user}
+                        url={`/chats/${chat.id}`}
+                      />
+                    ) : (
+                      <ButtonStartChat
+                        authenticatedUser={authenticatedUser}
+                        user={user}
+                        url={`/chat-with/${this.profileUserId()}`}
+                      />
+                    )}
+                  </div>
+                )}
             </div>
             <div>
               <ProfileView
@@ -75,7 +79,6 @@ class Profile extends React.Component {
                 offers={user.offers}
                 requests={user.requests}
               />
-              {/* FIXME: A refresh is required to see a new comment */}
               {user.comments && (
                 <div>
                   <ViewComments comments={user.comments} />

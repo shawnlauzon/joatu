@@ -1,17 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
-const ButtonStartChat = props => (
-  <Button variant="raised" color="primary" component={Link} to={props.url}>
-    Chat with {props.name.split(' ')[0]}
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  }
+})
+
+const ButtonStartChat = ({ authenticatedUser, user, url, classes }) => (
+  <Button
+    className={classes.button}
+    variant="raised"
+    color="primary"
+    component={Link}
+    to={url}
+    disabled={user.hub !== authenticatedUser.hub}
+  >
+    Chat with {user.displayName.split(' ')[0]}
   </Button>
 )
 
 ButtonStartChat.propTypes = {
-  name: PropTypes.string.isRequired,
+  authenticatedUser: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   url: PropTypes.string.isRequired
 }
 
-export default ButtonStartChat
+export default withStyles(styles)(ButtonStartChat)
