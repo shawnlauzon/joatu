@@ -10,7 +10,7 @@ import ResponsivePage from './components/ResponsivePage'
 import CreateProject from './scenes/CreateProject'
 import CreateOffer from './scenes/CreateOffer'
 import CreateRequest from './scenes/CreateRequest'
-import ProjectContainer from '../ProjectContainer'
+import Project from '../Project'
 import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 
@@ -110,7 +110,7 @@ export class Hub extends React.Component {
             <React.Fragment>
               <Route
                 path={this.props.match.path + '/projects/:projectId'}
-                component={ProjectContainer}
+                component={Project}
               />
               <Route
                 path={this.props.match.path + '/offers/:offerId'}

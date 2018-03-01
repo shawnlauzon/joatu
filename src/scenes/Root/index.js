@@ -10,7 +10,7 @@ import JoatUAppBar from './components/JoatUAppBar'
 import Hub from '../Hub'
 import HubMap from '../HubMap'
 import Profile from '../Profile'
-import ProjectContainer from '../ProjectContainer'
+import Project from '../Project'
 import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 import ChatContainer from '../ChatContainer'
@@ -65,7 +65,7 @@ class Root extends React.Component {
         <Switch>
           <Route path="/hubs/:hubId" component={Hub} />
           <Route path="/profiles/:profileId" component={Profile} />
-          <Route path="/projects/:projectId" component={ProjectContainer} />
+          <Route path="/projects/:projectId" component={Project} />
           <Route path="/offers/:offerId" component={OfferContainer} />
           <Route path="/requests/:requestId" component={RequestContainer} />
           <Route path="/chat-with/:userId" component={CreateChat} />

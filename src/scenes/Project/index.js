@@ -37,6 +37,10 @@ class Project extends React.Component {
       text
     })
 
+  canVolunteer = () =>
+    this.props.authenticatedUser &&
+    this.props.authenticatedUser.homeHub === this.props.project.hub.id
+
   render() {
     const {
       authenticatedUser,
@@ -92,11 +96,16 @@ class Project extends React.Component {
             <UserChip key={participant.id} user={participant} />
           ))}
         </ParticipantList>
-        <Typography variant="display1">Talk about the project</Typography>
-        <Conversation
-          messages={comments}
-          onNewMessage={this.handleNewMessage}
-        />
+        {(this.canVolunteer() || comments.length > 0) && (
+          <div>
+            <Typography variant="display1">Talk about the project</Typography>
+            <Conversation
+              messages={comments}
+              disableNewMessages={!this.canVolunteer()}
+              onNewMessage={this.handleNewMessage}
+            />
+          </div>
+        )}
       </div>
     )
   }
@@ -107,6 +116,7 @@ function mapStateToProps(state, ownProps) {
   return {
     authenticatedUser: authenticatedUser(state),
     project: projectWithId(projectId)(state),
+    // TODO Perhaps move comments as part of project
     comments: commentsTo(projectId)(state)
   }
 }
