@@ -8,6 +8,7 @@ import {
   inflateUser,
   inflateHub,
   inflateComment,
+  inflateDiscussion,
   canView
 } from '../utils'
 
@@ -54,7 +55,10 @@ export const projectWithId = id =>
           participants: project.participants.toRefArray().map(inflateUser),
           comments: project.comments
             ? project.comments.toRefArray().map(inflateComment)
-            : []
+            : [],
+          discussion: project.discussion
+            ? inflateDiscussion(project.discussion)
+            : undefined
         })
       }
     }
@@ -65,7 +69,9 @@ export const projectWithId = id =>
 //   {
 //     id: 'Evh5FhYWl6PdbrdCcNdk',
 //     name: 'Clean the park',
-//     participants: [ { id: 'abc123', name: 'Shawn Lauzon', imgSrc: 'http://fb.com/abc123' } ],
+//     participants: [ { id: '_', name: 'Shawn Lauzon', imgSrc: 'http://fb.com/abc123' } ],
+//     comments: [ { id: '_', from: {...}, text: 'Hi' }, ... ],
+//     discussion: [ { id: '_', from: {...}, text: 'Hi' }, ... ]
 //   },
 //   ...
 // ]

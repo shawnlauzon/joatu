@@ -60,7 +60,7 @@ export const fetch = () => async (dispatch, getState) => {
         type: MESSAGE_RECEIVED,
         payload: {
           id: change.doc.id,
-          chatId,
+          docId: chatId,
           ...change.doc.data()
         }
       })

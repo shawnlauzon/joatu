@@ -7,6 +7,7 @@ import * as requestActions from './request/actions'
 import * as commentActions from './comment/actions'
 import * as chatActions from './chat/actions'
 import * as messageActions from './message/actions'
+import * as discussionActions from './discussion/actions'
 
 export const CALL_API = 'CALL_API'
 
@@ -19,5 +20,6 @@ export {
   requestActions,
   commentActions,
   chatActions,
-  messageActions
+  messageActions,
+  discussionActions
 }

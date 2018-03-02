@@ -5,6 +5,10 @@ import JoatuModel from '../baseModel'
 
 import reducer from './reducer'
 
+// A Chat has exactly two participants, because then given two users,
+// we can find the specific Chat. Only participants can view the Chat.
+//
+// For multiple participants, use a Discussion
 export default class Chat extends JoatuModel {}
 Chat.reducer = reducer
 Chat.modelName = 'Chat'

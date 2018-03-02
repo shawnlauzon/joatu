@@ -16,7 +16,7 @@ export const DELETE_MESSAGE_STARTED = 'DELETE_MESSAGE_STARTED'
 export const DELETE_MESSAGE_SUCCEEDED = 'DELETE_MESSAGE_SUCCEEDED'
 export const DELETE_MESSAGE_FAILED = 'DELETE_MESSAGE_FAILED'
 
-const doFetchMessages = chatId => ({
+const doFetchMessages = (type, docId) => ({
   [CALL_API]: {
     types: [
       FETCH_MESSAGES_STARTED,
@@ -25,22 +25,22 @@ const doFetchMessages = chatId => ({
     ],
     action: 'getSorted',
     collection: {
-      root: 'chats',
+      root: type + 's',
       subcollection: 'messages',
-      ofDocument: chatId
+      ofDocument: docId
     },
     orderBy: 'createdAt',
     merge: {
-      chatId
+      docId
     }
   }
 })
 
-export const fetch = chatId => (dispatch, getState) => {
-  return dispatch(doFetchMessages(chatId))
+export const fetch = (type, docId) => (dispatch, getState) => {
+  return dispatch(doFetchMessages(type, docId))
 }
 
-const doCreateMessage = ({ chatId, text, from }) => ({
+const doCreateMessage = ({ type, docId, text, from }) => ({
   [CALL_API]: {
     types: [
       CREATE_MESSAGE_STARTED,
@@ -48,9 +48,9 @@ const doCreateMessage = ({ chatId, text, from }) => ({
       CREATE_MESSAGE_FAILED
     ],
     collection: {
-      root: 'chats',
+      root: type + 's',
       subcollection: 'messages',
-      ofDocument: chatId
+      ofDocument: docId
     },
     action: 'add',
     body: {
@@ -58,12 +58,13 @@ const doCreateMessage = ({ chatId, text, from }) => ({
       from
     },
     merge: {
-      chatId
+      docId
     }
   }
 })
 
 // {
+//   collection
 //   chatId,
 //   text,
 //   from: userId,

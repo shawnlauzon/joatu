@@ -8,6 +8,7 @@ import UserModel from './user/model'
 import CommentModel from './comment/model'
 import ChatModel from './chat/model'
 import MessageModel from './message/model'
+import DiscussionModel from './discussion/model'
 
 const orm = new ORM()
 orm.register(
@@ -18,7 +19,8 @@ orm.register(
   RequestModel,
   CommentModel,
   ChatModel,
-  MessageModel
+  MessageModel,
+  DiscussionModel
 )
 
 export default orm

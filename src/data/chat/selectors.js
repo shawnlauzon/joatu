@@ -12,6 +12,7 @@ export const chatWithUser = userId =>
     state => state.db,
     state => state.authenticatedUserId,
     (session, authenticatedUserId) => {
+      // TODO Querying all Chats to find the right one isn't great
       const matchingChats = session.Chat.all()
         .toModelArray()
         .filter(chat => {

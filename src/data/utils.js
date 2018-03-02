@@ -25,6 +25,12 @@ export const inflateComment = ({ id, from, text, to }) => ({
   to
 })
 
+export const inflateDiscussion = ({ id, topic, messages }) => ({
+  id,
+  topic,
+  messages
+})
+
 export const refArrayLens = prop =>
   R.lens(R.compose(toRefArray, R.prop(prop)), R.assoc(prop))
 

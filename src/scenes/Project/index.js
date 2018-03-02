@@ -10,6 +10,7 @@ import ButtonJoinDelete from './components/ButtonJoinDelete'
 import ParticipantList from './components/ParticipantList'
 import UserChip from '../../components/UserChip'
 import Conversation from '../../components/Conversation'
+import ButtonStartDiscussion from './components/ButtonStartDiscussion'
 
 import { authenticatedUser } from '../../data/user/selectors'
 import { create as createComment } from '../../data/comment/actions'
@@ -20,7 +21,7 @@ import {
   remove as removeProject
 } from '../../data/project/actions'
 
-import { isOwner } from '../../data/utils'
+import { isOwner, isParticipant } from '../../data/utils'
 
 class Project extends React.Component {
   handleNewMessage = text =>
@@ -30,7 +31,7 @@ class Project extends React.Component {
       text
     })
 
-  canVolunteer = () =>
+  canParticipate = () =>
     this.props.authenticatedUser &&
     this.props.authenticatedUser.homeHub === this.props.project.hub.id
 
@@ -61,13 +62,24 @@ class Project extends React.Component {
               <Typography variant="body1">Organized by</Typography>
               <UserChip user={project.owner} />
             </div>
-            <ButtonJoinDelete
-              authenticatedUser={authenticatedUser}
-              project={project}
-              addParticipant={addParticipant}
-              removeParticipant={removeParticipant}
-              removeProject={removeProject}
-            />
+            <Grid container>
+              {(isParticipant(authenticatedUser)(project) ||
+                isOwner(authenticatedUser)(project)) &&
+                project.discussion && (
+                  <ButtonStartDiscussion
+                    authenticatedUser={authenticatedUser}
+                    topic="project"
+                    url={`/discussions/${project.discussion.id}`}
+                  />
+                )}
+              <ButtonJoinDelete
+                authenticatedUser={authenticatedUser}
+                project={project}
+                addParticipant={addParticipant}
+                removeParticipant={removeParticipant}
+                removeProject={removeProject}
+              />
+            </Grid>
           </Grid>
         </Grid>
         {project.benefit && (
@@ -85,12 +97,12 @@ class Project extends React.Component {
             <UserChip key={participant.id} user={participant} />
           ))}
         </ParticipantList>
-        {(this.canVolunteer() || project.comments.length > 0) && (
+        {(this.canParticipate() || project.comments.length > 0) && (
           <div>
             <Typography variant="display1">Talk about the project</Typography>
             <Conversation
               messages={project.comments}
-              disableNewMessages={!this.canVolunteer()}
+              disableNewMessages={!this.canParticipate()}
               onNewMessage={this.handleNewMessage}
             />
           </div>

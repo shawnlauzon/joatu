@@ -3,24 +3,27 @@ import { connect } from 'react-redux'
 
 import Conversation from '../../components/Conversation'
 
-import { create, fetch } from '../../data/message/actions'
-import { authenticatedUser } from '../../data/user/selectors'
+import {
+  create as createMessage,
+  fetch as fetchMessages
+} from '../../data/message/actions'
 
+import { authenticatedUser } from '../../data/user/selectors'
 import { messagesIn } from '../../data/message/selectors'
 
-class ChatContainer extends React.Component {
+class DiscussionContainer extends React.Component {
   constructor(props) {
     super(props)
 
-    props.fetchMessages('chat', this.getChatId())
+    props.fetchMessages('discussion', this.getDiscussionId())
   }
 
-  getChatId = () => this.props.match.params.chatId
+  getDiscussionId = () => this.props.match.params.discussionId
 
   handleSendMessage = text => {
     this.props.createMessage({
-      type: 'chat',
-      docId: this.getChatId(),
+      type: 'discussion',
+      docId: this.getDiscussionId(),
       from: this.props.authenticatedUser.id,
       text
     })
@@ -36,17 +39,17 @@ class ChatContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const chatId = ownProps.match.params.chatId
+  const discussionId = ownProps.match.params.discussionId
 
   return {
     authenticatedUser: authenticatedUser(state),
-    messages: messagesIn(chatId)(state)
+    messages: messagesIn(discussionId)(state)
   }
 }
 
 const mapDispatchToProps = {
-  createMessage: create,
-  fetchMessages: fetch
+  createMessage,
+  fetchMessages
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(DiscussionContainer)

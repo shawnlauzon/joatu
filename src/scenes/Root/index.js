@@ -14,6 +14,7 @@ import Project from '../Project'
 import OfferContainer from '../OfferContainer'
 import RequestContainer from '../RequestContainer'
 import ChatContainer from '../ChatContainer'
+import DiscussionContainer from '../DiscussionContainer'
 import CreateChat from '../CreateChat'
 import ShowModal from '../../components/ShowModal'
 import RequestPostalCode from '../RequestPostalCode'
@@ -28,7 +29,8 @@ import {
   offerActions,
   requestActions,
   commentActions,
-  chatActions
+  chatActions,
+  discussionActions
 } from '../../data/actions'
 
 class Root extends React.Component {
@@ -38,6 +40,7 @@ class Root extends React.Component {
     this.props.fetchUsers()
     this.props.fetchHubs()
     this.props.fetchProjects()
+    this.props.fetchDiscussions()
     this.props.fetchOffers()
     this.props.fetchRequests()
     this.props.fetchComments()
@@ -70,6 +73,10 @@ class Root extends React.Component {
           <Route path="/requests/:requestId" component={RequestContainer} />
           <Route path="/chat-with/:userId" component={CreateChat} />
           <Route path="/chats/:chatId" component={ChatContainer} />
+          <Route
+            path="/discussions/:discussionId"
+            component={DiscussionContainer}
+          />
           <Route path="/" component={HubMap} />
         </Switch>
       </div>
@@ -91,6 +98,7 @@ const mapDispatchToProps = {
   fetchRequests: requestActions.fetch,
   fetchComments: commentActions.fetch,
   fetchChats: chatActions.fetch,
+  fetchDiscussions: discussionActions.fetch,
 
   onAuthChanged: authActions.onAuthChanged,
   createUser: userActions.create,

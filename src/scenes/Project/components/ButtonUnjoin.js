@@ -17,7 +17,7 @@ function ButtonUnjoin(props) {
       className={classes.button}
       onClick={props.handleClick}
       variant="raised"
-      color="primary"
+      color="secondary"
       disabled={!props.authenticatedUser}
     >
       I can't make it :(
