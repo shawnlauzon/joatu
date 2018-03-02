@@ -39,7 +39,7 @@ ButtonStartChat.propTypes = {
 function mapStateToProps(state, ownProps) {
   return {
     authenticatedUser: authenticatedUser(state),
-    chat: chatWithUser(ownProps.userId)(state)
+    chat: chatWithUser(ownProps.user.id)(state)
   }
 }
 

@@ -52,25 +52,30 @@ const doListenToChat = (chatId, listener) => ({
   }
 })
 
-export const fetch = () => async (dispatch, getState) => {
-  const listener = chatId => snapshot => {
-    snapshot.docChanges.forEach(change => {
-      // TODO Discard changes to documents originated from this computer
-      dispatch({
-        type: MESSAGE_RECEIVED,
-        payload: {
-          id: change.doc.id,
-          docId: chatId,
-          ...change.doc.data()
-        }
-      })
+const newChatListener = (dispatch, chatId) => snapshot => {
+  snapshot.docChanges.forEach(change => {
+    // TODO Only listen to messages from the other user, because then we could
+    // use the CREATE_MESSAGE_SUCCEEDED action to update the store, rather than
+    // this message
+    dispatch({
+      type: MESSAGE_RECEIVED,
+      payload: {
+        id: change.doc.id,
+        docId: chatId,
+        ...change.doc.data()
+      }
     })
-  }
+  })
+}
+
+export const fetch = () => async (dispatch, getState) => {
   const chats = await dispatch(doFetchChats())
 
   const promises = []
   Object.keys(chats.payload).forEach(chatId => {
-    promises.push(dispatch(doListenToChat(chatId, listener(chatId))))
+    promises.push(
+      dispatch(doListenToChat(chatId, newChatListener(dispatch, chatId)))
+    )
   })
 
   return Promise.all(promises)
@@ -88,12 +93,17 @@ const doCreateChat = body => ({
 // {
 //   participants: [ userId1, userId2 ] (exactly 2)
 // }
-export const create = body => (dispatch, getState) => {
+export const create = body => async (dispatch, getState) => {
   // Convert to { participants: { userId1: true, userId2: true } }
   const evolveBody = R.over(R.lensProp('participants'), boolMap)
 
-  console.log(evolveBody(body))
-  return dispatch(doCreateChat(evolveBody(body)))
+  const result = await dispatch(doCreateChat(evolveBody(body)))
+  if (result.type === CREATE_CHAT_SUCCEEDED) {
+    const chatId = result.payload.id
+    return dispatch(doListenToChat(chatId, newChatListener(dispatch, chatId)))
+  } else {
+    return result
+  }
 }
 
 const doUpdateChat = (id, body) => ({
