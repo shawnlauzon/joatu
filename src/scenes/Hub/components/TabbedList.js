@@ -10,11 +10,10 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => ({
   fab: {
     margin: 0,
-    top: 'auto',
+    top: 20,
     left: 20,
     bottom: 20,
-    right: 'auto',
-    position: 'fixed'
+    right: 20
   }
 })
 
@@ -39,17 +38,6 @@ class TabbedList extends React.Component {
 
     return (
       <div>
-        <Button
-          variant="fab"
-          className={classes.fab}
-          color="primary"
-          aria-label="add"
-          disabled={!authenticatedUser || authenticatedUser.homeHub !== hub.id}
-          component={Link}
-          to={this.currentTab().props.createUrl}
-        >
-          <AddIcon />
-        </Button>
         <Tabs value={tabNum} onChange={this.onTabChanged}>
           {this.props.children.map((tab, idx) => (
             <Tab
@@ -61,6 +49,17 @@ class TabbedList extends React.Component {
           ))}
         </Tabs>
         {this.currentTab()}
+        <Button
+          variant="fab"
+          className={classes.fab}
+          color="primary"
+          aria-label="add"
+          disabled={!authenticatedUser || authenticatedUser.homeHub !== hub.id}
+          component={Link}
+          to={this.currentTab().props.createUrl}
+        >
+          <AddIcon />
+        </Button>
       </div>
     )
   }
