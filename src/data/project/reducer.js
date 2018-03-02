@@ -21,14 +21,27 @@ const linkReducer = ({
 }) => (action, Model, session) => {
   switch (action.type) {
     case linkActionType:
-      Model.withId(action.payload[primaryKey])[collection].add(
-        action.payload[foreignKey]
-      )
+      Model.withId(action.payload[primaryKey])[
+        action.payload.participantType
+      ].add(action.payload[foreignKey])
       break
     case unlinkActionType:
-      Model.withId(action.payload[primaryKey])[collection].remove(
-        action.payload[foreignKey]
-      )
+      // TODO This has gotten much too complicated. Need to refactor
+      const project = Model.withId(action.payload[primaryKey])
+      if (
+        project['pendingParticipants']
+          .filter({ id: action.payload[foreignKey] })
+          .exists()
+      ) {
+        project['pendingParticipants'].remove(action.payload[foreignKey])
+      }
+      if (
+        project['participants']
+          .filter({ id: action.payload[foreignKey] })
+          .exists()
+      ) {
+        project['participants'].remove(action.payload[foreignKey])
+      }
       break
     default:
       break
@@ -53,7 +66,7 @@ const reducer = compositeReducer([
     }
   }),
   linkReducer({
-    collection: 'pendingParticipants',
+    collection: 'participantType',
     primaryKey: 'id',
     foreignKey: 'participantId',
     linkActionType: ADD_PARTICIPANT_TO_PROJECT_SUCCEEDED,

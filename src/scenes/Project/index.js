@@ -18,6 +18,7 @@ import { projectWithId } from '../../data/project/selectors'
 import {
   addParticipant,
   removeParticipant,
+  approveParticipant,
   remove as removeProject
 } from '../../data/project/actions'
 
@@ -33,15 +34,14 @@ class Project extends React.Component {
 
   handleAddParticipant = () =>
     this.props.addParticipant(
-      this.props.authenticatedUser.id,
       this.props.project.id,
-      'pending'
+      this.props.authenticatedUser.id
     )
 
   handleRemoveParticipant = () =>
     this.props.removeParticipant(
-      this.props.authenticatedUser.id,
-      this.props.project.id
+      this.props.project.id,
+      this.props.authenticatedUser.id
     )
 
   handleRemoveProject = () => this.props.removeProject(this.props.project.id)
@@ -57,7 +57,14 @@ class Project extends React.Component {
     if (isOwner(this.props.authenticatedUser)(project)) {
       chips = chips.concat(
         project.pendingParticipants.map(participant => (
-          <UserChip key={participant.id} user={participant} pending={true} />
+          <UserChip
+            key={participant.id}
+            user={participant}
+            altIcon="approve"
+            onAltClick={() =>
+              this.props.approveParticipant(project.id, participant.id)
+            }
+          />
         ))
       )
     } else if (isPendingParticipant(this.props.authenticatedUser)(project)) {
@@ -65,7 +72,8 @@ class Project extends React.Component {
         <UserChip
           key={this.props.authenticatedUser.id}
           user={this.props.authenticatedUser}
-          pending={true}
+          altIcon="pending"
+          onAltClick={() => {}}
         />
       ])
     }
@@ -153,6 +161,7 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   addParticipant,
   removeParticipant,
+  approveParticipant,
   removeProject,
   createComment
 }

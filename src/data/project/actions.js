@@ -32,6 +32,10 @@ export const ADD_PARTICIPANT_TO_PROJECT_SUCCEEDED =
 export const ADD_PARTICIPANT_TO_PROJECT_FAILED =
   'ADD_PARTICIPANT_TO_PROJECT_FAILED'
 
+export const APPROVE_PARTICIPANT_STARTED = 'APPROVE_PARTICIPANT_STARTED'
+export const APPROVE_PARTICIPANT_SUCCEEDED = 'APPROVE_PARTICIPANT_SUCCEEDED'
+export const APPROVE_PARTICIPANT_FAILED = 'APPROVE_PARTICIPANT_FAILED'
+
 export const REMOVE_PARTICIPANT_FROM_PROJECT_STARTED =
   'REMOVE_PARTICIPANT_FROM_PROJECT_STARTED'
 export const REMOVE_PARTICIPANT_FROM_PROJECT_SUCCEEDED =
@@ -131,8 +135,8 @@ export const remove = id => async (dispatch, getState) => {
   return result
 }
 
-export function addParticipant(userId, projectId) {
-  const pathToUser = ['pendingParticipants', userId].join('.')
+export const addParticipantAction = (projectId, userId, participantType) => {
+  const pathToUser = [participantType, userId].join('.')
 
   return {
     [CALL_API]: {
@@ -145,14 +149,20 @@ export function addParticipant(userId, projectId) {
       collection: 'projects',
       id: projectId,
       data: { [pathToUser]: true },
-      merge: { participantId: userId }
+      merge: { participantId: userId, participantType }
     }
   }
 }
 
-export function removeParticipant(userId, projectId) {
-  const pathToUser1 = ['participants', userId].join('.')
-  const pathToUser2 = ['pendingParticipants', userId].join('.')
+export const addParticipant = (projectId, userId) => (dispatch, getState) => {
+  return dispatch(
+    addParticipantAction(projectId, userId, 'pendingParticipants')
+  )
+}
+
+export const removeParticipantAction = (projectId, userId) => {
+  const participant = ['participants', userId].join('.')
+  const pendingParticipant = ['pendingParticipants', userId].join('.')
   return {
     [CALL_API]: {
       types: [
@@ -164,10 +174,26 @@ export function removeParticipant(userId, projectId) {
       collection: 'projects',
       id: projectId,
       data: {
-        [pathToUser1]: firebase.firestore.FieldValue.delete(),
-        [pathToUser2]: firebase.firestore.FieldValue.delete()
+        [participant]: firebase.firestore.FieldValue.delete(),
+        [pendingParticipant]: firebase.firestore.FieldValue.delete()
       },
       merge: { participantId: userId }
     }
   }
+}
+
+export const removeParticipant = (projectId, userId) => (
+  dispatch,
+  getState
+) => {
+  return dispatch(removeParticipantAction(projectId, userId))
+}
+
+export const approveParticipant = (projectId, userId) => (
+  dispatch,
+  getState
+) => {
+  return dispatch(removeParticipantAction(projectId, userId)).then(
+    dispatch(addParticipantAction(projectId, userId, 'participants'))
+  )
 }

@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
 import WatchLaterIcon from 'material-ui-icons/WatchLater'
+import DoneIcon from 'material-ui-icons/Done'
 import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
@@ -14,20 +15,40 @@ const styles = theme => ({
   }
 })
 
-const UserChip = ({ id, classes, user, pending }) => (
-  <span>
-    <Chip
-      className={classes.chip}
-      avatar={<Avatar src={user.imgSrc} />}
-      label={`${user.displayName}`}
-      component={Link}
-      to={`/profiles/${user.id}`}
-      deleteIcon={<WatchLaterIcon />}
-      // FIXME Do something here
-      onDelete={pending ? () => console.log('delete clicked') : undefined}
-    />
-  </span>
-)
+const icons = {
+  pending: <WatchLaterIcon />,
+  approve: <DoneIcon />
+}
+
+class UserChip extends React.Component {
+  constructor(props) {
+    super(props)
+
+    // Set to true when chip is clicked
+    this.state = {
+      redirect: false
+    }
+  }
+
+  render() {
+    const { user, altIcon, onAltClick, classes } = this.props
+
+    if (this.state.redirect) {
+      return <Redirect push to={`/profiles/${user.id}`} />
+    } else {
+      return (
+        <Chip
+          className={classes.chip}
+          avatar={<Avatar src={user.imgSrc} />}
+          label={`${user.displayName}`}
+          deleteIcon={altIcon ? icons[altIcon] : undefined}
+          onClick={() => this.setState({ redirect: true })}
+          onDelete={onAltClick}
+        />
+      )
+    }
+  }
+}
 
 UserChip.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -35,7 +56,8 @@ UserChip.propTypes = {
     displayName: PropTypes.string.isRequired,
     imgSrc: PropTypes.string.isRequired
   }).isRequired,
-  pending: PropTypes.bool
+  onAltClick: PropTypes.func,
+  altIcon: PropTypes.string
 }
 
 export default withStyles(styles)(UserChip)
