@@ -16,6 +16,7 @@ Project.fields = {
   owner: fk('User', 'projectsOwned'),
   hub: fk('Hub', 'projects'),
   participants: many('User', 'projectsParticipating'),
+  pendingParticipants: many('User', 'projectsPendingParticipating'),
   comments: fk('Comment', 'project')
 }
 

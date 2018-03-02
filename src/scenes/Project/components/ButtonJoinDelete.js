@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ButtonJoin from './ButtonJoin'
 import ButtonUnjoin from './ButtonUnjoin'
 import ButtonDelete from '../../../components/ButtonDelete'
-import { isOwner, isParticipant } from '../../../data/utils'
+import { isOwner, isMaybeParticipant } from '../../../data/utils'
 
 const propTypes = {
   authenticatedUser: PropTypes.object,
@@ -15,22 +15,24 @@ const propTypes = {
 }
 
 const ButtonJoinDelete = ({ authenticatedUser, project, ...props }) => {
+  if (isOwner(authenticatedUser)(project)) {
+    return <ButtonDelete handleClick={props.removeProject} />
+  }
+
+  if (isMaybeParticipant(authenticatedUser)(project)) {
+    return (
+      <ButtonUnjoin
+        handleClick={props.removeParticipant}
+        authenticatedUser={authenticatedUser}
+      />
+    )
+  }
+
   return (
-    <div>
-      {isOwner(authenticatedUser)(project) ? (
-        <ButtonDelete handleClick={props.removeProject} />
-      ) : isParticipant(authenticatedUser)(project) ? (
-        <ButtonUnjoin
-          handleClick={props.removeParticipant}
-          authenticatedUser={authenticatedUser}
-        />
-      ) : (
-        <ButtonJoin
-          handleClick={props.addParticipant}
-          authenticatedUser={authenticatedUser}
-        />
-      )}
-    </div>
+    <ButtonJoin
+      handleClick={props.addParticipant}
+      authenticatedUser={authenticatedUser}
+    />
   )
 }
 

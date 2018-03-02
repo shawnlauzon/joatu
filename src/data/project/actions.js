@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+
 import { CALL_API } from '../actions'
 
 import {
@@ -130,6 +132,8 @@ export const remove = id => async (dispatch, getState) => {
 }
 
 export function addParticipant(userId, projectId) {
+  const pathToUser = ['pendingParticipants', userId].join('.')
+
   return {
     [CALL_API]: {
       types: [
@@ -137,14 +141,18 @@ export function addParticipant(userId, projectId) {
         ADD_PARTICIPANT_TO_PROJECT_SUCCEEDED,
         ADD_PARTICIPANT_TO_PROJECT_FAILED
       ],
-      action: 'addParticipant',
-      userId,
-      projectId
+      action: 'update',
+      collection: 'projects',
+      id: projectId,
+      data: { [pathToUser]: true },
+      merge: { participantId: userId }
     }
   }
 }
 
 export function removeParticipant(userId, projectId) {
+  const pathToUser1 = ['participants', userId].join('.')
+  const pathToUser2 = ['pendingParticipants', userId].join('.')
   return {
     [CALL_API]: {
       types: [
@@ -152,9 +160,14 @@ export function removeParticipant(userId, projectId) {
         REMOVE_PARTICIPANT_FROM_PROJECT_SUCCEEDED,
         REMOVE_PARTICIPANT_FROM_PROJECT_FAILED
       ],
-      action: 'removeParticipant',
-      userId,
-      projectId
+      action: 'update',
+      collection: 'projects',
+      id: projectId,
+      data: {
+        [pathToUser1]: firebase.firestore.FieldValue.delete(),
+        [pathToUser2]: firebase.firestore.FieldValue.delete()
+      },
+      merge: { participantId: userId }
     }
   }
 }

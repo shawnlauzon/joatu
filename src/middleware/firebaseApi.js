@@ -10,8 +10,6 @@ import {
   // These should be embedded
   doLogin,
   doLogout,
-  addParticipant,
-  removeParticipant,
   addRef,
   removeRef,
   listenForNewDocuments,
@@ -68,14 +66,6 @@ const apiMiddleware = store => next => action => {
       .catch(handleError)
   } else if (callApi.action === 'logout') {
     return doLogout()
-      .then(handleResponse)
-      .catch(handleError)
-  } else if (callApi.action === 'addParticipant') {
-    return addParticipant(callApi)
-      .then(handleResponse)
-      .catch(handleError)
-  } else if (callApi.action === 'removeParticipant') {
-    return removeParticipant(callApi)
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'addRef') {

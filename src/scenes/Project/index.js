@@ -21,7 +21,7 @@ import {
   remove as removeProject
 } from '../../data/project/actions'
 
-import { isOwner, isParticipant } from '../../data/utils'
+import { isOwner, isParticipant, isPendingParticipant } from '../../data/utils'
 
 class Project extends React.Component {
   handleNewMessage = text =>
@@ -49,6 +49,28 @@ class Project extends React.Component {
   canParticipate = () =>
     this.props.authenticatedUser &&
     this.props.authenticatedUser.homeHub === this.props.project.hub.id
+
+  buildParticipantList = project => {
+    let chips = project.participants.map(participant => (
+      <UserChip key={participant.id} user={participant} />
+    ))
+    if (isOwner(this.props.authenticatedUser)(project)) {
+      chips = chips.concat(
+        project.pendingParticipants.map(participant => (
+          <UserChip key={participant.id} user={participant} pending={true} />
+        ))
+      )
+    } else if (isPendingParticipant(this.props.authenticatedUser)(project)) {
+      chips = chips.concat([
+        <UserChip
+          key={this.props.authenticatedUser.id}
+          user={this.props.authenticatedUser}
+          pending={true}
+        />
+      ])
+    }
+    return chips
+  }
 
   render() {
     const { authenticatedUser, project } = this.props
@@ -102,9 +124,7 @@ class Project extends React.Component {
         <div>{authenticatedUser && <div />}</div>
 
         <ParticipantList isOwner={isOwner(authenticatedUser)(project)}>
-          {project.participants.map(participant => (
-            <UserChip key={participant.id} user={participant} />
-          ))}
+          {this.buildParticipantList(project)}
         </ParticipantList>
         {(this.canParticipate() || project.comments.length > 0) && (
           <div>

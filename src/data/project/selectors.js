@@ -53,6 +53,9 @@ export const projectWithId = id =>
           hub: inflateHub(project.hub),
           owner: inflateUser(project.owner),
           participants: project.participants.toRefArray().map(inflateUser),
+          pendingParticipants: project.pendingParticipants
+            .toRefArray()
+            .map(inflateUser),
           comments: project.comments
             ? project.comments.toRefArray().map(inflateComment)
             : [],

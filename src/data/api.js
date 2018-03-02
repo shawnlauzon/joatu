@@ -105,8 +105,8 @@ export function doAdd({ collection, data, merge = {} }) {
     )
 }
 
-export function doSet({ collectionName, id, data }) {
-  return getCollection(collectionName)
+export function doSet({ collection, id, data }) {
+  return getCollection(collection)
     .doc(id)
     .set(toFirestore(data))
     .then(docRef => ({
@@ -115,18 +115,23 @@ export function doSet({ collectionName, id, data }) {
     }))
 }
 
-export function doUpdate({ collectionName, id, data }) {
-  return getCollection(collectionName)
+export function doUpdate({ collection, id, data, merge }) {
+  return getCollection(collection)
     .doc(id)
-    .update(toFirestore(data))
-    .then(docRef => ({
+    .update(
+      Object.assign({}, toFirestore(data), {
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+    )
+    .then(() => ({
+      ...merge,
       id,
-      ...data
+      data
     }))
 }
 
-export function doDelete({ collectionName, id }) {
-  return getCollection(collectionName)
+export function doDelete({ collection, id }) {
+  return getCollection(collection)
     .doc(id)
     .delete()
     .then(() => ({
@@ -147,19 +152,6 @@ export function doLogin(provider) {
       })
     default:
       throw Error('Unknown provider ' + provider)
-  }
-}
-
-export async function addParticipant({ projectId, userId }) {
-  const project = await getCollection('projects').doc(projectId)
-  const pathToUser = ['participants', userId].join('.')
-  await project.update({
-    [pathToUser]: entry ? entry : true
-  })
-
-  return {
-    projectId,
-    userId
   }
 }
 

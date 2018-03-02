@@ -44,7 +44,8 @@ const reducer = compositeReducer([
     createEntity: Project => (data, id) => {
       // TODO Move to API
       const transformations = {
-        participants: keys
+        participants: keys,
+        pendingParticipants: keys
       }
       const project = evolve(transformations, data)
 
@@ -52,9 +53,9 @@ const reducer = compositeReducer([
     }
   }),
   linkReducer({
-    collection: 'participants',
-    primaryKey: 'projectId',
-    foreignKey: 'userId',
+    collection: 'pendingParticipants',
+    primaryKey: 'id',
+    foreignKey: 'participantId',
     linkActionType: ADD_PARTICIPANT_TO_PROJECT_SUCCEEDED,
     unlinkActionType: REMOVE_PARTICIPANT_FROM_PROJECT_SUCCEEDED
   })

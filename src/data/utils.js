@@ -51,10 +51,19 @@ export const canView = authenticatedUserId =>
 export const isOwner = authenticatedUser =>
   R.pathEq(['owner', 'id'], R.prop('id', authenticatedUser))
 
+export const containsUser = authenticatedUser =>
+  R.any(R.propEq('id', R.prop('id', authenticatedUser)))
+
+export const isPendingParticipant = authenticatedUser =>
+  R.pipe(R.propOr({}, 'pendingParticipants'), containsUser(authenticatedUser))
+
 export const isParticipant = authenticatedUser =>
-  R.pipe(
-    R.prop('participants'),
-    R.any(R.propEq('id', R.prop('id', authenticatedUser)))
+  R.pipe(R.propOr({}, 'participants'), containsUser(authenticatedUser))
+
+export const isMaybeParticipant = authenticatedUser =>
+  R.either(
+    isParticipant(authenticatedUser),
+    isPendingParticipant(authenticatedUser)
   )
 
 // Resolves maps of refs to their values. For example, users have references
@@ -62,9 +71,18 @@ export const isParticipant = authenticatedUser =>
 // returns a new object with the `true` values replaced with their values
 //
 // Given ({ k -> true }, { k -> v })
-export const resolveKeys = R.curry((keyMap, values) =>
-  R.pick(R.keys(keyMap), values)
-)
+export const resolveKeys = (keyMap, values) =>
+  resolveKeysWithValue(true, keyMap, values)
+
+// Resolves maps of refs to their values. For example, users have references
+// to all the PORs they created in the form { k -> value }. This function
+// returns a new object with the `value` values replaced with their values
+//
+// Given ({ k -> true }, { k -> v })
+export const resolveKeysWithValue = (value, keyMap, values) => {
+  const hasValue = (v, k) => v === value
+  R.pickBy(R.pipe(R.filter(hasValue), R.keys)(keyMap), values)
+}
 
 export const addRefToCollection = (action, collection, state) =>
   R.assocPath(
