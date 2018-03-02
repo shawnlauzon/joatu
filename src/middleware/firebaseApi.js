@@ -71,11 +71,11 @@ const apiMiddleware = store => next => action => {
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'addParticipant') {
-    return addParticipant(callApi.projectId, callApi.userId)
+    return addParticipant(callApi)
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'removeParticipant') {
-    return removeParticipant(callApi.projectId, callApi.userId)
+    return removeParticipant(callApi)
       .then(handleResponse)
       .catch(handleError)
   } else if (callApi.action === 'addRef') {

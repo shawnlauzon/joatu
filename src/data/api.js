@@ -150,11 +150,11 @@ export function doLogin(provider) {
   }
 }
 
-export async function addParticipant(projectId, userId) {
+export async function addParticipant({ projectId, userId, entry }) {
   const pathToUser = ['participants', userId].join('.')
   const project = await getCollection('projects').doc(projectId)
   await project.update({
-    [pathToUser]: true
+    [pathToUser]: entry ? entry : true
   })
 
   return {
@@ -163,7 +163,7 @@ export async function addParticipant(projectId, userId) {
   }
 }
 
-export async function removeParticipant(projectId, userId) {
+export async function removeParticipant({ projectId, userId }) {
   const pathToUser = ['participants', userId].join('.')
   const project = await getCollection('projects').doc(projectId)
   await project.update({
