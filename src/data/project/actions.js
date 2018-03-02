@@ -129,7 +129,7 @@ export const remove = id => async (dispatch, getState) => {
   return result
 }
 
-export function addParticipant(userId, projectId, entry) {
+export function addParticipant(userId, projectId) {
   return {
     [CALL_API]: {
       types: [
@@ -139,8 +139,7 @@ export function addParticipant(userId, projectId, entry) {
       ],
       action: 'addParticipant',
       userId,
-      projectId,
-      entry
+      projectId
     }
   }
 }

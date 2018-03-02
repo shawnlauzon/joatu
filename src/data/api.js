@@ -150,9 +150,9 @@ export function doLogin(provider) {
   }
 }
 
-export async function addParticipant({ projectId, userId, entry }) {
-  const pathToUser = ['participants', userId].join('.')
+export async function addParticipant({ projectId, userId }) {
   const project = await getCollection('projects').doc(projectId)
+  const pathToUser = ['participants', userId].join('.')
   await project.update({
     [pathToUser]: entry ? entry : true
   })
@@ -164,8 +164,8 @@ export async function addParticipant({ projectId, userId, entry }) {
 }
 
 export async function removeParticipant({ projectId, userId }) {
-  const pathToUser = ['participants', userId].join('.')
   const project = await getCollection('projects').doc(projectId)
+  const pathToUser = ['participants', userId].join('.')
   await project.update({
     [pathToUser]: firebase.firestore.FieldValue.delete()
   })
