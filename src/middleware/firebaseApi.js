@@ -15,7 +15,8 @@ import {
   addRef,
   removeRef,
   listenForNewDocuments,
-  sendCaps
+  sendCaps,
+  find
 } from '../data/api'
 
 const apiMiddleware = store => next => action => {
@@ -93,6 +94,10 @@ const apiMiddleware = store => next => action => {
     return listenForNewDocuments(callApi)
   } else if (callApi.action === 'sendCaps') {
     return sendCaps(callApi)
+      .then(handleResponse)
+      .catch(handleError)
+  } else if (callApi.action === 'find') {
+    return find(callApi)
       .then(handleResponse)
       .catch(handleError)
   } else {

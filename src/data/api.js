@@ -241,3 +241,22 @@ export function sendCaps({ from, to, amount }) {
     }
   })
 }
+
+// `where` is like [['id', '==', 'foo'], ['isApproved', '==', 'true']]
+export function find({ collection, where }) {
+  let query = getCollection(collection)
+
+  where.forEach(clause => {
+    query = query.where(clause[0], clause[1], clause[2])
+  })
+
+  const result = []
+  return query
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        result.push(Object.assign({}, doc.data(), { id: doc.id }))
+      })
+    })
+    .then(() => result)
+}

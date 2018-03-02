@@ -20,6 +20,10 @@ export const DELETE_DISCUSSION_STARTED = 'DELETE_DISCUSSION_STARTED'
 export const DELETE_DISCUSSION_SUCCEEDED = 'DELETE_DISCUSSION_SUCCEEDED'
 export const DELETE_DISCUSSION_FAILED = 'DELETE_DISCUSSION_FAILED'
 
+export const FIND_DISCUSSION_STARTED = 'FIND_DISCUSSION_STARTED'
+export const FIND_DISCUSSION_SUCCEEDED = 'FIND_DISCUSSION_SUCCEEDED'
+export const FIND_DISCUSSION_FAILED = 'FIND_DISCUSSION_FAILED'
+
 export const FETCH_MESSAGES_STARTED = 'FETCH_MESSAGES_STARTED'
 export const FETCH_MESSAGES_SUCCEEDED = 'FETCH_MESSAGES_SUCCEEDED'
 export const FETCH_MESSAGES_FAILED = 'FETCH_MESSAGES_FAILED'
@@ -92,7 +96,7 @@ const doCreateDiscussion = body => ({
 })
 
 export const create = body => (dispatch, getState) => {
-  dispatch(doCreateDiscussion(body))
+  return dispatch(doCreateDiscussion(body))
 }
 
 const doUpdateDiscussion = (id, body) => ({
@@ -127,5 +131,22 @@ const doDeleteDiscussion = id => ({
 })
 
 export const remove = id => (dispatch, getState) => {
-  dispatch(doDeleteDiscussion(id))
+  return dispatch(doDeleteDiscussion(id))
+}
+
+const doFindDiscussion = where => ({
+  [CALL_API]: {
+    types: [
+      FIND_DISCUSSION_STARTED,
+      FIND_DISCUSSION_SUCCEEDED,
+      FIND_DISCUSSION_FAILED
+    ],
+    collection: 'discussions',
+    action: 'find',
+    where
+  }
+})
+
+export const find = where => (dispatch, getState) => {
+  return dispatch(doFindDiscussion(where))
 }

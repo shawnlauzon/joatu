@@ -1,6 +1,11 @@
 import { CALL_API } from '../actions'
 
-import { create as createDiscussion } from '../discussion/actions'
+import {
+  create as createDiscussion,
+  remove as deleteDiscussion,
+  find as findDiscussion,
+  FIND_DISCUSSION_SUCCEEDED
+} from '../discussion/actions'
 
 export const FETCH_PROJECTS_STARTED = 'FETCH_PROJECTS_STARTED'
 export const FETCH_PROJECTS_SUCCEEDED = 'FETCH_PROJECTS_SUCCEEDED'
@@ -104,8 +109,24 @@ const doDeleteProject = id => ({
   }
 })
 
-export const remove = id => (dispatch, getState) => {
-  return dispatch(doDeleteProject(id))
+export const remove = id => async (dispatch, getState) => {
+  const result = await dispatch(doDeleteProject(id))
+
+  if (result.type === DELETE_PROJECT_SUCCEEDED) {
+    // pass list of where clauses, each is an array of 3
+    const discussion = await dispatch(findDiscussion([['topic', '==', id]]))
+    if (discussion.type === FIND_DISCUSSION_SUCCEEDED) {
+      if (discussion.payload.length !== 1) {
+        console.error(
+          'Expected exactly 1 discussion, found',
+          discussion.payload
+        )
+      } else {
+        return dispatch(deleteDiscussion(discussion.payload[0].id))
+      }
+    }
+  }
+  return result
 }
 
 export function addParticipant(userId, projectId) {
