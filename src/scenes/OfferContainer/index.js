@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import OfferInfo from './components/OfferInfo'
+import ButtonStartChat from '../../components/ButtonStartChat'
 
 import { offerActions } from '../../data/actions'
 
@@ -17,11 +18,14 @@ class OfferContainer extends Component {
       return null
     }
     return (
-      <OfferInfo
-        authenticatedUser={this.props.authenticatedUser}
-        offer={this.props.offer}
-        onDelete={() => this.props.removeOffer(this.offerId())}
-      />
+      <div>
+        <OfferInfo
+          authenticatedUser={this.props.authenticatedUser}
+          offer={this.props.offer}
+          onDelete={() => this.props.removeOffer(this.offerId())}
+        />
+        <ButtonStartChat user={this.props.offer.owner} />
+      </div>
     )
   }
 }

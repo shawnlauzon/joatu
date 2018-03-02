@@ -12,10 +12,11 @@ export const inflateHub = ({ id, name, location }) => ({
   location
 })
 
-export const inflateUser = ({ id, displayName, imgSrc }) => ({
+export const inflateUser = ({ id, displayName, imgSrc, homeHub }) => ({
   id,
   displayName,
-  imgSrc
+  imgSrc,
+  homeHub
 })
 
 export const inflateComment = ({ id, from, text, to }) => ({

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import RequestInfo from './components/RequestInfo'
+import ButtonStartChat from '../../components/ButtonStartChat'
 
 import { requestActions } from '../../data/actions'
 
@@ -17,11 +18,14 @@ class RequestContainer extends Component {
       return null
     }
     return (
-      <RequestInfo
-        authenticatedUser={this.props.authenticatedUser}
-        request={this.props.request}
-        onDelete={() => this.props.removeRequest(this.requestId())}
-      />
+      <div>
+        <RequestInfo
+          authenticatedUser={this.props.authenticatedUser}
+          request={this.props.request}
+          onDelete={() => this.props.removeRequest(this.requestId())}
+        />
+        <ButtonStartChat user={this.props.request.owner} />
+      </div>
     )
   }
 }

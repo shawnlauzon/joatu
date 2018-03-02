@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar'
 
 import ProfileView from './components/ProfileView'
 import Conversation from '../../components/Conversation'
-import ButtonStartChat from './components/ButtonStartChat'
+import ButtonStartChat from '../../components/ButtonStartChat'
 import DonateCaps from '../../components/DonateCaps'
 
 import { authenticatedUser, userWithId } from '../../data/user/selectors'
@@ -50,7 +50,7 @@ class Profile extends React.Component {
                       capsAvailable={authenticatedUser.caps}
                       onSave={this.handleDonateCaps}
                     />
-                    <ButtonStartChat user={user} />
+                    <ButtonStartChat userId={user.id} />
                   </div>
                 )}
             </div>

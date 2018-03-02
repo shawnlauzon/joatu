@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
-import { authenticatedUser } from '../../../data/user/selectors'
-import { chatWithUser } from '../../../data/chat/selectors'
+import { authenticatedUser } from '../data/user/selectors'
+import { chatWithUser } from '../data/chat/selectors'
 
 const styles = theme => ({
   button: {
@@ -16,6 +16,10 @@ const styles = theme => ({
 })
 
 const ButtonStartChat = ({ authenticatedUser, chat, user, classes }) => {
+  if (!authenticatedUser || authenticatedUser.id === user.id) {
+    return null
+  }
+
   const url = chat ? `/chats/${chat.id}` : `/chat-with/${user.id}`
 
   return (
