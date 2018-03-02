@@ -18,11 +18,9 @@ class HubMap extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.homeHub) {
-      this.setState({
-        selectedHubId: newProps.homeHub.id
-      })
-    }
+    this.setState({
+      selectedHubId: newProps.homeHub ? newProps.homeHub.id : undefined
+    })
   }
 
   selectedHub = () =>
@@ -44,7 +42,7 @@ class HubMap extends React.Component {
             />
           ))}
         </DisplayMap>
-        {this.state.selectedHubId && (
+        {this.selectedHub() && (
           <HubInfo
             name={this.selectedHub().name}
             url={`/hubs/${this.state.selectedHubId}`}

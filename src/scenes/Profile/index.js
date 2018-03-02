@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import Avatar from 'material-ui/Avatar'
 
 import ProfileView from './components/ProfileView'
@@ -44,7 +43,6 @@ class Profile extends React.Component {
         {user && (
           <div>
             <div>
-              <Link to="/">Return to Home</Link>
               <Avatar src={user.imgSrc} />
               {authenticatedUser &&
                 user.id !== authenticatedUser.id && (
