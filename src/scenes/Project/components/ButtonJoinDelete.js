@@ -18,19 +18,15 @@ const ButtonJoinDelete = ({ authenticatedUser, project, ...props }) => {
   return (
     <div>
       {isOwner(authenticatedUser)(project) ? (
-        <ButtonDelete handleClick={() => props.removeProject(project.id)} />
+        <ButtonDelete handleClick={props.removeProject} />
       ) : isParticipant(authenticatedUser)(project) ? (
         <ButtonUnjoin
-          handleClick={() =>
-            props.removeParticipant(authenticatedUser.id, project.id)
-          }
+          handleClick={props.removeParticipant}
           authenticatedUser={authenticatedUser}
         />
       ) : (
         <ButtonJoin
-          handleClick={() =>
-            props.addParticipant(authenticatedUser.id, project.id)
-          }
+          handleClick={props.addParticipant}
           authenticatedUser={authenticatedUser}
         />
       )}

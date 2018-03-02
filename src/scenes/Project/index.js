@@ -31,18 +31,27 @@ class Project extends React.Component {
       text
     })
 
+  handleAddParticipant = () =>
+    this.props.addParticipant(
+      this.props.authenticatedUser.id,
+      this.props.project.id,
+      'pending'
+    )
+
+  handleRemoveParticipant = () =>
+    this.props.removeParticipant(
+      this.props.authenticatedUser.id,
+      this.props.project.id
+    )
+
+  handleRemoveProject = () => this.props.removeProject(this.props.project.id)
+
   canParticipate = () =>
     this.props.authenticatedUser &&
     this.props.authenticatedUser.homeHub === this.props.project.hub.id
 
   render() {
-    const {
-      authenticatedUser,
-      project,
-      addParticipant,
-      removeParticipant,
-      removeProject
-    } = this.props
+    const { authenticatedUser, project } = this.props
 
     return !project ? null : (
       <div>
@@ -75,9 +84,9 @@ class Project extends React.Component {
               <ButtonJoinDelete
                 authenticatedUser={authenticatedUser}
                 project={project}
-                addParticipant={addParticipant}
-                removeParticipant={removeParticipant}
-                removeProject={removeProject}
+                addParticipant={this.handleAddParticipant}
+                removeParticipant={this.handleRemoveParticipant}
+                removeProject={this.handleRemoveProject}
               />
             </Grid>
           </Grid>

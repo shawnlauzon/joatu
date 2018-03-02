@@ -153,7 +153,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  addParticipant: projectActions.addParticipant,
   createProject: projectActions.create,
   createOffer: offerActions.create,
   createRequest: requestActions.create
