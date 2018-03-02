@@ -94,7 +94,7 @@ export function doGetSorted({ collection, orderBy, merge }) {
     })
 }
 
-export function doAdd(collection, data, merge = {}) {
+export function doAdd({ collection, data, merge = {} }) {
   return getCollection(collection)
     .add(toFirestore(data))
     .then(docRef =>
@@ -105,7 +105,7 @@ export function doAdd(collection, data, merge = {}) {
     )
 }
 
-export function doSet(collectionName, id, data) {
+export function doSet({ collectionName, id, data }) {
   return getCollection(collectionName)
     .doc(id)
     .set(toFirestore(data))
@@ -115,7 +115,7 @@ export function doSet(collectionName, id, data) {
     }))
 }
 
-export function doUpdate(collectionName, id, data) {
+export function doUpdate({ collectionName, id, data }) {
   return getCollection(collectionName)
     .doc(id)
     .update(toFirestore(data))
@@ -125,7 +125,7 @@ export function doUpdate(collectionName, id, data) {
     }))
 }
 
-export function doDelete(collectionName, id) {
+export function doDelete({ collectionName, id }) {
   return getCollection(collectionName)
     .doc(id)
     .delete()
