@@ -11,7 +11,6 @@ import { authenticatedUser, userWithId } from '../../data/user/selectors'
 
 import { create } from '../../data/comment/actions'
 import { sendCaps } from '../../data/user/actions'
-import { chatWithUser } from '../../data/chat/selectors'
 
 class Profile extends React.Component {
   profileUserId = () => this.props.match.params.profileId
@@ -37,7 +36,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { user, authenticatedUser, chat } = this.props
+    const { user, authenticatedUser } = this.props
     return (
       <div>
         {user && (
@@ -51,20 +50,7 @@ class Profile extends React.Component {
                       capsAvailable={authenticatedUser.caps}
                       onSave={this.handleDonateCaps}
                     />
-                    {/* TODO Merge into a single ButtonStartChat */}
-                    {chat ? (
-                      <ButtonStartChat
-                        authenticatedUser={authenticatedUser}
-                        user={user}
-                        url={`/chats/${chat.id}`}
-                      />
-                    ) : (
-                      <ButtonStartChat
-                        authenticatedUser={authenticatedUser}
-                        user={user}
-                        url={`/chat-with/${this.profileUserId()}`}
-                      />
-                    )}
+                    <ButtonStartChat user={user} />
                   </div>
                 )}
             </div>
@@ -100,13 +86,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     authenticatedUser: thisUser,
-    user: userWithId(profileUserId)(state),
-
-    // I need to know if the authenticated user has an existing chat with the userId
-    chat:
-      thisUser && thisUser.id !== profileUserId
-        ? chatWithUser(profileUserId)(state)
-        : undefined
+    user: userWithId(profileUserId)(state)
   }
 }
 

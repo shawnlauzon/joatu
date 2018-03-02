@@ -67,9 +67,13 @@ export const fetch = () => async (dispatch, getState) => {
     })
   }
   const chats = await dispatch(doFetchChats())
+
+  const promises = []
   Object.keys(chats.payload).forEach(chatId => {
-    dispatch(doListenToChat(chatId, listener(chatId)))
+    promises.push(dispatch(doListenToChat(chatId, listener(chatId))))
   })
+
+  return Promise.all(promises)
 }
 
 const doCreateChat = body => ({
@@ -85,9 +89,11 @@ const doCreateChat = body => ({
 //   participants: [ userId1, userId2 ] (exactly 2)
 // }
 export const create = body => (dispatch, getState) => {
+  // Convert to { participants: { userId1: true, userId2: true } }
   const evolveBody = R.over(R.lensProp('participants'), boolMap)
 
-  dispatch(doCreateChat(evolveBody(body)))
+  console.log(evolveBody(body))
+  return dispatch(doCreateChat(evolveBody(body)))
 }
 
 const doUpdateChat = (id, body) => ({
@@ -114,5 +120,5 @@ const doDeleteChat = id => ({
 })
 
 export const remove = id => (dispatch, getState) => {
-  dispatch(doDeleteChat(id))
+  return dispatch(doDeleteChat(id))
 }

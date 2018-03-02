@@ -94,39 +94,39 @@ export function doGetSorted({ collection, orderBy, merge }) {
     })
 }
 
-export function doAdd({ collection, data, merge = {} }) {
+export function doAdd({ collection, body, merge = {} }) {
   return getCollection(collection)
-    .add(toFirestore(data))
+    .add(toFirestore(body))
     .then(docRef =>
       R.merge(merge, {
         id: docRef.id,
-        ...data
+        ...body
       })
     )
 }
 
-export function doSet({ collection, id, data }) {
+export function doSet({ collection, id, body }) {
   return getCollection(collection)
     .doc(id)
-    .set(toFirestore(data))
+    .set(toFirestore(body))
     .then(docRef => ({
       id,
-      ...data
+      ...body
     }))
 }
 
-export function doUpdate({ collection, id, data, merge }) {
+export function doUpdate({ collection, id, body, merge }) {
   return getCollection(collection)
     .doc(id)
     .update(
-      Object.assign({}, toFirestore(data), {
+      Object.assign({}, toFirestore(body), {
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       })
     )
     .then(() => ({
       ...merge,
       id,
-      data
+      body
     }))
 }
 
