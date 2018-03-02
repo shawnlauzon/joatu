@@ -19,9 +19,9 @@ export const UPDATE_PROJECT_STARTED = 'UPDATE_PROJECT_STARTED'
 export const UPDATE_PROJECT_SUCCEEDED = 'UPDATE_PROJECT_SUCCEEDED'
 export const UPDATE_PROJECT_FAILED = 'UPDATE_PROJECT_FAILED'
 
-export const DELETE_PROJECT_STARTED = 'DELETE_PROJECT_STARTED'
-export const DELETE_PROJECT_SUCCEEDED = 'DELETE_PROJECT_SUCCEEDED'
-export const DELETE_PROJECT_FAILED = 'DELETE_PROJECT_FAILED'
+export const REMOVE_PROJECT_STARTED = 'REMOVE_PROJECT_STARTED'
+export const REMOVE_PROJECT_SUCCEEDED = 'REMOVE_PROJECT_SUCCEEDED'
+export const REMOVE_PROJECT_FAILED = 'REMOVE_PROJECT_FAILED'
 
 export const ADD_PARTICIPANT_TO_PROJECT_STARTED =
   'ADD_PARTICIPANT_TO_PROJECT_STARTED'
@@ -99,9 +99,9 @@ export const update = (id, body) => (dispatch, getState) => {
 const doDeleteProject = id => ({
   [CALL_API]: {
     types: [
-      DELETE_PROJECT_STARTED,
-      DELETE_PROJECT_SUCCEEDED,
-      DELETE_PROJECT_FAILED
+      REMOVE_PROJECT_STARTED,
+      REMOVE_PROJECT_SUCCEEDED,
+      REMOVE_PROJECT_FAILED
     ],
     collection: 'projects',
     action: 'delete',
@@ -112,7 +112,7 @@ const doDeleteProject = id => ({
 export const remove = id => async (dispatch, getState) => {
   const result = await dispatch(doDeleteProject(id))
 
-  if (result.type === DELETE_PROJECT_SUCCEEDED) {
+  if (result.type === REMOVE_PROJECT_SUCCEEDED) {
     // pass list of where clauses, each is an array of 3
     const discussion = await dispatch(findDiscussion([['topic', '==', id]]))
     if (discussion.type === FIND_DISCUSSION_SUCCEEDED) {

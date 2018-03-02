@@ -2,7 +2,7 @@ import orm from './orm'
 
 import {
   CREATE_PROJECT_SUCCEEDED,
-  DELETE_PROJECT_SUCCEEDED,
+  REMOVE_PROJECT_SUCCEEDED,
   ASSIGN_COMMUNITY_SUCCEEDED,
   ADD_PARTICIPANT_TO_PROJECT,
   REMOVE_PARTICIPANT_FROM_PROJECT
@@ -20,7 +20,7 @@ function ormReducer(dbState, action) {
     case CREATE_PROJECT_SUCCEEDED:
       Project.withId(action.payload.id).update(action.payload)
       break
-    case DELETE_PROJECT_SUCCEEDED:
+    case REMOVE_PROJECT_SUCCEEDED:
       Project.withId(action.payload.id).delete()
       break
     case ASSIGN_COMMUNITY_SUCCEEDED:

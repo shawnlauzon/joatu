@@ -7,7 +7,7 @@ import {
   FETCH_PROJECTS_SUCCEEDED,
   CREATE_PROJECT_SUCCEEDED,
   UPDATE_PROJECT_SUCCEEDED,
-  DELETE_PROJECT_SUCCEEDED,
+  REMOVE_PROJECT_SUCCEEDED,
   ADD_PARTICIPANT_TO_PROJECT_SUCCEEDED,
   REMOVE_PARTICIPANT_FROM_PROJECT_SUCCEEDED
 } from './actions'
@@ -40,7 +40,7 @@ const reducer = compositeReducer([
     fetchActionType: FETCH_PROJECTS_SUCCEEDED,
     createActionType: CREATE_PROJECT_SUCCEEDED,
     updateActionType: UPDATE_PROJECT_SUCCEEDED,
-    removeActionType: DELETE_PROJECT_SUCCEEDED,
+    removeActionType: REMOVE_PROJECT_SUCCEEDED,
     createEntity: Project => (data, id) => {
       // TODO Move to API
       const transformations = {

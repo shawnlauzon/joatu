@@ -6,7 +6,7 @@ import {
   FETCH_USERS_SUCCEEDED,
   CREATE_USER_SUCCEEDED,
   UPDATE_USER_SUCCEEDED,
-  DELETE_USER_SUCCEEDED,
+  REMOVE_USER_SUCCEEDED,
   SEND_CAPS_SUCCEEDED
 } from './actions'
 
@@ -26,7 +26,7 @@ const reducer = compositeReducer([
     fetchActionType: FETCH_USERS_SUCCEEDED,
     createActionType: CREATE_USER_SUCCEEDED,
     updateActionType: UPDATE_USER_SUCCEEDED,
-    removeActionType: DELETE_USER_SUCCEEDED,
+    removeActionType: REMOVE_USER_SUCCEEDED,
     createEntity: User => (data, id) => {
       // TODO Move to API
       const transformations = {
@@ -66,7 +66,7 @@ export default reducer
 //       return action.payload
 //     case CREATE_USER_SUCCEEDEDActionType:
 //       return assoc(action.payload.id, action.payload.data, state)
-//     case DELETE_USER_SUCCEEDEDActionType:
+//     case REMOVE_USER_SUCCEEDEDActionType:
 //       return dissoc(action.payload.id, state)
 //     case ADD_PARTICIPANT_SUCCEEDEDActionType:
 //       return assocPath(

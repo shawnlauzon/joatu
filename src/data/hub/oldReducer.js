@@ -3,7 +3,7 @@ import { assoc, dissoc } from 'ramda'
 import {
   FETCH_COMMUNITIES_SUCCEEDED,
   CREATE_COMMUNITY_SUCCEEDED,
-  DELETE_COMMUNITY_SUCCEEDED
+  REMOVE_COMMUNITY_SUCCEEDED
 } from './actions'
 
 import {
@@ -27,7 +27,7 @@ const reducer = (state = {}, action) => {
       return action.payload
     case CREATE_COMMUNITY_SUCCEEDED:
       return assoc(action.payload.id, action.payload.data, state)
-    case DELETE_COMMUNITY_SUCCEEDED:
+    case REMOVE_COMMUNITY_SUCCEEDED:
       return dissoc(action.payload.id, state)
     case ADD_NEW_PROJECT_TO_COMMUNITY_SUCCEEDED:
       return addRefToCollection(action, 'projects', state)

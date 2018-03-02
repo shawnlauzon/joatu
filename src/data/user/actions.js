@@ -17,9 +17,9 @@ export const UPDATE_USER_STARTED = 'UPDATE_USER_STARTED'
 export const UPDATE_USER_SUCCEEDED = 'UPDATE_USER_SUCCEEDED'
 export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED'
 
-export const DELETE_USER_STARTED = 'DELETE_USER_STARTED'
-export const DELETE_USER_SUCCEEDED = 'DELETE_USER_SUCCEEDED'
-export const DELETE_USER_FAILED = 'DELETE_USER_FAILED'
+export const REMOVE_USER_STARTED = 'REMOVE_USER_STARTED'
+export const REMOVE_USER_SUCCEEDED = 'REMOVE_USER_SUCCEEDED'
+export const REMOVE_USER_FAILED = 'REMOVE_USER_FAILED'
 
 export const SEND_CAPS_STARTED = 'SEND_CAPS_STARTED'
 export const SEND_CAPS_SUCCEEDED = 'SEND_CAPS_SUCCEEDED'
@@ -84,7 +84,7 @@ export const update = (id, body) => (dispatch, getState) => {
 
 const doDeleteUser = id => ({
   [CALL_API]: {
-    types: [DELETE_USER_STARTED, DELETE_USER_SUCCEEDED, DELETE_USER_FAILED],
+    types: [REMOVE_USER_STARTED, REMOVE_USER_SUCCEEDED, REMOVE_USER_FAILED],
     collection: 'users',
     action: 'delete',
     id
