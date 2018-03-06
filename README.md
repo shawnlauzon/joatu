@@ -76,4 +76,4 @@ To talk about the project, join us on [Gitter](https://gitter.im/buildjoatu/Lobb
 
 ## License
 
-JoatU is released under the MIT license.
+JoatU is released under the [MIT license](./LICENSE).
