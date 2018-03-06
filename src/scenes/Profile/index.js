@@ -50,7 +50,7 @@ class Profile extends React.Component {
                       capsAvailable={authenticatedUser.caps}
                       onSave={this.handleDonateCaps}
                     />
-                    <ButtonStartChat userId={user.id} />
+                    <ButtonStartChat user={user} />
                   </div>
                 )}
             </div>
