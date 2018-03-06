@@ -1,6 +1,6 @@
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/shawnlauzon/joatu.png?columns=all)](https://waffle.io/shawnlauzon/joatu?utm_source=badge)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Join the chat at https://gitter.im/buildjoatu/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/https://gitter.im/buildjoatu/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/buildjoatu/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/buildjoatu/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # JoatU: The Jack of all trades universe
 
