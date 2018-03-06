@@ -70,7 +70,7 @@ Other important libraries:
 
 ## Contributors
 
-Joatu is completely open source we love contributions! Look at the Issues list and find something which looks interesting. If you want to add something new, please open an Issue first.
+Joatu is completely open source we love contributions! Look at the Issues list and find something which looks interesting. If you want to add something new, please open an Issue first. We also use [Waffle](https://waffle.io/shawnlauzon/joatu) to manage the project.
 
 Then submit a pull request with your code and someone will look at it quickly.
 
