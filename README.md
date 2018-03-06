@@ -18,7 +18,7 @@ The development build is live at [tiny.cc/joatudev].
 
 ### Environment variables
 
-Environment variables must be set to run and deploy JoatU. We typically use a `.env` file for this.
+Environment variables must be set to run and deploy JoatU. We typically use a `.env` file for this which must be placed in the root JoatU directory.
 
 ```
 REACT_APP_FIREBASE_API_KEY=
@@ -32,7 +32,9 @@ Talk to us on [Gitter](https://gitter.im/buildjoatu/Lobby) and we can send you t
 
 ### Starting the project
 
-All scripts are provided by [Create React App]((https://github.com/facebook/create-react-app/):
+First download and install all dependencies using `yarn install`. Then start the app with `yarn start`.
+
+The following scripts are provided by [Create React App]((https://github.com/facebook/create-react-app/):
 
 #### `yarn start`
 
@@ -61,6 +63,7 @@ JoatU is built on React and Redux, connecting to [Firebase](https://firebase.goo
 Other important libraries:
 
 * [Material-UI](https://material-ui-next.com/) React widgets using Material Design
+* [React Router](https://reacttraining.com/react-router/) React navigation
 * [Ramda](http://ramdajs.com/) We love functional programming!
 * [redux-orm](https://github.com/tommikaikkonen/redux-orm) Handles the relations between objects in Redux
 * [Formik](https://github.com/jaredpalmer/formik) Simplify forms with React
