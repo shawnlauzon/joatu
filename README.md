@@ -58,7 +58,7 @@ Your app is ready to be deployed!
 
 ### Dependencies
 
-JoatU is built on React and Redux, connecting to [Firebase](https://firebase.google.com/) using [Cloud Firestore](https://firebase.google.com/docs/firestore/). We use (Prettier)[https://github.com/prettier/prettier] to ensure a consistent coding style.
+JoatU is built on React and Redux, connecting to [Firebase](https://firebase.google.com/) using [Cloud Firestore](https://firebase.google.com/docs/firestore/). We use [Prettier](https://github.com/prettier/prettier) to ensure a consistent coding style.
 
 Other important libraries:
 
