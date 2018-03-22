@@ -34,7 +34,7 @@ Talk to us on [Gitter](https://gitter.im/buildjoatu/Lobby) and we can send you t
 
 First download and install all dependencies using `yarn install`. Then start the app with `yarn start`.
 
-The following scripts are provided by [Create React App]((https://github.com/facebook/create-react-app/):
+The following scripts are provided by [Create React App](https://github.com/facebook/create-react-app/):
 
 #### `yarn start`
 
