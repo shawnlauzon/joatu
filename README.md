@@ -12,7 +12,7 @@ For example, the members of a community may want to plant a community garden. So
 
 What can you do with CAPS? This is where the trades come in: people can post requests for things they need and offers for things they have. For example, I might be able to shovel a sidewalk and so I offer to do this for 5 CAPS (this amount does not need to match the same 1:15 ratio for projects). Or I might want help with a problem on my computer, so I offer 20 CAPS to anyone who can resolve the problem.
 
-The development build is live at [tiny.cc/joatudev].
+The development build [is live](tiny.cc/joatudev).
 
 ## The code
 
