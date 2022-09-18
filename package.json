@@ -11,7 +11,7 @@
     "mapbox-gl": "^0.44.0",
     "material-ui": "^1.0.0-beta.32",
     "material-ui-icons": "^1.0.0-beta.17",
-    "moment": "^2.20.1",
+    "moment": "^2.29.4",
     "prop-types": "^15.5.4",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
